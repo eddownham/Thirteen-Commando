@@ -1,0 +1,161 @@
+{
+  "THIRTEEN_COMMANDO": {
+    "ActorName": "Actor Name",
+    "ItemName": "Item Name",
+    "Description": "Description",
+    
+    "Physical": "Physical",
+    "Mental": "Mental", 
+    "Social": "Social",
+    
+    "Force": "Force",
+    "Finesse": "Finesse",
+    "Resilience": "Resilience",
+    
+    "AttributeMight": "Might",
+    "AttributeCoordination": "Coordination",
+    "AttributeEndurance": "Endurance",
+    "AttributeIntellect": "Intellect",
+    "AttributeGuile": "Guile",
+    "AttributeGuts": "Guts",
+    "AttributeBearing": "Bearing",
+    "AttributeCharm": "Charm",
+    "AttributeComposure": "Composure",
+    
+    "Breeding": "Breeding",
+    "FivePoints": "5 Points",
+    "ThreePoints": "3 Points", 
+    "TwoPoints": "2 Points",
+    
+    "MindsetForce": "Force",
+    "MindsetFinesse": "Finesse",
+    "MindsetResilience": "Resilience",
+    
+    "Commando": "Commando",
+    "Primary": "Primary",
+    "Secondary": "Secondary",
+    "Tertiary": "Tertiary",
+    
+    "Fields": "Fields",
+    "PrimaryField": "Primary Field",
+    "SecondaryField": "Secondary Field",
+    "TertiaryField": "Tertiary Field",
+    
+    "CombatSkills": "Combat Skills",
+    "GeneralSkills": "General Skills",
+    "CustomSkills": "Custom Skills",
+    
+    "HeavyWeapons": "Heavy Weapons",
+    "ExplosiveOrdinance": "Explosive Ordinance",
+    "GrenadeThrowing": "Grenade Throwing",
+    "MachineGunner": "Machine Gunner",
+    "MeleeCombat": "Melee Combat",
+    "Pistols": "Pistols",
+    "Rifles": "Rifles",
+    "SubmachineGuns": "Submachine Guns",
+    "UnarmedCombat": "Unarmed Combat",
+    
+    "Athletics": "Athletics",
+    "Climb": "Climb",
+    "ConcealmentCamouflage": "Concealment and Camouflage",
+    "Cryptography": "Cryptography",
+    "Endurance": "Endurance",
+    "FirstAid": "First Aid",
+    "Linguistics": "Linguistics",
+    "Navigation": "Navigation",
+    "Parachuting": "Parachuting",
+    "RadioOperations": "Radio Operations",
+    "Stalking": "Stalking",
+    "Survival": "Survival",
+    "Swimming": "Swimming",
+    
+    "Character": "Character",
+    "NPC": "NPC",
+    
+    "Weapon": "Weapon",
+    "Equipment": "Equipment",
+    "Skill": "Skill",
+    "Talent": "Talent",
+    
+    "Rifle": "Rifle",
+    "Pistol": "Pistol",
+    "SubmachineGun": "Submachine Gun",
+    "MachineGun": "Machine Gun",
+    "HeavyWeapon": "Heavy Weapon",
+    "MeleeWeapon": "Melee Weapon",
+    "Grenade": "Grenade",
+    "Explosive": "Explosive",
+    
+    "Gear": "Gear",
+    "Armor": "Armor",
+    "Consumable": "Consumable",
+    "Tool": "Tool",
+    "Communication": "Communication",
+    
+    "Flaws": "Flaws",
+    "Merits": "Merits",
+    "Languages": "Languages",
+    "Biography": "Biography",
+    
+    "Health": "Health",
+    "Stress": "Stress",
+    "Damage": "Damage",
+    "Range": "Range",
+    "Weight": "Weight",
+    "Price": "Price",
+    "Quantity": "Quantity",
+    "Equipped": "Equipped",
+    
+    "Roll": "Roll",
+    "RollSkill": "Roll Skill",
+    "RollAttribute": "Roll Attribute",
+    
+    "Total": "Total",
+    "Points": "Points",
+    "SkillTotal": "Skill Total",
+    "AttributeTotal": "Attribute Total",
+    
+    "SheetTabAttributes": "Attributes",
+    "SheetTabSkills": "Skills",
+    "SheetTabCombat": "Combat",
+    "SheetTabEquipment": "Equipment",
+    "SheetTabBiography": "Biography",
+    
+    "Save": "Save",
+    "Edit": "Edit",
+    "Delete": "Delete",
+    "Add": "Add",
+    "Create": "Create",
+    
+    "BreedingValidation": "Breeding must allocate 5, 3, and 2 points to different categories",
+    "SkillPointsRemaining": "Skill Points Remaining",
+    "AttributePointsRemaining": "Attribute Points Remaining",
+    
+    "RollFormula": "Roll Formula",
+    "RollResult": "Roll Result",
+    "Success": "Success",
+    "Failure": "Failure",
+    
+    "WeaponProperties": "Weapon Properties",
+    "Automatic": "Automatic",
+    "Burst": "Burst", 
+    "SemiAutomatic": "Semi-Automatic",
+    "Silenced": "Silenced",
+    "Scope": "Scope",
+    
+    "ArmorType": "Armor Type",
+    "Light": "Light",
+    "Medium": "Medium",
+    "Heavy": "Heavy",
+    
+    "ThreatLevel": "Threat Level",
+    "Minion": "Minion",
+    "Elite": "Elite",
+    "Boss": "Boss",
+    
+    "Prerequisites": "Prerequisites",
+    "Effects": "Effects",
+    "Active": "Active",
+    "Passive": "Passive"
+  }
+}
