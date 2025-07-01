@@ -1,0 +1,527 @@
+<form class="{{cssClass}} {{item.type}} flexcol" autocomplete="off" style="height: 800px; overflow-y: auto;">
+
+    {{!-- Sheet Header --}}
+    <header class="sheet-header">
+        <img class="item-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64" />
+        <div class="header-fields">
+            <h1 class="charname">
+                <input name="name" type="text" value="{{item.name}}" placeholder="Weapon Name" />
+            </h1>
+            <div class="weapon-type-row">
+                <select name="system.weaponType" class="weapon-type-select">
+                    <option value="rifle" {{#if (eq system.weaponType "rifle")}}selected{{/if}}>Rifle</option>
+                    <option value="pistol" {{#if (eq system.weaponType "pistol")}}selected{{/if}}>Pistol</option>
+                    <option value="submachinegun" {{#if (eq system.weaponType "submachinegun")}}selected{{/if}}>Submachine Gun</option>
+                    <option value="machinegun" {{#if (eq system.weaponType "machinegun")}}selected{{/if}}>Machine Gun</option>
+                    <option value="heavyweapon" {{#if (eq system.weaponType "heavyweapon")}}selected{{/if}}>Heavy Weapon</option>
+                </select>
+                <select name="system.proficiency" class="proficiency-select">
+                    <option value="rifles" {{#if (eq system.proficiency "rifles")}}selected{{/if}}>Rifles Skill</option>
+                    <option value="pistols" {{#if (eq system.proficiency "pistols")}}selected{{/if}}>Pistols Skill</option>
+                    <option value="submachineguns" {{#if (eq system.proficiency "submachineguns")}}selected{{/if}}>SMG Skill</option>
+                    <option value="machinegunner" {{#if (eq system.proficiency "machinegunner")}}selected{{/if}}>Machine Gun Skill</option>
+                    <option value="heavyweapons" {{#if (eq system.proficiency "heavyweapons")}}selected{{/if}}>Heavy Weapons Skill</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    {{!-- Main Content --}}
+    <section class="sheet-body">
+        
+        {{!-- Core Stats Row --}}
+        <div class="core-stats">
+            <div class="stat-box damage">
+                <label>Damage</label>
+                <input type="number" name="system.damage" value="{{system.damage}}" min="1" max="20" />
+                <small>Base damage dice</small>
+            </div>
+            <div class="stat-box rof">
+                <label>Rate of Fire</label>
+                <input type="number" name="system.rateOfFire" value="{{system.rateOfFire}}" min="1" max="50" />
+                <small>Max rounds/turn</small>
+            </div>
+            <div class="stat-box recoil">
+                <label>Recoil</label>
+                <input type="number" name="system.recoil" value="{{system.recoil}}" min="-5" max="0" />
+                <small>Per-shot penalty</small>
+            </div>
+            <div class="stat-box ammo">
+                <label>Ammunition</label>
+                <div class="ammo-inputs">
+                    <input type="number" name="system.ammunition.current" value="{{system.ammunition.current}}" min="0" />
+                    <span>/</span>
+                    <input type="number" name="system.ammunition.max" value="{{system.ammunition.max}}" min="1" />
+                </div>
+                <input type="text" name="system.ammunition.type" value="{{system.ammunition.type}}" placeholder="Ammo type" />
+            </div>
+        </div>
+
+        {{!-- Range Brackets --}}
+        <div class="range-section">
+            <h3>Range Brackets (meters)</h3>
+            <div class="range-grid">
+                <div class="range-item hip">
+                    <label>Hip Fire</label>
+                    <input type="number" name="system.ranges.hipFire" value="{{system.ranges.hipFire}}" />
+                    <span class="difficulty">Standard</span>
+                </div>
+                <div class="range-item short">
+                    <label>Short</label>
+                    <input type="number" name="system.ranges.short" value="{{system.ranges.short}}" />
+                    <span class="difficulty">Standard</span>
+                </div>
+                <div class="range-item medium">
+                    <label>Medium</label>
+                    <input type="number" name="system.ranges.medium" value="{{system.ranges.medium}}" />
+                    <span class="difficulty">+1 Difficulty</span>
+                </div>
+                <div class="range-item long">
+                    <label>Long</label>
+                    <input type="number" name="system.ranges.long" value="{{system.ranges.long}}" />
+                    <span class="difficulty">+2 Difficulty</span>
+                </div>
+            </div>
+        </div>
+
+        {{!-- Shot Types --}}
+        <div class="shot-types-section">
+            <h3>Available Shot Types</h3>
+            <div class="shot-types-grid">
+                
+                <div class="shot-type {{#if system.shotTypes.hipShot.available}}enabled{{/if}}">
+                    <div class="shot-header">
+                        <input type="checkbox" name="system.shotTypes.hipShot.available" {{checked system.shotTypes.hipShot.available}} />
+                        <label>Hip Shot</label>
+                        <span class="cost">{{system.shotTypes.hipShot.cost}} Exertion</span>
+                    </div>
+                    <div class="shot-details">
+                        <input type="number" name="system.shotTypes.hipShot.cost" value="{{system.shotTypes.hipShot.cost}}" min="1" max="10" />
+                        <small>Quick, inaccurate shot</small>
+                    </div>
+                </div>
+
+                <div class="shot-type {{#if system.shotTypes.deliberateFire.available}}enabled{{/if}}">
+                    <div class="shot-header">
+                        <input type="checkbox" name="system.shotTypes.deliberateFire.available" {{checked system.shotTypes.deliberateFire.available}} />
+                        <label>Deliberate Fire</label>
+                        <span class="cost">{{system.shotTypes.deliberateFire.cost}} Exertion</span>
+                    </div>
+                    <div class="shot-details">
+                        <input type="number" name="system.shotTypes.deliberateFire.cost" value="{{system.shotTypes.deliberateFire.cost}}" min="1" max="10" />
+                        <small>Careful, aimed shot</small>
+                    </div>
+                </div>
+
+                <div class="shot-type {{#if system.shotTypes.shortBurst.available}}enabled{{/if}}">
+                    <div class="shot-header">
+                        <input type="checkbox" name="system.shotTypes.shortBurst.available" {{checked system.shotTypes.shortBurst.available}} />
+                        <label>Short Burst</label>
+                        <span class="cost">{{system.shotTypes.shortBurst.cost}} Exertion</span>
+                    </div>
+                    <div class="shot-details">
+                        <input type="number" name="system.shotTypes.shortBurst.cost" value="{{system.shotTypes.shortBurst.cost}}" min="1" max="10" />
+                        <small>3-round burst</small>
+                    </div>
+                </div>
+
+                <div class="shot-type {{#if system.shotTypes.fullAuto.available}}enabled{{/if}}">
+                    <div class="shot-header">
+                        <input type="checkbox" name="system.shotTypes.fullAuto.available" {{checked system.shotTypes.fullAuto.available}} />
+                        <label>Full Auto</label>
+                        <span class="cost">{{system.shotTypes.fullAuto.cost}} Exertion</span>
+                    </div>
+                    <div class="shot-details">
+                        <input type="number" name="system.shotTypes.fullAuto.cost" value="{{system.shotTypes.fullAuto.cost}}" min="1" max="10" />
+                        <small>Sustained fire</small>
+                    </div>
+                </div>
+
+                <div class="shot-type {{#if system.shotTypes.coveringFire.available}}enabled{{/if}}">
+                    <div class="shot-header">
+                        <input type="checkbox" name="system.shotTypes.coveringFire.available" {{checked system.shotTypes.coveringFire.available}} />
+                        <label>Covering Fire</label>
+                        <span class="cost">{{system.shotTypes.coveringFire.cost}} Exertion</span>
+                    </div>
+                    <div class="shot-details">
+                        <input type="number" name="system.shotTypes.coveringFire.cost" value="{{system.shotTypes.coveringFire.cost}}" min="1" max="10" />
+                        <small>Area suppression</small>
+                    </div>
+                </div>
+
+                <div class="shot-type {{#if system.shotTypes.overwatch.available}}enabled{{/if}}">
+                    <div class="shot-header">
+                        <input type="checkbox" name="system.shotTypes.overwatch.available" {{checked system.shotTypes.overwatch.available}} />
+                        <label>Overwatch</label>
+                        <span class="cost">{{system.shotTypes.overwatch.cost}} Exertion</span>
+                    </div>
+                    <div class="shot-details">
+                        <input type="number" name="system.shotTypes.overwatch.cost" value="{{system.shotTypes.overwatch.cost}}" min="1" max="10" />
+                        <small>Reaction fire setup</small>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        {{!-- Bayonet & Description --}}
+        <div class="bottom-section">
+            <div class="bayonet-section">
+                <h3>Bayonet</h3>
+                <div class="bayonet-controls">
+                    <label class="bayonet-compatible">
+                        <input type="checkbox" name="system.bayonet.compatible" {{checked system.bayonet.compatible}} />
+                        Compatible
+                    </label>
+                    <label class="bayonet-attached">
+                        <input type="checkbox" name="system.bayonet.attached" {{checked system.bayonet.attached}} />
+                        Attached
+                    </label>
+                </div>
+            </div>
+
+            <div class="description-section">
+                <h3>Notes</h3>
+                <textarea name="system.notes" placeholder="Special rules, modifications, etc...">{{system.notes}}</textarea>
+            </div>
+        </div>
+
+    </section>
+</form>
+
+<style>
+    .thirteen-commando.item {
+        --color-primary: #d4af37;
+        --color-accent: #34495e;
+        --color-text: #ecf0f1;
+        --color-bg: #2c3e50;
+    }
+
+    .thirteen-commando.item .sheet-header {
+        background: linear-gradient(135deg, rgba(52, 73, 94, 0.9), rgba(44, 62, 80, 0.9));
+        border: 2px solid var(--color-primary);
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .thirteen-commando.item .item-img {
+        border: 3px solid var(--color-primary);
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+    }
+
+    .thirteen-commando.item .header-fields {
+        flex: 1;
+    }
+
+    .thirteen-commando.item .charname input {
+        background: transparent;
+        border: none;
+        border-bottom: 2px solid var(--color-primary);
+        color: var(--color-text);
+        font-size: 1.5em;
+        font-weight: bold;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .thirteen-commando.item .weapon-type-row {
+        display: flex;
+        gap: 15px;
+    }
+
+    .thirteen-commando.item .weapon-type-select,
+    .thirteen-commando.item .proficiency-select {
+        background: rgba(44, 62, 80, 0.8);
+        border: 2px solid var(--color-accent);
+        border-radius: 5px;
+        color: var(--color-text);
+        padding: 12px 16px;
+        flex: 1;
+        font-size: 1em;
+        min-height: 44px;
+    }
+
+    .thirteen-commando.item .core-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+        margin-bottom: 25px;
+    }
+
+    .thirteen-commando.item .stat-box {
+        background: rgba(52, 73, 94, 0.9);
+        border: 2px solid var(--color-accent);
+        border-radius: 8px;
+        padding: 15px;
+        text-align: center;
+    }
+
+    .thirteen-commando.item .stat-box.damage {
+        border-color: #e74c3c;
+    }
+
+    .thirteen-commando.item .stat-box.rof {
+        border-color: #f39c12;
+    }
+
+    .thirteen-commando.item .stat-box.recoil {
+        border-color: #9b59b6;
+    }
+
+    .thirteen-commando.item .stat-box.ammo {
+        border-color: #2ecc71;
+    }
+
+    .thirteen-commando.item .stat-box label {
+        display: block;
+        color: var(--color-primary);
+        font-weight: bold;
+        margin-bottom: 8px;
+        font-size: 0.9em;
+        text-transform: uppercase;
+    }
+
+    .thirteen-commando.item .stat-box input {
+        background: rgba(52, 73, 94, 0.8);
+        border: 1px solid var(--color-accent);
+        border-radius: 4px;
+        color: var(--color-text);
+        padding: 6px;
+        text-align: center;
+        width: 100%;
+        font-size: 1.1em;
+        font-weight: bold;
+    }
+
+    .thirteen-commando.item .ammo-inputs {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-bottom: 8px;
+    }
+
+    .thirteen-commando.item .ammo-inputs input {
+        flex: 1;
+    }
+
+    .thirteen-commando.item .ammo-inputs span {
+        color: var(--color-primary);
+        font-weight: bold;
+    }
+
+    .thirteen-commando.item .stat-box small {
+        display: block;
+        color: #95a5a6;
+        font-size: 0.8em;
+        margin-top: 5px;
+        font-style: italic;
+    }
+
+    .thirteen-commando.item .range-section,
+    .thirteen-commando.item .shot-types-section {
+        background: rgba(52, 73, 94, 0.9);
+        border: 2px solid var(--color-accent);
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .thirteen-commando.item .range-section h3,
+    .thirteen-commando.item .shot-types-section h3 {
+        color: var(--color-primary);
+        text-align: center;
+        margin-bottom: 15px;
+        font-size: 1.3em;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .thirteen-commando.item .range-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+    }
+
+    .thirteen-commando.item .range-item {
+        background: rgba(44, 62, 80, 0.8);
+        border-radius: 6px;
+        padding: 12px;
+        text-align: center;
+    }
+
+    .thirteen-commando.item .range-item.hip {
+        border: 2px solid #2ecc71;
+    }
+
+    .thirteen-commando.item .range-item.short {
+        border: 2px solid #3498db;
+    }
+
+    .thirteen-commando.item .range-item.medium {
+        border: 2px solid #f39c12;
+    }
+
+    .thirteen-commando.item .range-item.long {
+        border: 2px solid #e74c3c;
+    }
+
+    .thirteen-commando.item .range-item label {
+        display: block;
+        color: var(--color-primary);
+        font-weight: bold;
+        margin-bottom: 8px;
+        font-size: 0.9em;
+    }
+
+    .thirteen-commando.item .range-item input {
+        background: rgba(52, 73, 94, 0.8);
+        border: 1px solid var(--color-accent);
+        border-radius: 4px;
+        color: var(--color-text);
+        padding: 6px;
+        text-align: center;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .thirteen-commando.item .range-item .difficulty {
+        color: #95a5a6;
+        font-size: 0.8em;
+        font-style: italic;
+    }
+
+    .thirteen-commando.item .shot-types-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 12px;
+    }
+
+    .thirteen-commando.item .shot-type {
+        background: rgba(44, 62, 80, 0.8);
+        border: 2px solid #7f8c8d;
+        border-radius: 8px;
+        padding: 12px;
+        transition: all 0.3s ease;
+    }
+
+    .thirteen-commando.item .shot-type.enabled {
+        border-color: var(--color-primary);
+        background: rgba(212, 175, 55, 0.1);
+        box-shadow: 0 0 8px rgba(212, 175, 55, 0.2);
+    }
+
+    .thirteen-commando.item .shot-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    .thirteen-commando.item .shot-header label {
+        color: var(--color-text);
+        font-weight: bold;
+        flex: 1;
+        cursor: pointer;
+    }
+
+    .thirteen-commando.item .shot-header .cost {
+        color: var(--color-primary);
+        font-size: 0.9em;
+        font-weight: bold;
+        background: rgba(44, 62, 80, 0.8);
+        padding: 2px 8px;
+        border-radius: 10px;
+    }
+
+    .thirteen-commando.item .shot-details {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .thirteen-commando.item .shot-details input {
+        background: rgba(52, 73, 94, 0.8);
+        border: 1px solid var(--color-accent);
+        border-radius: 4px;
+        color: var(--color-text);
+        padding: 4px 8px;
+        text-align: center;
+        width: 60px;
+    }
+
+    .thirteen-commando.item .shot-details small {
+        color: #95a5a6;
+        font-style: italic;
+        font-size: 0.8em;
+    }
+
+    .thirteen-commando.item .bottom-section {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        gap: 20px;
+    }
+
+    .thirteen-commando.item .bayonet-section,
+    .thirteen-commando.item .description-section {
+        background: rgba(52, 73, 94, 0.9);
+        border: 2px solid var(--color-accent);
+        border-radius: 8px;
+        padding: 15px;
+    }
+
+    .thirteen-commando.item .bayonet-section h3,
+    .thirteen-commando.item .description-section h3 {
+        color: var(--color-primary);
+        margin-bottom: 10px;
+        font-size: 1.1em;
+    }
+
+    .thirteen-commando.item .bayonet-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .thirteen-commando.item .bayonet-controls label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--color-text);
+        cursor: pointer;
+    }
+
+    .thirteen-commando.item .description-section textarea {
+        width: 100%;
+        background: rgba(44, 62, 80, 0.6);
+        border: 2px solid var(--color-accent);
+        border-radius: 5px;
+        color: var(--color-text);
+        padding: 10px;
+        font-family: inherit;
+        resize: vertical;
+        min-height: 80px;
+    }
+
+    @media (max-width: 768px) {
+        .thirteen-commando.item .core-stats {
+            grid-template-columns: 1fr 1fr;
+        }
+        
+        .thirteen-commando.item .range-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+        
+        .thirteen-commando.item .shot-types-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .thirteen-commando.item .bottom-section {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

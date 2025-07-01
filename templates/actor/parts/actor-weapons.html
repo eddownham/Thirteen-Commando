@@ -1,0 +1,1260 @@
+<!-- Weapons Section -->
+<div class="weapons-section">
+  <div class="weapons-header">
+    <h3 class="section-title">
+      <i class="fas fa-crosshairs"></i>
+      {{localize "Weapons Arsenal"}} ({{weapons.length}})
+    </h3>
+    <div class="weapons-controls">
+      <button class="add-weapon-btn" type="button" data-type="weapon" title="{{localize 'Add New Weapon'}}">
+        <i class="fas fa-plus-circle"></i>
+        <span>{{localize "Add Weapon"}}</span>
+      </button>
+      <button class="weapons-filter-btn" type="button" title="{{localize 'Filter Weapons'}}">
+        <i class="fas fa-filter"></i>
+        <span>{{localize "Filter"}}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Weapon Filters -->
+  <div class="weapons-filters" id="weapons-filters" style="display: none;">
+    <div class="filter-group">
+      <label>{{localize "Weapon Type"}}:</label>
+      <select class="weapon-type-filter">
+        <option value="">{{localize "All Types"}}</option>
+        <option value="rifle">{{localize "THIRTEEN_COMMANDO.Rifles"}}</option>
+        <option value="pistol">{{localize "THIRTEEN_COMMANDO.Pistols"}}</option>
+        <option value="submachinegun">{{localize "THIRTEEN_COMMANDO.SubmachineGuns"}}</option>
+        <option value="machinegun">{{localize "THIRTEEN_COMMANDO.MachineGunner"}}</option>
+        <option value="heavyweapon">{{localize "THIRTEEN_COMMANDO.HeavyWeapons"}}</option>
+        <option value="melee">{{localize "THIRTEEN_COMMANDO.MeleeCombat"}}</option>
+        <option value="grenade">{{localize "THIRTEEN_COMMANDO.GrenadeThrowing"}}</option>
+        <option value="explosive">{{localize "THIRTEEN_COMMANDO.ExplosiveOrdinance"}}</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>{{localize "Status"}}:</label>
+      <select class="weapon-status-filter">
+        <option value="">{{localize "All Weapons"}}</option>
+        <option value="equipped">{{localize "Equipped Only"}}</option>
+        <option value="unequipped">{{localize "Unequipped Only"}}</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <button class="clear-filters-btn" type="button">
+        <i class="fas fa-times"></i>
+        {{localize "Clear Filters"}}
+      </button>
+    </div>
+  </div>
+
+  <!-- Primary Weapons -->
+  <div class="weapon-category primary-weapons">
+    <div class="category-header">
+      <h4 class="category-title">
+        <i class="fas fa-star"></i>
+        {{localize "Primary Weapons"}}
+      </h4>
+      <div class="category-stats">
+        <span class="equipped-count">
+          {{#each weapons}}{{#if (and this.system.equipped (or (eq this.system.weaponType "rifle") (eq this.system.weaponType "submachinegun") (eq this.system.weaponType "machinegun")))}}1{{/if}}{{/each}}
+        </span>
+        /
+        <span class="total-count">
+          {{#each weapons}}{{#if (or (eq this.system.weaponType "rifle") (eq this.system.weaponType "submachinegun") (eq this.system.weaponType "machinegun"))}}1{{/if}}{{/each}}
+        </span>
+        {{localize "equipped"}}
+      </div>
+    </div>
+
+    <div class="weapons-grid primary-grid">
+      {{#each weapons as |weapon|}}
+      {{#if (or (eq weapon.system.weaponType "rifle") (eq weapon.system.weaponType "submachinegun") (eq weapon.system.weaponType "machinegun"))}}
+      <div class="weapon-card {{weapon.system.weaponType}} {{#if weapon.system.equipped}}equipped{{/if}}" 
+           data-item-id="{{weapon._id}}" 
+           data-weapon-type="{{weapon.system.weaponType}}">
+        
+        <!-- Weapon Header -->
+        <div class="weapon-header">
+          <div class="weapon-icon">
+            {{#if weapon.img}}
+              <img src="{{weapon.img}}" alt="{{weapon.name}}" />
+            {{else}}
+              <i class="fas {{#eq weapon.system.weaponType "rifle"}}fa-crosshairs{{/eq}}{{#eq weapon.system.weaponType "submachinegun"}}fa-spray-can{{/eq}}{{#eq weapon.system.weaponType "machinegun"}}fa-grip-lines{{/eq}}"></i>
+            {{/if}}
+          </div>
+          <div class="weapon-info">
+            <h5 class="weapon-name rollable" data-item-id="{{weapon._id}}" title="{{localize 'Attack with'}} {{weapon.name}}">
+              {{weapon.name}}
+            </h5>
+            <div class="weapon-type-badge {{weapon.system.weaponType}}">
+              {{localize weapon.system.weaponType}}
+            </div>
+          </div>
+          <div class="weapon-status">
+            <label class="equipped-toggle">
+              <input type="checkbox" 
+                     class="equipped-checkbox" 
+                     data-item-id="{{weapon._id}}" 
+                     {{#if weapon.system.equipped}}checked{{/if}}>
+              <span class="equipped-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Weapon Stats -->
+        <div class="weapon-stats">
+          <div class="stat-group damage-group">
+            <div class="stat-label">{{localize "Damage"}}</div>
+            <div class="stat-value">
+              {{#each weapon.system.damage.parts as |part|}}
+                <div class="damage-part">
+                  <span class="damage-formula rollable" data-item-id="{{../weapon._id}}" data-action="damage">{{part.[0]}}</span>
+                  <span class="damage-type">{{part.[1]}}</span>
+                </div>
+              {{else}}
+                <span class="no-damage">{{localize "Special"}}</span>
+              {{/each}}
+            </div>
+          </div>
+
+          <div class="stat-group range-group">
+            <div class="stat-label">{{localize "Range"}}</div>
+            <div class="stat-value">
+              {{#if weapon.system.range.value}}
+                <span class="range-value">{{weapon.system.range.value}}</span>
+                {{#if weapon.system.range.long}}
+                  <span class="range-separator">/</span>
+                  <span class="range-long">{{weapon.system.range.long}}</span>
+                {{/if}}
+                <span class="range-units">{{weapon.system.range.units}}</span>
+              {{else}}
+                <span class="range-melee">{{localize "Melee"}}</span>
+              {{/if}}
+            </div>
+          </div>
+
+          <div class="stat-group skill-group">
+            <div class="stat-label">{{localize "Skill"}}</div>
+            <div class="stat-value">
+              <span class="skill-name">{{localize weapon.system.proficiency}}</span>
+              <span class="skill-total">{{actor.getSkillTotal weapon.system.proficiency}}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Weapon Properties -->
+        {{#if weapon.system.properties}}
+        <div class="weapon-properties">
+          {{#each weapon.system.properties as |value key|}}
+            {{#if value}}
+              <span class="weapon-property {{key}}" title="{{localize key}}">
+                {{#eq key "automatic"}}
+                  <i class="fas fa-sync-alt"></i>
+                  <span>{{localize "Auto"}}</span>
+                {{/eq}}
+                {{#eq key "burst"}}
+                  <i class="fas fa-fire"></i>
+                  <span>{{localize "Burst"}}</span>
+                {{/eq}}
+                {{#eq key "semiautomatic"}}
+                  <i class="fas fa-bolt"></i>
+                  <span>{{localize "Semi"}}</span>
+                {{/eq}}
+                {{#eq key "silenced"}}
+                  <i class="fas fa-volume-mute"></i>
+                  <span>{{localize "Silenced"}}</span>
+                {{/eq}}
+                {{#eq key "scope"}}
+                  <i class="fas fa-search-plus"></i>
+                  <span>{{localize "Scope"}}</span>
+                {{/eq}}
+              </span>
+            {{/if}}
+          {{/each}}
+        </div>
+        {{/if}}
+
+        <!-- Weapon Actions -->
+        <div class="weapon-actions">
+          <button class="action-btn primary attack-btn" 
+                  data-item-id="{{weapon._id}}" 
+                  title="{{localize 'Make Attack Roll'}}">
+            <i class="fas fa-crosshairs"></i>
+            <span>{{localize "Attack"}}</span>
+          </button>
+          <button class="action-btn secondary damage-btn" 
+                  data-item-id="{{weapon._id}}" 
+                  title="{{localize 'Roll Damage Only'}}">
+            <i class="fas fa-dice-d6"></i>
+            <span>{{localize "Damage"}}</span>
+          </button>
+          <button class="action-btn tertiary edit-btn" 
+                  data-item-id="{{weapon._id}}" 
+                  title="{{localize 'Edit Weapon'}}">
+            <i class="fas fa-edit"></i>
+          </button>
+        </div>
+      </div>
+      {{/if}}
+      {{else}}
+      <div class="empty-category">
+        <i class="fas fa-crosshairs"></i>
+        <p>{{localize "No primary weapons"}}</p>
+        <button class="add-weapon-btn" data-type="weapon" data-subtype="rifle">
+          <i class="fas fa-plus"></i>
+          {{localize "Add Primary Weapon"}}
+        </button>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+
+  <!-- Secondary Weapons -->
+  <div class="weapon-category secondary-weapons">
+    <div class="category-header">
+      <h4 class="category-title">
+        <i class="fas fa-dot-circle"></i>
+        {{localize "Secondary Weapons"}}
+      </h4>
+      <div class="category-stats">
+        <span class="equipped-count">
+          {{#each weapons}}{{#if (and this.system.equipped (eq this.system.weaponType "pistol"))}}1{{/if}}{{/each}}
+        </span>
+        /
+        <span class="total-count">
+          {{#each weapons}}{{#if (eq this.system.weaponType "pistol")}}1{{/if}}{{/each}}
+        </span>
+        {{localize "equipped"}}
+      </div>
+    </div>
+
+    <div class="weapons-grid secondary-grid">
+      {{#each weapons as |weapon|}}
+      {{#if (eq weapon.system.weaponType "pistol")}}
+      <div class="weapon-card pistol {{#if weapon.system.equipped}}equipped{{/if}}" 
+           data-item-id="{{weapon._id}}" 
+           data-weapon-type="pistol">
+        
+        <div class="weapon-header">
+          <div class="weapon-icon">
+            {{#if weapon.img}}
+              <img src="{{weapon.img}}" alt="{{weapon.name}}" />
+            {{else}}
+              <i class="fas fa-gun"></i>
+            {{/if}}
+          </div>
+          <div class="weapon-info">
+            <h5 class="weapon-name rollable" data-item-id="{{weapon._id}}">{{weapon.name}}</h5>
+            <div class="weapon-type-badge pistol">{{localize "Pistol"}}</div>
+          </div>
+          <div class="weapon-status">
+            <label class="equipped-toggle">
+              <input type="checkbox" 
+                     class="equipped-checkbox" 
+                     data-item-id="{{weapon._id}}" 
+                     {{#if weapon.system.equipped}}checked{{/if}}>
+              <span class="equipped-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="weapon-stats">
+          <div class="stat-group damage-group">
+            <div class="stat-label">{{localize "Damage"}}</div>
+            <div class="stat-value">
+              {{#each weapon.system.damage.parts as |part|}}
+                <div class="damage-part">
+                  <span class="damage-formula rollable" data-item-id="{{../weapon._id}}" data-action="damage">{{part.[0]}}</span>
+                  <span class="damage-type">{{part.[1]}}</span>
+                </div>
+              {{/each}}
+            </div>
+          </div>
+
+          <div class="stat-group range-group">
+            <div class="stat-label">{{localize "Range"}}</div>
+            <div class="stat-value">
+              <span class="range-value">{{weapon.system.range.value}}</span>
+              <span class="range-units">{{weapon.system.range.units}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="weapon-actions">
+          <button class="action-btn primary attack-btn" data-item-id="{{weapon._id}}">
+            <i class="fas fa-crosshairs"></i>
+            <span>{{localize "Attack"}}</span>
+          </button>
+          <button class="action-btn secondary damage-btn" data-item-id="{{weapon._id}}">
+            <i class="fas fa-dice-d6"></i>
+          </button>
+          <button class="action-btn tertiary edit-btn" data-item-id="{{weapon._id}}">
+            <i class="fas fa-edit"></i>
+          </button>
+        </div>
+      </div>
+      {{/if}}
+      {{else}}
+      <div class="empty-category">
+        <i class="fas fa-gun"></i>
+        <p>{{localize "No secondary weapons"}}</p>
+        <button class="add-weapon-btn" data-type="weapon" data-subtype="pistol">
+          <i class="fas fa-plus"></i>
+          {{localize "Add Sidearm"}}
+        </button>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+
+  <!-- Heavy Weapons -->
+  <div class="weapon-category heavy-weapons">
+    <div class="category-header">
+      <h4 class="category-title">
+        <i class="fas fa-rocket"></i>
+        {{localize "Heavy Weapons"}}
+      </h4>
+      <div class="category-stats">
+        <span class="equipped-count">
+          {{#each weapons}}{{#if (and this.system.equipped (eq this.system.weaponType "heavyweapon"))}}1{{/if}}{{/each}}
+        </span>
+        /
+        <span class="total-count">
+          {{#each weapons}}{{#if (eq this.system.weaponType "heavyweapon")}}1{{/if}}{{/each}}
+        </span>
+        {{localize "equipped"}}
+      </div>
+    </div>
+
+    <div class="weapons-grid heavy-grid">
+      {{#each weapons as |weapon|}}
+      {{#if (eq weapon.system.weaponType "heavyweapon")}}
+      <div class="weapon-card heavy {{#if weapon.system.equipped}}equipped{{/if}}" 
+           data-item-id="{{weapon._id}}" 
+           data-weapon-type="heavyweapon">
+        
+        <div class="weapon-header">
+          <div class="weapon-icon">
+            {{#if weapon.img}}
+              <img src="{{weapon.img}}" alt="{{weapon.name}}" />
+            {{else}}
+              <i class="fas fa-rocket"></i>
+            {{/if}}
+          </div>
+          <div class="weapon-info">
+            <h5 class="weapon-name rollable" data-item-id="{{weapon._id}}">{{weapon.name}}</h5>
+            <div class="weapon-type-badge heavy">{{localize "Heavy"}}</div>
+          </div>
+          <div class="weapon-status">
+            <label class="equipped-toggle">
+              <input type="checkbox" 
+                     class="equipped-checkbox" 
+                     data-item-id="{{weapon._id}}" 
+                     {{#if weapon.system.equipped}}checked{{/if}}>
+              <span class="equipped-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="weapon-stats">
+          <div class="stat-group damage-group">
+            <div class="stat-label">{{localize "Damage"}}</div>
+            <div class="stat-value">
+              {{#each weapon.system.damage.parts as |part|}}
+                <div class="damage-part">
+                  <span class="damage-formula rollable" data-item-id="{{../weapon._id}}" data-action="damage">{{part.[0]}}</span>
+                  <span class="damage-type">{{part.[1]}}</span>
+                </div>
+              {{/each}}
+            </div>
+          </div>
+
+          <div class="stat-group range-group">
+            <div class="stat-label">{{localize "Range"}}</div>
+            <div class="stat-value">
+              <span class="range-value">{{weapon.system.range.value}}</span>
+              <span class="range-units">{{weapon.system.range.units}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="weapon-actions">
+          <button class="action-btn primary attack-btn" data-item-id="{{weapon._id}}">
+            <i class="fas fa-crosshairs"></i>
+            <span>{{localize "Attack"}}</span>
+          </button>
+          <button class="action-btn secondary damage-btn" data-item-id="{{weapon._id}}">
+            <i class="fas fa-dice-d6"></i>
+          </button>
+          <button class="action-btn tertiary edit-btn" data-item-id="{{weapon._id}}">
+            <i class="fas fa-edit"></i>
+          </button>
+        </div>
+      </div>
+      {{/if}}
+      {{else}}
+      <div class="empty-category">
+        <i class="fas fa-rocket"></i>
+        <p>{{localize "No heavy weapons"}}</p>
+        <button class="add-weapon-btn" data-type="weapon" data-subtype="heavyweapon">
+          <i class="fas fa-plus"></i>
+          {{localize "Add Heavy Weapon"}}
+        </button>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+
+  <!-- Melee Weapons -->
+  <div class="weapon-category melee-weapons">
+    <div class="category-header">
+      <h4 class="category-title">
+        <i class="fas fa-sword"></i>
+        {{localize "Melee Weapons"}}
+      </h4>
+      <div class="category-stats">
+        <span class="equipped-count">
+          {{#each weapons}}{{#if (and this.system.equipped (or (eq this.system.weaponType "melee") (eq this.system.weaponType "unarmed")))}}1{{/if}}{{/each}}
+        </span>
+        /
+        <span class="total-count">
+          {{#each weapons}}{{#if (or (eq this.system.weaponType "melee") (eq this.system.weaponType "unarmed"))}}1{{/if}}{{/each}}
+        </span>
+        {{localize "equipped"}}
+      </div>
+    </div>
+
+    <div class="weapons-grid melee-grid">
+      {{#each weapons as |weapon|}}
+      {{#if (or (eq weapon.system.weaponType "melee") (eq weapon.system.weaponType "unarmed"))}}
+      <div class="weapon-card melee {{#if weapon.system.equipped}}equipped{{/if}}" 
+           data-item-id="{{weapon._id}}" 
+           data-weapon-type="{{weapon.system.weaponType}}">
+        
+        <div class="weapon-header">
+          <div class="weapon-icon">
+            {{#if weapon.img}}
+              <img src="{{weapon.img}}" alt="{{weapon.name}}" />
+            {{else}}
+              <i class="fas {{#eq weapon.system.weaponType "melee"}}fa-sword{{else}}fa-fist-raised{{/eq}}"></i>
+            {{/if}}
+          </div>
+          <div class="weapon-info">
+            <h5 class="weapon-name rollable" data-item-id="{{weapon._id}}">{{weapon.name}}</h5>
+            <div class="weapon-type-badge melee">{{localize weapon.system.weaponType}}</div>
+          </div>
+          <div class="weapon-status">
+            <label class="equipped-toggle">
+              <input type="checkbox" 
+                     class="equipped-checkbox" 
+                     data-item-id="{{weapon._id}}" 
+                     {{#if weapon.system.equipped}}checked{{/if}}>
+              <span class="equipped-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="weapon-stats">
+          <div class="stat-group damage-group">
+            <div class="stat-label">{{localize "Damage"}}</div>
+            <div class="stat-value">
+              {{#each weapon.system.damage.parts as |part|}}
+                <div class="damage-part">
+                  <span class="damage-formula rollable" data-item-id="{{../weapon._id}}" data-action="damage">{{part.[0]}}</span>
+                  <span class="damage-type">{{part.[1]}}</span>
+                </div>
+              {{/each}}
+            </div>
+          </div>
+
+          <div class="stat-group reach-group">
+            <div class="stat-label">{{localize "Reach"}}</div>
+            <div class="stat-value">
+              <span class="reach-value">{{#if weapon.system.range.value}}{{weapon.system.range.value}} {{weapon.system.range.units}}{{else}}{{localize "Touch"}}{{/if}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="weapon-actions">
+          <button class="action-btn primary attack-btn" data-item-id="{{weapon._id}}">
+            <i class="fas fa-fist-raised"></i>
+            <span>{{localize "Attack"}}</span>
+          </button>
+          <button class="action-btn secondary damage-btn" data-item-id="{{weapon._id}}">
+            <i class="fas fa-dice-d6"></i>
+          </button>
+          <button class="action-btn tertiary edit-btn" data-item-id="{{weapon._id}}">
+            <i class="fas fa-edit"></i>
+          </button>
+        </div>
+      </div>
+      {{/if}}
+      {{else}}
+      <div class="empty-category">
+        <i class="fas fa-sword"></i>
+        <p>{{localize "No melee weapons"}}</p>
+        <button class="add-weapon-btn" data-type="weapon" data-subtype="melee">
+          <i class="fas fa-plus"></i>
+          {{localize "Add Melee Weapon"}}
+        </button>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+
+  <!-- Explosives & Grenades -->
+  <div class="weapon-category explosive-weapons">
+    <div class="category-header">
+      <h4 class="category-title">
+        <i class="fas fa-bomb"></i>
+        {{localize "Explosives & Grenades"}}
+      </h4>
+      <div class="category-stats">
+        <span class="equipped-count">
+          {{#each weapons}}{{#if (and this.system.equipped (or (eq this.system.weaponType "grenade") (eq this.system.weaponType "explosive")))}}1{{/if}}{{/each}}
+        </span>
+        /
+        <span class="total-count">
+          {{#each weapons}}{{#if (or (eq this.system.weaponType "grenade") (eq this.system.weaponType "explosive"))}}1{{/if}}{{/each}}
+        </span>
+        {{localize "equipped"}}
+      </div>
+    </div>
+
+    <div class="weapons-grid explosive-grid">
+      {{#each weapons as |weapon|}}
+      {{#if (or (eq weapon.system.weaponType "grenade") (eq weapon.system.weaponType "explosive"))}}
+      <div class="weapon-card explosive {{#if weapon.system.equipped}}equipped{{/if}}" 
+           data-item-id="{{weapon._id}}" 
+           data-weapon-type="{{weapon.system.weaponType}}">
+        
+        <div class="weapon-header">
+          <div class="weapon-icon">
+            {{#if weapon.img}}
+              <img src="{{weapon.img}}" alt="{{weapon.name}}" />
+            {{else}}
+              <i class="fas {{#eq weapon.system.weaponType "grenade"}}fa-dot-circle{{else}}fa-bomb{{/eq}}"></i>
+            {{/if}}
+          </div>
+          <div class="weapon-info">
+            <h5 class="weapon-name rollable" data-item-id="{{weapon._id}}">{{weapon.name}}</h5>
+            <div class="weapon-type-badge explosive">{{localize weapon.system.weaponType}}</div>
+            {{#if weapon.system.quantity}}
+              <div class="weapon-quantity">×{{weapon.system.quantity}}</div>
+            {{/if}}
+          </div>
+          <div class="weapon-status">
+            <label class="equipped-toggle">
+              <input type="checkbox" 
+                     class="equipped-checkbox" 
+                     data-item-id="{{weapon._id}}" 
+                     {{#if weapon.system.equipped}}checked{{/if}}>
+              <span class="equipped-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="weapon-stats">
+          <div class="stat-group damage-group">
+            <div class="stat-label">{{localize "Damage"}}</div>
+            <div class="stat-value">
+              {{#each weapon.system.damage.parts as |part|}}
+                <div class="damage-part">
+                  <span class="damage-formula rollable" data-item-id="{{../weapon._id}}" data-action="damage">{{part.[0]}}</span>
+                  <span class="damage-type">{{part.[1]}}</span>
+                </div>
+              {{/each}}
+            </div>
+          </div>
+
+          <div class="stat-group range-group">
+            <div class="stat-label">{{localize "Range/Area"}}</div>
+            <div class="stat-value">
+              {{#if weapon.system.range.value}}
+                <span class="range-value">{{weapon.system.range.value}}</span>
+                <span class="range-units">{{weapon.system.range.units}}</span>
+              {{/if}}
+              {{#if weapon.system.areaEffect}}
+                <div class="area-effect">{{weapon.system.areaEffect}}</div>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+
+        <div class="weapon-actions">
+          <button class="action-btn primary attack-btn" data-item-id="{{weapon._id}}">
+            <i class="fas fa-bomb"></i>
+            <span>{{localize "Use"}}</span>
+          </button>
+          <button class="action-btn secondary damage-btn" data-item-id="{{weapon._id}}">
+            <i class="fas fa-dice-d6"></i>
+          </button>
+          <button class="action-btn tertiary edit-btn" data-item-id="{{weapon._id}}">
+            <i class="fas fa-edit"></i>
+          </button>
+        </div>
+      </div>
+      {{/if}}
+      {{else}}
+      <div class="empty-category">
+        <i class="fas fa-bomb"></i>
+        <p>{{localize "No explosives"}}</p>
+        <button class="add-weapon-btn" data-type="weapon" data-subtype="grenade">
+          <i class="fas fa-plus"></i>
+          {{localize "Add Explosive"}}
+        </button>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+
+</div>
+
+<!-- Weapons Specific CSS -->
+<style>
+.thirteen-commando .weapons-section {
+  background: rgba(52, 73, 94, 0.4);
+  border: 2px solid var(--color-accent);
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.thirteen-commando .weapons-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.thirteen-commando .weapons-header .section-title {
+  color: var(--color-primary);
+  font-size: 1.6em;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+}
+
+.thirteen-commando .weapons-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.thirteen-commando .add-weapon-btn,
+.thirteen-commando .weapons-filter-btn {
+  background: rgba(46, 204, 113, 0.2);
+  border: 2px solid #2ecc71;
+  border-radius: 8px;
+  padding: 10px 15px;
+  color: #2ecc71;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.thirteen-commando .add-weapon-btn:hover,
+.thirteen-commando .weapons-filter-btn:hover {
+  background: rgba(46, 204, 113, 0.3);
+  transform: scale(1.05);
+}
+
+.thirteen-commando .weapons-filters {
+  background: rgba(52, 73, 94, 0.6);
+  border: 2px solid var(--color-accent);
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.thirteen-commando .filter-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.thirteen-commando .filter-group label {
+  color: var(--color-primary);
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+.thirteen-commando .weapon-type-filter,
+.thirteen-commando .weapon-status-filter {
+  background: rgba(44, 62, 80, 0.8);
+  border: 2px solid var(--color-accent);
+  border-radius: 5px;
+  padding: 5px 10px;
+  color: var(--color-text);
+  font-size: 0.9em;
+}
+
+.thirteen-commando .clear-filters-btn {
+  background: rgba(231, 76, 60, 0.2);
+  border: 2px solid #e74c3c;
+  border-radius: 5px;
+  padding: 5px 10px;
+  color: #e74c3c;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.9em;
+}
+
+.thirteen-commando .clear-filters-btn:hover {
+  background: rgba(231, 76, 60, 0.3);
+}
+
+.thirteen-commando .weapon-category {
+  margin-bottom: 30px;
+  background: rgba(52, 73, 94, 0.3);
+  border: 2px solid var(--color-accent);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.thirteen-commando .category-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--color-accent);
+}
+
+.thirteen-commando .category-title {
+  color: var(--color-primary);
+  font-size: 1.3em;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+}
+
+.thirteen-commando .category-stats {
+  color: #bdc3c7;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.thirteen-commando .equipped-count {
+  color: #2ecc71;
+}
+
+.thirteen-commando .weapons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 15px;
+}
+
+.thirteen-commando .weapon-card {
+  background: rgba(44, 62, 80, 0.6);
+  border: 2px solid var(--color-accent);
+  border-radius: 12px;
+  padding: 15px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.thirteen-commando .weapon-card:hover {
+  background: rgba(44, 62, 80, 0.8);
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+.thirteen-commando .weapon-card.equipped {
+  border-color: #2ecc71;
+  box-shadow: 0 0 10px rgba(46, 204, 113, 0.3);
+}
+
+.thirteen-commando .weapon-card.equipped::before {
+  content: "✓";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #2ecc71;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+.thirteen-commando .weapon-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.thirteen-commando .weapon-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  background: rgba(212, 175, 55, 0.1);
+  border: 2px solid var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.thirteen-commando .weapon-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thirteen-commando .weapon-icon i {
+  font-size: 1.5em;
+  color: var(--color-primary);
+}
+
+.thirteen-commando .weapon-info {
+  flex: 1;
+}
+
+.thirteen-commando .weapon-name {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: var(--color-text);
+  margin: 0 0 5px 0;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.thirteen-commando .weapon-name:hover {
+  color: var(--color-primary);
+}
+
+.thirteen-commando .weapon-type-badge {
+  display: inline-block;
+  background: rgba(52, 152, 219, 0.2);
+  border: 1px solid #3498db;
+  border-radius: 10px;
+  padding: 2px 8px;
+  font-size: 0.75em;
+  color: #3498db;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+.thirteen-commando .weapon-type-badge.rifle {
+  background: rgba(39, 174, 96, 0.2);
+  border-color: #27ae60;
+  color: #27ae60;
+}
+
+.thirteen-commando .weapon-type-badge.pistol {
+  background: rgba(52, 152, 219, 0.2);
+  border-color: #3498db;
+  color: #3498db;
+}
+
+.thirteen-commando .weapon-type-badge.heavy {
+  background: rgba(231, 76, 60, 0.2);
+  border-color: #e74c3c;
+  color: #e74c3c;
+}
+
+.thirteen-commando .weapon-type-badge.melee {
+  background: rgba(149, 165, 166, 0.2);
+  border-color: #95a5a6;
+  color: #95a5a6;
+}
+
+.thirteen-commando .weapon-type-badge.explosive {
+  background: rgba(243, 156, 18, 0.2);
+  border-color: #f39c12;
+  color: #f39c12;
+}
+
+.thirteen-commando .weapon-quantity {
+  font-size: 0.8em;
+  color: #95a5a6;
+  font-weight: bold;
+  margin-top: 2px;
+}
+
+.thirteen-commando .weapon-status {
+  margin-left: auto;
+}
+
+.thirteen-commando .equipped-toggle {
+  position: relative;
+  width: 40px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.thirteen-commando .equipped-checkbox {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.thirteen-commando .equipped-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(127, 140, 141, 0.3);
+  border: 2px solid #7f8c8d;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.thirteen-commando .equipped-slider:before {
+  position: absolute;
+  content: "";
+  height: 12px;
+  width: 12px;
+  left: 2px;
+  bottom: 2px;
+  background: #7f8c8d;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.thirteen-commando .equipped-checkbox:checked + .equipped-slider {
+  background: rgba(46, 204, 113, 0.3);
+  border-color: #2ecc71;
+}
+
+.thirteen-commando .equipped-checkbox:checked + .equipped-slider:before {
+  transform: translateX(20px);
+  background: #2ecc71;
+}
+
+.thirteen-commando .weapon-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  margin-bottom: 15px;
+  padding: 10px;
+  background: rgba(52, 73, 94, 0.4);
+  border-radius: 8px;
+}
+
+.thirteen-commando .stat-group {
+  text-align: center;
+}
+
+.thirteen-commando .stat-label {
+  font-size: 0.8em;
+  color: var(--color-primary);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 5px;
+}
+
+.thirteen-commando .stat-value {
+  font-size: 0.9em;
+  color: var(--color-text);
+  font-weight: bold;
+}
+
+.thirteen-commando .damage-part {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 2px;
+}
+
+.thirteen-commando .damage-formula {
+  color: var(--color-text);
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.thirteen-commando .damage-formula:hover {
+  color: var(--color-primary);
+}
+
+.thirteen-commando .damage-type {
+  font-size: 0.8em;
+  color: #95a5a6;
+  text-transform: capitalize;
+}
+
+.thirteen-commando .no-damage {
+  color: #95a5a6;
+  font-style: italic;
+}
+
+.thirteen-commando .range-value {
+  color: var(--color-text);
+  font-weight: bold;
+}
+
+.thirteen-commando .range-separator {
+  color: #95a5a6;
+  margin: 0 2px;
+}
+
+.thirteen-commando .range-long {
+  color: #95a5a6;
+}
+
+.thirteen-commando .range-units {
+  font-size: 0.8em;
+  color: #95a5a6;
+  margin-left: 4px;
+}
+
+.thirteen-commando .range-melee {
+  color: #e67e22;
+  font-style: italic;
+}
+
+.thirteen-commando .reach-value {
+  color: var(--color-text);
+}
+
+.thirteen-commando .area-effect {
+  font-size: 0.8em;
+  color: #f39c12;
+  font-style: italic;
+  margin-top: 2px;
+}
+
+.thirteen-commando .skill-name {
+  color: var(--color-text);
+  text-transform: capitalize;
+}
+
+.thirteen-commando .skill-total {
+  color: var(--color-primary);
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.thirteen-commando .weapon-properties {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
+  padding: 8px;
+  background: rgba(52, 73, 94, 0.3);
+  border-radius: 6px;
+}
+
+.thirteen-commando .weapon-property {
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid var(--color-primary);
+  border-radius: 12px;
+  padding: 4px 8px;
+  font-size: 0.75em;
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: bold;
+}
+
+.thirteen-commando .weapon-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.thirteen-commando .action-btn {
+  flex: 1;
+  background: rgba(52, 73, 94, 0.6);
+  border: 2px solid var(--color-accent);
+  border-radius: 8px;
+  padding: 10px;
+  color: #bdc3c7;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.thirteen-commando .action-btn:hover {
+  transform: scale(1.05);
+}
+
+.thirteen-commando .action-btn.primary {
+  background: rgba(231, 76, 60, 0.2);
+  border-color: #e74c3c;
+  color: #e74c3c;
+}
+
+.thirteen-commando .action-btn.primary:hover {
+  background: rgba(231, 76, 60, 0.3);
+  box-shadow: 0 0 10px rgba(231, 76, 60, 0.3);
+}
+
+.thirteen-commando .action-btn.secondary {
+  background: rgba(243, 156, 18, 0.2);
+  border-color: #f39c12;
+  color: #f39c12;
+}
+
+.thirteen-commando .action-btn.secondary:hover {
+  background: rgba(243, 156, 18, 0.3);
+  box-shadow: 0 0 10px rgba(243, 156, 18, 0.3);
+}
+
+.thirteen-commando .action-btn.tertiary {
+  background: rgba(52, 152, 219, 0.2);
+  border-color: #3498db;
+  color: #3498db;
+}
+
+.thirteen-commando .action-btn.tertiary:hover {
+  background: rgba(52, 152, 219, 0.3);
+  box-shadow: 0 0 10px rgba(52, 152, 219, 0.3);
+}
+
+.thirteen-commando .empty-category {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px 20px;
+  color: #7f8c8d;
+  background: rgba(52, 73, 94, 0.2);
+  border: 2px dashed var(--color-accent);
+  border-radius: 10px;
+}
+
+.thirteen-commando .empty-category i {
+  font-size: 2.5em;
+  margin-bottom: 15px;
+  opacity: 0.5;
+}
+
+.thirteen-commando .empty-category p {
+  margin: 0 0 15px 0;
+  font-size: 1em;
+  font-style: italic;
+}
+
+/* Weapon category specific colors */
+.thirteen-commando .primary-weapons .category-title i {
+  color: #27ae60;
+}
+
+.thirteen-commando .secondary-weapons .category-title i {
+  color: #3498db;
+}
+
+.thirteen-commando .heavy-weapons .category-title i {
+  color: #e74c3c;
+}
+
+.thirteen-commando .melee-weapons .category-title i {
+  color: #95a5a6;
+}
+
+.thirteen-commando .explosive-weapons .category-title i {
+  color: #f39c12;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .thirteen-commando .weapons-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .thirteen-commando .weapons-controls {
+    justify-content: center;
+  }
+  
+  .thirteen-commando .weapons-filters {
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+  }
+  
+  .thirteen-commando .filter-group {
+    justify-content: space-between;
+  }
+  
+  .thirteen-commando .weapons-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .thirteen-commando .weapon-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+  
+  .thirteen-commando .weapon-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .thirteen-commando .weapon-actions {
+    flex-direction: column;
+  }
+  
+  .thirteen-commando .action-btn {
+    padding: 12px;
+  }
+}
+
+/* Animation for weapon usage */
+@keyframes weaponFire {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(231, 76, 60, 0.5); }
+  100% { transform: scale(1); }
+}
+
+.thirteen-commando .weapon-card.firing {
+  animation: weaponFire 0.3s ease-in-out;
+}
+
+/* Hidden state for filtered weapons */
+.thirteen-commando .weapon-card.hidden {
+  display: none;
+}
+
+/* Print styles */
+@media print {
+  .thirteen-commando .weapons-controls,
+  .thirteen-commando .weapons-filters,
+  .thirteen-commando .weapon-actions {
+    display: none;
+  }
+  
+  .thirteen-commando .weapons-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .thirteen-commando .weapon-card {
+    break-inside: avoid;
+  }
+}
+</style>

@@ -1,0 +1,118 @@
+<form class="{{cssClass}} {{item.type}} flexcol" autocomplete="off">
+
+    {{!-- Sheet Header --}}
+    <header class="sheet-header">
+        <img class="item-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64" />
+        <div class="header-fields">
+            <h1 class="charname">
+                <input name="name" type="text" value="{{item.name}}" placeholder="Skill Name" />
+            </h1>
+            <div class="item-subtitle">
+                <select name="system.skillType">
+                    <option value="combat" {{#if (eq system.skillType "combat")}}selected{{/if}}>Combat</option>
+                    <option value="general" {{#if (eq system.skillType "general")}}selected{{/if}}>General</option>
+                    <option value="custom" {{#if (eq system.skillType "custom")}}selected{{/if}}>Custom</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    {{!-- Sheet Navigation --}}
+    <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="item" data-tab="description">Description</a>
+        <a class="item" data-tab="details">Details</a>
+        <a class="item" data-tab="effects">Effects</a>
+    </nav>
+
+    {{!-- Sheet Body --}}
+    <section class="sheet-body">
+        
+        {{!-- Description Tab --}}
+        <div class="tab" data-group="primary" data-tab="description">
+            <div class="description-section">
+                <h3>Description</h3>
+                <textarea name="system.description" rows="8" placeholder="Enter skill description, usage, and training requirements...">{{system.description}}</textarea>
+            </div>
+
+            {{!-- Quick Stats --}}
+            <div class="quick-stats">
+                <h3>Quick Stats</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <label>Type:</label>
+                        <span>{{capitalize system.skillType}}</span>
+                    </div>
+                    <div class="stat-item">
+                        <label>Attribute:</label>
+                        <span>{{capitalize system.attribute}}</span>
+                    </div>
+                    {{#if system.specialization}}
+                    <div class="stat-item">
+                        <label>Specialization:</label>
+                        <span>{{system.specialization}}</span>
+                    </div>
+                    {{/if}}
+                    {{#if system.synergy}}
+                    <div class="stat-item">
+                        <label>Synergy:</label>
+                        <span>{{system.synergy}}</span>
+                    </div>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+
+        {{!-- Details Tab --}}
+        <div class="tab" data-group="primary" data-tab="details">
+            <div class="skill-details">
+                <h3>Skill Details</h3>
+                <div class="skill-properties">
+                    <div class="property-item">
+                        <label for="skill-attribute">Primary Attribute:</label>
+                        <select name="system.attribute">
+                            <option value="physical" {{#if (eq system.attribute "physical")}}selected{{/if}}>Physical</option>
+                            <option value="mental" {{#if (eq system.attribute "mental")}}selected{{/if}}>Mental</option>
+                            <option value="social" {{#if (eq system.attribute "social")}}selected{{/if}}>Social</option>
+                        </select>
+                    </div>
+
+                    <div class="property-item">
+                        <label for="skill-specialization">Specialization:</label>
+                        <input type="text" 
+                               name="system.specialization" 
+                               value="{{system.specialization}}" 
+                               placeholder="e.g., Assault Rifles, Field Medicine" />
+                    </div>
+
+                    <div class="property-item">
+                        <label for="skill-synergy">Synergy Skills:</label>
+                        <input type="text" 
+                               name="system.synergy" 
+                               value="{{system.synergy}}" 
+                               placeholder="Skills that provide bonuses to this skill" />
+                    </div>
+                </div>
+
+                <div class="skill-usage">
+                    <h4>Usage Guidelines</h4>
+                    <textarea name="system.usage" 
+                              rows="4" 
+                              placeholder="When and how this skill is used...">{{system.usage}}</textarea>
+                </div>
+
+                <div class="skill-training">
+                    <h4>Training Requirements</h4>
+                    <textarea name="system.training" 
+                              rows="3" 
+                              placeholder="Prerequisites and training needed...">{{system.training}}</textarea>
+                </div>
+            </div>
+        </div>
+
+        {{!-- Effects Tab --}}
+        <div class="tab" data-group="primary" data-tab="effects">
+            {{> "systems/thirteen-commando/templates/item/parts/item-effects.html"}}
+        </div>
+
+    </section>
+</form>

@@ -1,0 +1,233 @@
+<form class="{{cssClass}} {{item.type}} flexcol" autocomplete="off">
+
+    {{!-- Sheet Header --}}
+    <header class="sheet-header">
+        <img class="item-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64" />
+        <div class="header-fields">
+            <h1 class="charname">
+                <input name="name" type="text" value="{{item.name}}" placeholder="Talent Name" />
+            </h1>
+            <div class="item-subtitle">
+                <select name="system.talentType">
+                    <option value="combat" {{#if (eq system.talentType "combat")}}selected{{/if}}>Combat</option>
+                    <option value="general" {{#if (eq system.talentType "general")}}selected{{/if}}>General</option>
+                    <option value="leadership" {{#if (eq system.talentType "leadership")}}selected{{/if}}>Leadership</option>
+                    <option value="technical" {{#if (eq system.talentType "technical")}}selected{{/if}}>Technical</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    {{!-- Sheet Navigation --}}
+    <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="item" data-tab="description">Description</a>
+        <a class="item" data-tab="details">Details</a>
+        <a class="item" data-tab="effects">Effects</a>
+    </nav>
+
+    {{!-- Sheet Body --}}
+    <section class="sheet-body">
+        
+        {{!-- Description Tab --}}
+        <div class="tab" data-group="primary" data-tab="description">
+            <div class="description-section">
+                <h3>Description</h3>
+                <textarea name="system.description" rows="8" placeholder="Enter talent description, benefits, and usage...">{{system.description}}</textarea>
+            </div>
+
+            {{!-- Quick Stats --}}
+            <div class="quick-stats">
+                <h3>Quick Stats</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <label>Type:</label>
+                        <span>{{capitalize system.talentType}}</span>
+                    </div>
+                    <div class="stat-item">
+                        <label>Passive:</label>
+                        <span class="{{#if system.passive}}active{{else}}inactive{{/if}}">
+                            {{#if system.passive}}Yes{{else}}No{{/if}}
+                        </span>
+                    </div>
+                    {{#if system.prerequisites}}
+                    <div class="stat-item">
+                        <label>Prerequisites:</label>
+                        <span>{{system.prerequisites}}</span>
+                    </div>
+                    {{/if}}
+                    {{#if system.conditional}}
+                    <div class="stat-item">
+                        <label>Conditional:</label>
+                        <span>{{system.conditional}}</span>
+                    </div>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+
+        {{!-- Details Tab --}}
+        <div class="tab" data-group="primary" data-tab="details">
+            <div class="talent-details">
+                <h3>Talent Details</h3>
+                <div class="talent-properties">
+                    <div class="property-item">
+                        <label for="talent-passive">Passive Talent:</label>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" 
+                                   name="system.passive" 
+                                   id="talent-passive"
+                                   {{checked system.passive}} />
+                            <label for="talent-passive" class="checkbox-label">
+                                <i class="fas {{#if system.passive}}fa-check-square{{else}}fa-square{{/if}}"></i>
+                                {{#if system.passive}}Always Active{{else}}Activated{{/if}}
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="property-item">
+                        <label for="talent-prerequisites">Prerequisites:</label>
+                        <input type="text" 
+                               name="system.prerequisites" 
+                               value="{{system.prerequisites}}" 
+                               placeholder="Required attributes, skills, or other talents" />
+                    </div>
+
+                    <div class="property-item">
+                        <label for="talent-conditional">Conditional Requirements:</label>
+                        <input type="text" 
+                               name="system.conditional" 
+                               value="{{system.conditional}}" 
+                               placeholder="Situational requirements or triggers" />
+                    </div>
+                </div>
+
+                <div class="talent-effects-desc">
+                    <h4>Talent Effects</h4>
+                    <textarea name="system.effects" 
+                              rows="4" 
+                              placeholder="Mechanical effects and bonuses provided...">{{system.effects}}</textarea>
+                </div>
+
+                <div class="talent-usage">
+                    <h4>Usage Guidelines</h4>
+                    <textarea name="system.usage" 
+                              rows="3" 
+                              placeholder="How and when this talent is used...">{{system.usage}}</textarea>
+                </div>
+
+                <div class="talent-notes">
+                    <h4>Designer Notes</h4>
+                    <textarea name="system.designerNotes" 
+                              rows="2" 
+                              placeholder="Additional notes for GMs and players...">{{system.designerNotes}}</textarea>
+                </div>
+            </div>
+        </div>
+
+        {{!-- Effects Tab --}}
+        <div class="tab" data-group="primary" data-tab="effects">
+            {{> "systems/thirteen-commando/templates/item/parts/item-effects.html"}}
+        </div>
+
+    </section>
+</form>
+
+{{!-- Talent Sheet Styling --}}
+<style>
+    .thirteen-commando.item.talent .checkbox-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .thirteen-commando.item.talent .checkbox-wrapper input[type="checkbox"] {
+        display: none;
+    }
+
+    .thirteen-commando.item.talent .checkbox-label {
+        color: var(--color-text);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-weight: bold;
+    }
+
+    .thirteen-commando.item.talent .checkbox-label i {
+        color: var(--color-primary);
+        font-size: 1.1em;
+    }
+
+    .thirteen-commando.item .stat-item .active {
+        color: #27ae60;
+    }
+
+    .thirteen-commando.item .stat-item .inactive {
+        color: #95a5a6;
+    }
+
+    .thirteen-commando.item .talent-details {
+        background: rgba(52, 73, 94, 0.3);
+        border: 2px solid var(--color-accent);
+        border-radius: 10px;
+        padding: 20px;
+    }
+
+    .thirteen-commando.item .talent-details h3,
+    .thirteen-commando.item .talent-details h4 {
+        color: var(--color-primary);
+        margin-bottom: 15px;
+        font-size: 1.3em;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .thirteen-commando.item .talent-details h4 {
+        font-size: 1.1em;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    .thirteen-commando.item .talent-properties {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .thirteen-commando.item .property-item {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .thirteen-commando.item .property-item label {
+        color: var(--color-primary);
+        font-weight: bold;
+        font-size: 0.9em;
+    }
+
+    .thirteen-commando.item .property-item input,
+    .thirteen-commando.item .property-item select,
+    .thirteen-commando.item .property-item textarea {
+        background: rgba(52, 73, 94, 0.6);
+        border: 2px solid var(--color-accent);
+        border-radius: 5px;
+        padding: 8px;
+        color: var(--color-text);
+        font-size: 1em;
+        font-family: inherit;
+    }
+
+    .thirteen-commando.item .property-item textarea {
+        resize: vertical;
+    }
+
+    .thirteen-commando.item .property-item input:focus,
+    .thirteen-commando.item .property-item select:focus,
+    .thirteen-commando.item .property-item textarea:focus {
+        border-color: var(--color-primary);
+        outline: none;
+        box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+    }
+</style>

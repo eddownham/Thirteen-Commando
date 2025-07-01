@@ -1,0 +1,1063 @@
+<form class="{{cssClass}} thirteen-commando" autocomplete="off">
+    <style>
+        /* Basic Layout CSS - Minimal Styling */
+
+        /* CSS Variables for theming */
+        :root {
+            --color-primary: #d4af37;
+            --color-accent: #95a5a6;
+            --color-text: #ecf0f1;
+            --color-background: #2c3e50;
+            --tab-title-size: 1.5em;
+            --tab-title-letter-spc: 1px;
+            --tab-title-weight: normal;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .thirteen-commando {
+            height: 960px;
+            width: 1385px;
+            max-width: 1400px;
+            margin: 20px auto;
+            background: #34495e;
+            border: 3px solid #d4af37;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            color: #ecf0f1;
+        }
+
+        /* Header - Fixed Height */
+        .sheet-header {
+            height: 240px;
+            background: rgba(52, 73, 94, 0.8);
+            border-bottom: 3px solid #d4af37;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; 
+            gap: 20px;
+        }
+
+        .character-basics {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .health {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            width: fit-content;
+            max-width: 400px;
+            flex-shrink: 0;
+            background: rgba(52, 73, 94, 0.4);
+            border: 2px solid #95a5a6;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        /* Exertion section styling */
+        .exertion {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            background: rgba(52, 73, 94, 0.4);
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            padding: 15px;
+            min-width: 140px;
+        }
+
+        .exertion-title {
+            color: #d4af37;
+            font-weight: bold;
+            font-size: 1.1em;
+            text-align: center;
+        }
+
+        .exertion-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .exertion-current {
+            background: rgba(44, 62, 80, 0.8);
+            border: 1px solid #95a5a6;
+            border-radius: 4px;
+            padding: 4px 8px;
+            color: #ecf0f1;
+            font-weight: bold;
+            text-align: center;
+            min-width: 40px;
+            display: inline-block;
+        }
+
+        .exertion-max {
+            color: #95a5a6;
+            font-weight: bold;
+        }
+
+        .exertion-formula {
+            font-size: 0.8em;
+            color: #95a5a6;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .exertion-controls {
+            display: flex;
+            gap: 4px;
+            margin-top: 4px;
+        }
+
+        .exertion-btn {
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid #d4af37;
+            border-radius: 3px;
+            color: #d4af37;
+            cursor: pointer;
+            padding: 2px 6px;
+            font-size: 0.8em;
+            transition: all 0.2s ease;
+        }
+
+        .exertion-btn:hover {
+            background: rgba(212, 175, 55, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .exertion-btn:active {
+            transform: translateY(0);
+        }
+
+        .exertion-btn.restore {
+            background: rgba(46, 204, 113, 0.2);
+            border-color: #2ecc71;
+            color: #2ecc71;
+        }
+
+        .exertion-btn.restore:hover {
+            background: rgba(46, 204, 113, 0.4);
+        }
+
+            /* Disabled checkbox styling */
+            .health input[type="checkbox"]:disabled {
+                opacity: 0.4;
+                cursor: not-allowed;
+                background-color: #555;
+            }
+
+                /* Visual indicator for disabled state */
+                .health input[type="checkbox"]:disabled + label,
+                .health label:has(+ input[type="checkbox"]:disabled) {
+                    opacity: 0.4;
+                    color: #888;
+                }
+
+        .profile-img {
+            width: 200px !important;
+            height: 200px !important;
+            background: #95a5a6;
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+            object-fit: cover;
+        }
+
+        .character-name {
+            color: #d4af37;
+            font-size: 1.4em;
+            font-weight: bold;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            padding: 5px;
+            width: 300px; 
+            max-width: 300px; 
+        }
+
+            .character-name:focus {
+                border-bottom-color: #d4af37;
+                outline: none;
+            }
+
+        .quick-stats {
+            display: flex;
+            gap: 20px;
+        }
+
+        .quick-stat {
+            text-align: center;
+            background: rgba(212, 175, 55, 0.2);
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #d4af37;
+        }
+
+        .quick-stat-label {
+            font-size: 0.8em;
+            color: #95a5a6;
+            display: block;
+        }
+
+        .quick-stat-value {
+            font-weight: bold;
+            color: #d4af37;
+        }
+
+        /* Main Container - Flexrow */
+        .main-container {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Left Sidebar - Fixed Width */
+        .sidebar {
+            width: 350px;
+            background: rgba(52, 73, 94, 0.4);
+            border-right: 2px solid #95a5a6;
+            padding: 15px;
+            overflow-y: auto;
+            flex-shrink: 0;
+        }
+
+        .sidebar-section {
+            background: rgba(44, 62, 80, 0.4);
+            border: 2px solid #95a5a6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .sidebar-title {
+            color: var(--color-primary);
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #d4af37;
+            padding-bottom: 5px;
+        }
+
+        .attr-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .attr-item {
+            background: rgba(52, 73, 94, 0.6);
+            padding: 8px;
+            border-radius: 4px;
+            text-align: center;
+            border: 1px solid #95a5a6;
+        }
+
+            /* Rollable styling for attributes */
+            .attr-item.rollable {
+                cursor: pointer;
+                transition: all 0.2s ease;
+            }
+
+                .attr-item.rollable:hover {
+                    background-color: rgba(212, 175, 55, 0.2);
+                    box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+                    transform: translateY(-1px);
+                    border-color: #d4af37;
+                }
+
+                .attr-item.rollable:active {
+                    transform: translateY(0);
+                    box-shadow: 0 0 4px rgba(212, 175, 55, 0.5);
+                }
+
+        .attr-name {
+            font-size: 0.8em;
+            color: #95a5a6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .attr-value {
+            font-weight: bold;
+            color: #ecf0f1;
+        }
+
+        .roll-icon {
+            color: #d4af37;
+            font-size: 0.8em;
+            opacity: 0.7;
+            transition: all 0.2s ease;
+        }
+
+        .attr-item.rollable:hover .roll-icon {
+            opacity: 1;
+            animation: rollBounce 0.5s ease;
+        }
+
+        @keyframes rollBounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-3px);
+            }
+
+            60% {
+                transform: translateY(-2px);
+            }
+        }
+
+        .skill-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .skill-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; /* ADD THIS LINE */
+            padding: 4px 8px;
+            background: rgba(52, 73, 94, 0.6);
+            border-radius: 4px;
+            border: 1px solid #95a5a6;
+        }
+
+        .trait-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .trait-item {
+            padding: 6px;
+            background: rgba(52, 73, 94, 0.6);
+            border-radius: 4px;
+            border: 1px solid #95a5a6;
+            font-size: 0.9em;
+        }
+
+        /* Right Main Content - Tabbed */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Foundry Tab Navigation Styling */
+        .sheet-tabs {
+            height: 50px;
+            background: rgba(52, 73, 94, 0.6);
+            border-bottom: 2px solid #95a5a6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            flex-shrink: 0;
+            padding: 0 10px;
+        }
+
+            .sheet-tabs .item {
+                background: rgba(52, 73, 94, 0.8);
+                border: 2px solid #95a5a6;
+                border-radius: 8px 8px 0 0;
+                padding: 8px 16px;
+                color: #bdc3c7;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                text-decoration: none;
+                font-weight: bold;
+                font-size: 0.9em;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+
+                .sheet-tabs .item:hover {
+                    background: rgba(52, 73, 94, 1);
+                    color: #ecf0f1;
+                    border-color: #bdc3c7;
+                }
+
+                .sheet-tabs .item.active {
+                    background: rgba(212, 175, 55, 0.2);
+                    border-color: #d4af37;
+                    color: #d4af37;
+                    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+                }
+
+        /* Tab Content Area - Scrollable */
+        .sheet-body {
+            flex: 1;
+            overflow: hidden;
+            background: rgba(44, 62, 80, 0.3);
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .tab {
+            display: none;
+            height: 100%;
+        }
+
+            .tab.active {
+                display: block;
+            }
+
+        .content-section {
+            background: rgba(52, 73, 94, 0.4);
+            border: 2px solid #95a5a6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            color: var(--color-primary);
+            font-size: 1.3em;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #d4af37;
+            padding-bottom: 8px;
+        }
+
+        .placeholder-content {
+            color: #95a5a6;
+            font-style: italic;
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(44, 62, 80, 0.6);
+            border-radius: 6px;
+            border: 1px dashed #95a5a6;
+        }
+
+        .help-text {
+            color: #95a5a6;
+            font-style: italic;
+            text-align: center;
+            padding: 20px 10px;
+            background: rgba(44, 62, 80, 0.6);
+            border-radius: 6px;
+            border: 1px dashed #95a5a6;
+        }
+
+        select {
+            color: var(--color-accent);
+            background-color: var(--color-background);
+            border-radius: 6px;
+            height: 40px;
+        }
+
+        /*Biography Section*/
+
+        .traits-grid {
+            color: var(--color-primary);
+            font-style: italic;
+            text-align: center;
+            padding: 20px 10px;
+            background: rgba(44, 62, 80, 0.6);
+            border-radius: 6px;
+            border: 1px solid #95a5a6;
+        }
+
+        /*Character Section*/
+        /*Breeding Subsection*/
+
+        .breeding-flex {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: auto auto auto auto;
+            grid-template-rows: 40px 100px 100px 100px;
+        }
+
+        .attribute-cell {
+            color: var(--color-accent);
+            width: 100px;
+            height: 100px;
+        }
+
+        .attribute-input-group {
+            height: 60px;
+            margin-top: 10px;
+        }
+
+
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .thirteen-commando {
+                height: auto;
+                min-height: 600px;
+            }
+
+            .main-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                order: 2;
+                max-height: 300px;
+            }
+
+            .main-content {
+                order: 1;
+            }
+
+            .quick-stats {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .attr-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .thirteen-commando .help-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .thirteen-commando .effect-category-header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .thirteen-commando .effect-item {
+                flex-direction: column;
+                gap: 10px;
+                align-items: stretch;
+            }
+
+            .thirteen-commando .effect-main {
+                justify-content: center;
+            }
+
+            .thirteen-commando .effect-item .effect-controls {
+                justify-content: center;
+            }
+        }
+
+        /* Quick Skills button styling */
+        .select-quick-skill:hover {
+            background: rgba(212, 175, 55, 0.4) !important;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(212, 175, 55, 0.3);
+        }
+
+        .remove-quick-skill:hover {
+            background: rgba(231, 76, 60, 0.4) !important;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(231, 76, 60, 0.3);
+        }
+
+        .select-quick-skill:active,
+        .remove-quick-skill:active {
+            transform: translateY(0);
+        }
+
+        .remove-quick-skill {
+            width: 24px !important;
+            height: 24px !important;
+            padding: 0 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            flex-shrink: 0 !important;
+        }
+
+        /* Rollable quick skills hover effect */
+        .skill-item.rollable:hover {
+            background: rgba(212, 175, 55, 0.2) !important;
+            box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+            transform: translateY(-1px);
+            border-color: #d4af37 !important;
+        }
+
+            .skill-item.rollable:hover .fas.fa-dice-d6 {
+                opacity: 1 !important;
+                animation: rollBounce 0.5s ease;
+            }
+    </style>
+
+    <!-- Header Section-->
+
+    <header class="sheet-header">
+        <div class="character-basics">
+            <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" />
+            <input class="character-name" name="name" type="text" value="{{actor.name}}" placeholder="Character Name" />
+        </div>
+        <div class="health">
+            <!-- Health checkboxes grid -->
+            <div style="display: grid; grid-template-columns: 100px 50px 50px; gap: 5px; align-items: center;">
+                <div><label for="bruised1">Bruised</label></div>
+                <div><input type="checkbox" id="bruised1" name="system.health.bruised1" {{#if system.health.bruised1}} checked{{/if}} data-dtype="Boolean"></div>
+                <div><input type="checkbox" id="bruised2" name="system.health.bruised2" {{#if system.health.bruised2}} checked{{/if}} data-dtype="Boolean" class="guts-dependent" data-guts-required="5"></div>
+
+                <div><label for="grazed1">Grazed</label></div>
+                <div><input type="checkbox" id="grazed1" name="system.health.grazed1" {{#if system.health.grazed1}} checked{{/if}} data-dtype="Boolean"></div>
+                <div><input type="checkbox" id="grazed2" name="system.health.grazed2" {{#if system.health.grazed2}} checked{{/if}} data-dtype="Boolean" class="guts-dependent" data-guts-required="5"></div>
+
+                <div><label for="hurt1">Hurt</label></div>
+                <div><input type="checkbox" id="hurt1" name="system.health.hurt1" {{#if system.health.hurt1}} checked{{/if}} data-dtype="Boolean"></div>
+                <div><input type="checkbox" id="hurt2" name="system.health.hurt2" {{#if system.health.hurt2}} checked{{/if}} data-dtype="Boolean" class="guts-dependent" data-guts-required="4"></div>
+
+                <div><label for="injured1">Injured</label></div>
+                <div><input type="checkbox" id="injured1" name="system.health.injured1" {{#if system.health.injured1}} checked{{/if}} data-dtype="Boolean"></div>
+                <div><input type="checkbox" id="injured2" name="system.health.injured2" {{#if system.health.injured2}} checked{{/if}} data-dtype="Boolean" class="guts-dependent" data-guts-required="3"></div>
+
+                <div><label for="critical1">Critical</label></div>
+                <div><input type="checkbox" id="critical1" name="system.health.critical1" {{#if system.health.critical1}} checked{{/if}} data-dtype="Boolean"></div>
+                <div><input type="checkbox" id="critical2" name="system.health.critical2" {{#if system.health.critical2}} checked{{/if}} data-dtype="Boolean" class="guts-dependent" data-guts-required="2"></div>
+
+                <div><label for="dead">Dead</label></div>
+                <div><input type="checkbox" id="dead" name="system.health.dead" {{#if system.health.dead}} checked{{/if}} data-dtype="Boolean"></div>
+                <div></div>
+            </div>
+
+            <!-- Soak section with 10px padding -->
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding-right: 10px;">
+                <div class="attr-item" style="min-width: 80px; text-align: center;">
+                    <div class="attr-name">Soak</div>
+                    <div class="attr-value">{{system.attributes.mental.guts.value}}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exertion section -->
+        <div class="exertion">
+            <div class="exertion-title">Exertion</div>
+            <div class="exertion-bar">
+                <span class="exertion-current">{{system.exertion.value}}</span>
+                <span>/</span>
+                <span class="exertion-max">{{system.exertion.max}}</span>
+            </div>
+            <div class="exertion-formula">
+                6 + {{system.totals.guile}} + {{system.totals.coordination}} = {{system.exertion.max}}
+            </div>
+            <div class="exertion-controls">
+                <button type="button" class="exertion-btn" data-action="modify-exertion" data-amount="-1" title="Spend 1 exertion">-1</button>
+                <button type="button" class="exertion-btn" data-action="modify-exertion" data-amount="-5" title="Spend 5 exertion">-5</button>
+                <button type="button" class="exertion-btn restore" data-action="restore-exertion" title="Restore all exertion">Restore</button>
+                <button type="button" class="exertion-btn" data-action="modify-exertion" data-amount="1" title="Gain 1 exertion">+1</button>
+                <button type="button" class="exertion-btn" data-action="modify-exertion" data-amount="5" title="Gain 5 exertion">+5</button>
+            </div>
+        </div>
+        <!-- Morale section -->
+        <div class="morale-section" style="display: flex; flex-direction: column; align-items: center; gap: 8px; background: rgba(52, 73, 94, 0.4); border: 2px solid #95a5a6; border-radius: 8px; padding: 15px; min-width: 140px;">
+            <div style="color: #95a5a6; font-weight: bold; font-size: 1.1em; text-align: center;">Morale</div>
+
+            <!-- Current morale state display -->
+            <div class="morale-state" data-state="{{system.morale.state}}" style="text-align: center; padding: 8px; border-radius: 6px; border: 2px solid; {{#if (eq system.morale.state 'undaunted')}}color: #2ecc71; border-color: #2ecc71;{{/if}}{{#if (eq system.morale.state 'suppressed')}}color: #f39c12; border-color: #f39c12;{{/if}}{{#if (eq system.morale.state 'pinned')}}color: #e67e22; border-color: #e67e22;{{/if}}{{#if (eq system.morale.state 'shattered')}}color: #e74c3c; border-color: #e74c3c;{{/if}}">
+                <i class="{{#if (eq system.morale.state 'undaunted')}}fas fa-shield-alt{{/if}}{{#if (eq system.morale.state 'suppressed')}}fas fa-exclamation-triangle{{/if}}{{#if (eq system.morale.state 'pinned')}}fas fa-arrow-down{{/if}}{{#if (eq system.morale.state 'shattered')}}fas fa-heart-broken{{/if}}"></i>
+                <div class="state-name" style="font-weight: bold; font-size: 0.9em; margin-top: 4px;">
+                    {{#if (eq system.morale.state 'undaunted')}}Undaunted{{/if}}
+                    {{#if (eq system.morale.state 'suppressed')}}Suppressed{{/if}}
+                    {{#if (eq system.morale.state 'pinned')}}Pinned{{/if}}
+                    {{#if (eq system.morale.state 'shattered')}}Shattered{{/if}}
+                </div>
+            </div>
+
+            <!-- Recovery button (only show if morale damage exists and can recover) -->
+            {{#unless (eq system.morale.state 'undaunted')}}
+            {{#unless system.morale.turnRecoveryUsed}}
+            <button type="button" class="morale-recovery-btn" data-action="morale-recovery" style="background: rgba(46, 204, 113, 0.2); border: 1px solid #2ecc71; border-radius: 4px; color: #2ecc71; cursor: pointer; padding: 4px 8px; font-size: 0.8em; font-weight: bold; transition: all 0.2s ease;" title="Attempt morale recovery (2 Exertion)">
+                Recover (2 Ex)
+            </button>
+            {{/unless}}
+            {{/unless}}
+        </div>
+        <!-- Initiative section -->
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <div class="attr-item rollable" style="min-width: 80px; text-align: center; cursor: pointer; transition: all 0.2s ease;"
+                 data-attribute="initiative"
+                 data-label="Initiative"
+                 title="Click to roll Initiative (Coordination + Guile + 1d10)">
+                <div class="attr-name">Initiative <i class="fas fa-dice-d6 roll-icon"></i></div>
+                <div class="attr-value">+{{sum system.attributes.physical.coordination.value system.attributes.mental.guile.value}}</div>
+            </div>
+        </div>
+    </header>
+        <!-- Main Container (flexrow) -->
+        <div class="main-container">
+
+            <!-- Left Sidebar (Fixed Content) -->
+            <aside class="sidebar">
+
+                <!-- Core Attributes -->
+                <section class="sidebar-section">
+                    <h3 class="sidebar-title">Core Attributes</h3>
+
+                    <div class="attr-grid">
+                        <div class="attr-item rollable"
+                             data-attribute="system.attributes.physical.might.value"
+                             data-label="Might">
+                            <div class="attr-name">Might <i class="fas fa-dice-d6 roll-icon"></i></div>
+                            <div class="attr-value">{{system.attributes.physical.might.value}}</div>
+                        </div>
+                        <div class="attr-item rollable"
+                             data-attribute="system.attributes.mental.intelligence.value"
+                             data-label="Intelligence">
+                            <div class="attr-name">Intel <i class="fas fa-dice-d6 roll-icon"></i></div>
+                            <div class="attr-value">{{system.attributes.mental.intelligence.value}}</div>
+                        </div>
+                        <div class="attr-item rollable"
+                             data-attribute="system.attributes.social.bearing.value"
+                             data-label="Bearing">
+                            <div class="attr-name">Bearing <i class="fas fa-dice-d6 roll-icon"></i></div>
+                            <div class="attr-value">{{system.attributes.social.bearing.value}}</div>
+                        </div>
+                        <div class="attr-item rollable"
+                             data-attribute="system.attributes.physical.coordination.value"
+                             data-label="Coordination">
+                            <div class="attr-name">Coord <i class="fas fa-dice-d6 roll-icon"></i></div>
+                            <div class="attr-value">{{system.attributes.physical.coordination.value}}</div>
+                        </div>
+                        <div class="attr-item rollable"
+                             data-attribute="system.attributes.mental.guile.value"
+                             data-label="Guile">
+                            <div class="attr-name">Guile <i class="fas fa-dice-d6 roll-icon"></i></div>
+                            <div class="attr-value">{{system.attributes.mental.guile.value}}</div>
+                        </div>
+                        <div class="attr-item rollable"
+                             data-attribute="system.attributes.social.charm.value"
+                             data-label="Charm">
+                            <div class="attr-name">Charm <i class="fas fa-dice-d6 roll-icon"></i></div>
+                            <div class="attr-value">{{system.attributes.social.charm.value}}</div>
+                        </div>
+                        <div class="attr-item rollable"
+                             data-attribute="system.attributes.physical.endurance.value"
+                             data-label="Endurance">
+                            <div class="attr-name">Endurance <i class="fas fa-dice-d6 roll-icon"></i></div>
+                            <div class="attr-value">{{system.attributes.physical.endurance.value}}</div>
+                        </div>
+                        <div class="attr-item rollable"
+                             data-attribute="system.attributes.mental.guts.value"
+                             data-label="Guts">
+                            <div class="attr-name">Guts <i class="fas fa-dice-d6 roll-icon"></i></div>
+                            <div class="attr-value">{{system.attributes.mental.guts.value}}</div>
+                        </div>
+                        <div class="attr-item rollable"
+                             data-attribute="system.attributes.social.composure.value"
+                             data-label="Composure">
+                            <div class="attr-name">Compos <i class="fas fa-dice-d6 roll-icon"></i></div>
+                            <div class="attr-value">{{system.attributes.social.composure.value}}</div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <!-- Quick Skills -->
+                <section class="sidebar-section">
+                    <h3 class="sidebar-title">Quick Skills</h3>
+
+                    <div class="skill-list quick-skills">
+                        {{#each quickSkillsData}}
+                        {{#if this.isEmpty}}
+                        <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 4px;">
+                            <div class="skill-item" style="flex: 1;">
+                                <span style="color: #95a5a6; font-style: italic;">Empty Slot</span>
+                                <span style="color: #95a5a6;">-</span>
+                            </div>
+                            <button type="button" class="select-quick-skill" data-slot="{{@key}}" style="background: rgba(212, 175, 55, 0.2); color: #d4af37; border: 1px solid #d4af37; border-radius: 4px; padding: 4px 8px; cursor: pointer; font-size: 0.9em; font-weight: bold; transition: all 0.2s ease;">+</button>
+                        </div>
+                        {{else}}
+                        <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 4px;">
+                            <div class="skill-item rollable" style="flex: 1; cursor: pointer; transition: all 0.2s ease;"
+                                 data-skill="{{this.skillKey}}"
+                                 data-attribute="{{this.total}}"
+                                 data-label="{{this.name}}"
+                                 title="Click to roll {{this.name}}">
+                                <span style="color: #ecf0f1; font-weight: bold;">{{this.name}} <i class="fas fa-dice-d6" style="color: #d4af37; font-size: 0.8em; opacity: 0.7;"></i></span>
+                                <span style="color: #d4af37; font-weight: bold;">{{this.total}}</span>
+                            </div>
+                            <button type="button" class="remove-quick-skill" data-slot="{{@key}}" style="background: rgba(231, 76, 60, 0.2); color: #e74c3c; border: 1px solid #e74c3c; border-radius: 4px; padding: 4px 6px; cursor: pointer; font-size: 0.8em; transition: all 0.2s ease;" title="Remove skill">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                        {{/if}}
+                        {{/each}}
+                    </div>
+                </section>
+
+                <!-- Character Traits -->
+                <section class="sidebar-section">
+                    <h3 class="sidebar-title">Character Build</h3>
+
+                    <div class="trait-list">
+                        <div class="trait-item">
+                            <strong>Breeding:</strong> {{system.breeding.fivepoints}} {{system.breeding.threepoints}} {{system.breeding.twopoints}}
+                        </div>
+                        <div class="trait-item">
+                            <strong>Mindset:</strong> {{system.mindset.selected}}
+                        </div>
+                        <div class="trait-item">
+                            <strong>Field:</strong> {{system.fields.primary}} {{system.fields.secondary}} {{system.fields.tertiary}}
+                        </div>
+                        <div class="trait-item">
+                            <strong>Role:</strong> {{system.character_data.details.primary-role}}
+                        </div>
+                    </div>
+                </section>
+
+            </aside>
+
+            <!-- Right Main Content (Foundry Tabs) -->
+            <main class="main-content">
+
+                <!-- Foundry Tab Navigation -->
+                <nav class="sheet-tabs tabs" data-group="primary">
+                    <a class="item" data-tab="biography">Biography</a>
+                    <a class="item" data-tab="skills">Skills</a>
+                    <a class="item" data-tab="equipment">Equipment</a>
+                    <a class="item" data-tab="character">Character</a>
+                    <a class="item" data-tab="effects">Effects</a>
+                </nav>
+
+                <!-- Tab Content Area -->
+                <section class="sheet-body">
+
+                    <!-- Biography Tab -->
+                    <div class="tab biography" data-group="primary" data-tab="biography">
+                        {{> "systems/thirteen-commando/templates/actor/parts/actor-biography.html"}}
+                    </div>
+
+                    <!-- Skills Tab -->
+                    <div class="tab skills" data-group="primary" data-tab="skills">
+                        {{> "systems/thirteen-commando/templates/actor/parts/actor-fields.html"}}
+                        {{> "systems/thirteen-commando/templates/actor/parts/actor-combat-skills.html"}}
+                        {{> "systems/thirteen-commando/templates/actor/parts/actor-general-skills.html"}}
+                        {{> "systems/thirteen-commando/templates/actor/parts/actor-custom-skills.html"}}
+                    </div>
+
+                    <!-- Equipment Tab -->
+                    <div class="tab equipment" data-group="primary" data-tab="equipment">
+                        {{> "systems/thirteen-commando/templates/actor/parts/actor-equipment.html"}}
+                    </div>
+
+                    <!-- Character Tab -->
+                    <div class="tab character" data-group="primary" data-tab="character">
+                        {{> "systems/thirteen-commando/templates/actor/parts/actor-breeding.html"}}
+                        {{> "systems/thirteen-commando/templates/actor/parts/actor-mindset.html"}}
+                        {{> "systems/thirteen-commando/templates/actor/parts/actor-attributes.html"}}
+                    </div>
+
+                    <!-- Effects Tab -->
+                    <div class="tab effects" data-group="primary" data-tab="effects">
+                        {{> "systems/thirteen-commando/templates/actor/parts/actor-effects.html"}}
+                    </div>
+
+                </section>
+            </main>
+        </div>
+
+        <script>
+            /**
+             * Updates health checkboxes based on guts attribute value
+             * Call this function whenever guts value changes or on sheet render
+             */
+            function updateHealthBoxes() {
+                // Get current guts value
+                const gutsValue = parseInt(document.querySelector('[name="system.attributes.mental.guts.value"]')?.value) || 1;
+
+                // Get all guts-dependent checkboxes
+                const gutsDependent = document.querySelectorAll('.guts-dependent');
+
+                gutsDependent.forEach(checkbox => {
+                    const requiredGuts = parseInt(checkbox.dataset.gutsRequired);
+
+                    if (gutsValue >= requiredGuts) {
+                        // Enable checkbox
+                        checkbox.disabled = false;
+                        checkbox.parentElement.style.opacity = '1';
+                    } else {
+                        // Disable checkbox and uncheck it
+                        checkbox.disabled = true;
+                        checkbox.checked = false;
+                        checkbox.parentElement.style.opacity = '0.4';
+
+                        // Trigger change event to update the actor data
+                        checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+                    }
+                });
+            }
+
+            // Call on initial render
+            document.addEventListener('DOMContentLoaded', function () {
+                updateHealthBoxes();
+
+                // Watch for changes to guts attribute
+                const gutsInput = document.querySelector('[name="system.attributes.mental.guts.value"]');
+                if (gutsInput) {
+                    gutsInput.addEventListener('change', updateHealthBoxes);
+                    gutsInput.addEventListener('input', updateHealthBoxes);
+                }
+
+                // Also watch for any attribute updates that might affect guts
+                const attributeInputs = document.querySelectorAll('[name*="system.attributes"]');
+                attributeInputs.forEach(input => {
+                    input.addEventListener('change', updateHealthBoxes);
+                });
+            });
+
+            // For Foundry VTT integration - call this in your actor sheet's activateListeners method
+            function activateHealthListeners(html) {
+                // Update health boxes when sheet opens
+                updateHealthBoxes();
+
+                // Watch for guts changes
+                html.find('[name="system.attributes.mental.guts.value"]').on('change input', updateHealthBoxes);
+
+                // Watch for any attribute changes that might recalculate guts
+                html.find('[name*="system.attributes"]').on('change', updateHealthBoxes);
+            }
+
+            /**
+             * Activate exertion listeners for manual modification
+             */
+            function activateExertionListeners(html) {
+                // Handle exertion modification buttons with event stopPropagation
+                html.find('[data-action="modify-exertion"]').on('click', async function(event) {
+                    event.preventDefault();
+                    event.stopPropagation(); // Prevent event bubbling
+                    
+                    const amount = parseInt(this.dataset.amount);
+                    
+                    // Get the actor from the sheet context - try multiple methods
+                    let actor = null;
+                    
+                    // Method 1: From form data attribute
+                    const form = this.closest('form');
+                    if (form && form.dataset.actorId) {
+                        actor = game.actors.get(form.dataset.actorId);
+                    }
+                    
+                    // Method 2: From window context
+                    if (!actor) {
+                        const windowContent = this.closest('.window-content');
+                        if (windowContent && windowContent.dataset.actorId) {
+                            actor = game.actors.get(windowContent.dataset.actorId);
+                        }
+                    }
+                    
+                    // Method 3: From global sheet registry (fallback)
+                    if (!actor) {
+                        const sheetId = this.closest('.window-app')?.id;
+                        if (sheetId) {
+                            const app = Object.values(ui.windows).find(w => w.id === sheetId);
+                            if (app && app.actor) {
+                                actor = app.actor;
+                            }
+                        }
+                    }
+                    
+                    if (actor && actor.modifyExertion) {
+                        try {
+                            await actor.modifyExertion(amount);
+                        } catch (error) {
+                            console.error('Error modifying exertion:', error);
+                            ui.notifications.error('Failed to modify exertion.');
+                        }
+                    } else {
+                        console.error('Could not find actor or modifyExertion method');
+                        ui.notifications.error('Could not modify exertion - actor not found.');
+                    }
+                });
+
+                // Handle exertion restore button with event stopPropagation
+                html.find('[data-action="restore-exertion"]').on('click', async function(event) {
+                    event.preventDefault();
+                    event.stopPropagation(); // Prevent event bubbling
+                    
+                    // Get the actor from the sheet context - try multiple methods
+                    let actor = null;
+                    
+                    // Method 1: From form data attribute
+                    const form = this.closest('form');
+                    if (form && form.dataset.actorId) {
+                        actor = game.actors.get(form.dataset.actorId);
+                    }
+                    
+                    // Method 2: From window context
+                    if (!actor) {
+                        const windowContent = this.closest('.window-content');
+                        if (windowContent && windowContent.dataset.actorId) {
+                            actor = game.actors.get(windowContent.dataset.actorId);
+                        }
+                    }
+                    
+                    // Method 3: From global sheet registry (fallback)
+                    if (!actor) {
+                        const sheetId = this.closest('.window-app')?.id;
+                        if (sheetId) {
+                            const app = Object.values(ui.windows).find(w => w.id === sheetId);
+                            if (app && app.actor) {
+                                actor = app.actor;
+                            }
+                        }
+                    }
+                    
+                    if (actor && actor.restoreExertion) {
+                        try {
+                            await actor.restoreExertion();
+                        } catch (error) {
+                            console.error('Error restoring exertion:', error);
+                            ui.notifications.error('Failed to restore exertion.');
+                        }
+                    } else {
+                        console.error('Could not find actor or restoreExertion method');
+                        ui.notifications.error('Could not restore exertion - actor not found.');
+                    }
+                });
+            }
+
+            // Initialize both health and exertion listeners on DOM load
+            document.addEventListener('DOMContentLoaded', function () {
+                updateHealthBoxes();
+
+                // Watch for changes to guts attribute
+                const gutsInput = document.querySelector('[name="system.attributes.mental.guts.value"]');
+                if (gutsInput) {
+                    gutsInput.addEventListener('change', updateHealthBoxes);
+                    gutsInput.addEventListener('input', updateHealthBoxes);
+                }
+
+                // Also watch for any attribute updates that might affect guts
+                const attributeInputs = document.querySelectorAll('[name*="system.attributes"]');
+                attributeInputs.forEach(input => {
+                    input.addEventListener('change', updateHealthBoxes);
+                });
+
+                // Initialize exertion listeners
+                activateExertionListeners($(document));
+            });
+        </script>
+
+</form>

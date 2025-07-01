@@ -1,0 +1,188 @@
+<form class="{{cssClass}} {{item.type}} flexcol" autocomplete="off">
+
+    {{!-- Sheet Header --}}
+    <header class="sheet-header">
+        <img class="item-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64" />
+        <div class="header-fields">
+            <h1 class="charname">
+                <input name="name" type="text" value="{{item.name}}" placeholder="Equipment Name" />
+            </h1>
+            <div class="item-subtitle">
+                <select name="system.equipmentType">
+                    <option value="gear" {{#if (eq system.equipmentType "gear")}}selected{{/if}}>Gear</option>
+                    <option value="armor" {{#if (eq system.equipmentType "armor")}}selected{{/if}}>Armor</option>
+                    <option value="consumable" {{#if (eq system.equipmentType "consumable")}}selected{{/if}}>Consumable</option>
+                    <option value="tool" {{#if (eq system.equipmentType "tool")}}selected{{/if}}>Tool</option>
+                    <option value="communication" {{#if (eq system.equipmentType "communication")}}selected{{/if}}>Communication</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    {{!-- Sheet Navigation --}}
+    <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="item" data-tab="description">Description</a>
+        <a class="item" data-tab="details">Details</a>
+        <a class="item" data-tab="effects">Effects</a>
+    </nav>
+
+    {{!-- Sheet Body --}}
+    <section class="sheet-body">
+        
+        {{!-- Description Tab --}}
+        <div class="tab" data-group="primary" data-tab="description">
+            <div class="description-section">
+                <h3>Description</h3>
+                <textarea name="system.description" rows="8" placeholder="Enter equipment description, usage instructions, and notes...">{{system.description}}</textarea>
+            </div>
+
+            {{!-- Quick Stats --}}
+            <div class="quick-stats">
+                <h3>Quick Stats</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <label>Type:</label>
+                        <span>{{capitalize system.equipmentType}}</span>
+                    </div>
+                    <div class="stat-item">
+                        <label>Weight:</label>
+                        <span>{{system.weight}} kg</span>
+                    </div>
+                    <div class="stat-item">
+                        <label>Price:</label>
+                        <span>{{system.price.value}} {{system.price.denomination}}</span>
+                    </div>
+                    <div class="stat-item">
+                        <label>Equipped:</label>
+                        <span class="{{#if system.equipped}}equipped{{else}}not-equipped{{/if}}">
+                            {{#if system.equipped}}Yes{{else}}No{{/if}}
+                        </span>
+                    </div>
+                    {{#eq system.equipmentType "armor"}}
+                    <div class="stat-item">
+                        <label>Armor Value:</label>
+                        <span>{{system.armor.value}}</span>
+                    </div>
+                    <div class="stat-item">
+                        <label>Armor Type:</label>
+                        <span>{{capitalize system.armor.type}}</span>
+                    </div>
+                    {{/eq}}
+                    {{#eq system.equipmentType "consumable"}}
+                    <div class="stat-item">
+                        <label>Uses:</label>
+                        <span>{{system.uses.current}}/{{system.uses.max}}</span>
+                    </div>
+                    <div class="stat-item">
+                        <label>Type:</label>
+                        <span>{{capitalize system.consumableType}}</span>
+                    </div>
+                    {{/eq}}
+                </div>
+            </div>
+        </div>
+
+        {{!-- Details Tab --}}
+        <div class="tab" data-group="primary" data-tab="details">
+            {{> "systems/thirteen-commando/templates/item/parts/equipment-details.html"}}
+        </div>
+
+        {{!-- Effects Tab --}}
+        <div class="tab" data-group="primary" data-tab="effects">
+            {{> "systems/thirteen-commando/templates/item/parts/item-effects.html"}}
+        </div>
+
+    </section>
+</form>
+
+{{!-- Equipment Sheet Styling --}}
+<style>
+    .thirteen-commando.item .description-section {
+        background: rgba(52, 73, 94, 0.3);
+        border: 2px solid var(--color-accent);
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .thirteen-commando.item .description-section h3 {
+        color: var(--color-primary);
+        text-align: center;
+        margin-bottom: 15px;
+        font-size: 1.3em;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .thirteen-commando.item .description-section textarea {
+        width: 100%;
+        background: rgba(52, 73, 94, 0.6);
+        border: 2px solid var(--color-accent);
+        border-radius: 5px;
+        padding: 12px;
+        color: var(--color-text);
+        font-family: inherit;
+        resize: vertical;
+        min-height: 150px;
+    }
+
+    .thirteen-commando.item .description-section textarea:focus {
+        border-color: var(--color-primary);
+        outline: none;
+        box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+    }
+
+    .thirteen-commando.item .quick-stats {
+        background: rgba(212, 175, 55, 0.1);
+        border: 2px solid var(--color-primary);
+        border-radius: 10px;
+        padding: 20px;
+    }
+
+    .thirteen-commando.item .quick-stats h3 {
+        color: var(--color-primary);
+        text-align: center;
+        margin-bottom: 15px;
+        font-size: 1.3em;
+    }
+
+    .thirteen-commando.item .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+
+    .thirteen-commando.item .stat-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(44, 62, 80, 0.4);
+        border-radius: 5px;
+        padding: 10px;
+    }
+
+    .thirteen-commando.item .stat-item label {
+        color: var(--color-primary);
+        font-weight: bold;
+    }
+
+    .thirteen-commando.item .stat-item span {
+        color: var(--color-text);
+        font-weight: bold;
+    }
+
+    .thirteen-commando.item .stat-item .equipped {
+        color: #27ae60;
+    }
+
+    .thirteen-commando.item .stat-item .not-equipped {
+        color: #95a5a6;
+    }
+
+    @media (max-width: 768px) {
+        .thirteen-commando.item .stats-grid {
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+    }
+</style>

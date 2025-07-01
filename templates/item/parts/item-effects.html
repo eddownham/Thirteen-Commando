@@ -1,0 +1,476 @@
+{{!-- Item Effects Section --}}
+<div class="item-effects-section">
+    <h3>Item Effects</h3>
+    <p class="effects-description">Effects that this item provides when equipped or used.</p>
+
+    {{!-- Effect Categories for Items --}}
+    {{#each effects as |category key|}}
+    <div class="effect-category" data-category="{{key}}">
+        <div class="effect-category-header">
+            <h4 class="effect-category-title">{{category.label}}</h4>
+            <div class="effect-controls">
+                <a class="effect-control" data-action="create" data-effect-type="{{key}}" title="Add {{category.label}}">
+                    <i class="fas fa-plus"></i> Add Effect
+                </a>
+            </div>
+        </div>
+
+        {{#if category.effects}}
+        <div class="effects-list">
+            {{#each category.effects as |effect|}}
+            <div class="effect-item" data-effect-id="{{effect.id}}">
+                <div class="effect-main">
+                    <div class="effect-icon">
+                        <img src="{{effect.icon}}" alt="{{effect.label}}" />
+                    </div>
+                    <div class="effect-details">
+                        <div class="effect-name">{{effect.label}}</div>
+                        <div class="effect-source">From: {{../../../name}}</div>
+                        {{#if effect.changes}}
+                        <div class="effect-changes">
+                            {{#each effect.changes as |change|}}
+                            <div class="effect-change">
+                                <span class="change-key">{{change.key}}</span>: 
+                                <span class="change-mode">
+                                    {{#eq change.mode 0}}Custom{{/eq}}
+                                    {{#eq change.mode 1}}Multiply{{/eq}}
+                                    {{#eq change.mode 2}}Add{{/eq}}
+                                    {{#eq change.mode 3}}Downgrade{{/eq}}
+                                    {{#eq change.mode 4}}Upgrade{{/eq}}
+                                    {{#eq change.mode 5}}Override{{/eq}}
+                                </span>
+                                <span class="change-value">{{change.value}}</span>
+                            </div>
+                            {{/each}}
+                        </div>
+                        {{/if}}
+                    </div>
+                </div>
+                <div class="effect-controls">
+                    <a class="effect-control" data-action="edit" title="Edit Effect">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a class="effect-control" data-action="toggle" title="{{#if effect.disabled}}Enable{{else}}Disable{{/if}} Effect">
+                        <i class="fas {{#if effect.disabled}}fa-eye-slash{{else}}fa-eye{{/if}}"></i>
+                    </a>
+                    <a class="effect-control" data-action="delete" title="Delete Effect">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        {{else}}
+        <div class="effects-empty">
+            <p>No {{lowercase category.label}} on this item.</p>
+        </div>
+        {{/if}}
+    </div>
+    {{/each}}
+
+    {{!-- Common Item Effects Templates --}}
+    <div class="common-effects">
+        <h4>Common Item Effects</h4>
+        <div class="common-effects-grid">
+            {{!-- Weapon Effects --}}
+            {{#eq type "weapon"}}
+            <div class="common-effect-category">
+                <h5>Weapon Effects</h5>
+                <div class="effect-templates">
+                    <button type="button" class="effect-template" data-template="weapon-damage-bonus">
+                        <i class="fas fa-sword"></i> Damage Bonus
+                    </button>
+                    <button type="button" class="effect-template" data-template="weapon-accuracy">
+                        <i class="fas fa-crosshairs"></i> Accuracy Bonus
+                    </button>
+                    <button type="button" class="effect-template" data-template="weapon-range">
+                        <i class="fas fa-expand-arrows-alt"></i> Range Modifier
+                    </button>
+                    <button type="button" class="effect-template" data-template="weapon-special">
+                        <i class="fas fa-star"></i> Special Property
+                    </button>
+                </div>
+            </div>
+            {{/eq}}
+
+            {{!-- Equipment Effects --}}
+            {{#eq type "equipment"}}
+            <div class="common-effect-category">
+                <h5>Equipment Effects</h5>
+                <div class="effect-templates">
+                    <button type="button" class="effect-template" data-template="armor-bonus">
+                        <i class="fas fa-shield-alt"></i> Armor Bonus
+                    </button>
+                    <button type="button" class="effect-template" data-template="attribute-bonus">
+                        <i class="fas fa-plus-circle"></i> Attribute Bonus
+                    </button>
+                    <button type="button" class="effect-template" data-template="skill-bonus">
+                        <i class="fas fa-graduation-cap"></i> Skill Bonus
+                    </button>
+                    <button type="button" class="effect-template" data-template="movement-bonus">
+                        <i class="fas fa-running"></i> Movement Bonus
+                    </button>
+                </div>
+            </div>
+            {{/eq}}
+
+            {{!-- Skill Effects --}}
+            {{#eq type "skill"}}
+            <div class="common-effect-category">
+                <h5>Skill Effects</h5>
+                <div class="effect-templates">
+                    <button type="button" class="effect-template" data-template="skill-specialization">
+                        <i class="fas fa-bullseye"></i> Specialization
+                    </button>
+                    <button type="button" class="effect-template" data-template="skill-synergy">
+                        <i class="fas fa-link"></i> Skill Synergy
+                    </button>
+                </div>
+            </div>
+            {{/eq}}
+
+            {{!-- Talent Effects --}}
+            {{#eq type "talent"}}
+            <div class="common-effect-category">
+                <h5>Talent Effects</h5>
+                <div class="effect-templates">
+                    <button type="button" class="effect-template" data-template="talent-passive">
+                        <i class="fas fa-circle"></i> Passive Bonus
+                    </button>
+                    <button type="button" class="effect-template" data-template="talent-conditional">
+                        <i class="fas fa-question-circle"></i> Conditional Effect
+                    </button>
+                    <button type="button" class="effect-template" data-template="talent-special">
+                        <i class="fas fa-magic"></i> Special Ability
+                    </button>
+                </div>
+            </div>
+            {{/eq}}
+        </div>
+    </div>
+
+    {{!-- Effect Application Info --}}
+    <div class="effect-info">
+        <h4>Effect Application</h4>
+        <div class="info-content">
+            <p><strong>When Equipped:</strong> Effects are automatically applied to the character when this item is equipped.</p>
+            <p><strong>When Used:</strong> Effects with limited duration are applied when the item is used or activated.</p>
+            <p><strong>Transfer to Actor:</strong> Check this option for effects that should transfer to the character when equipped.</p>
+        </div>
+    </div>
+</div>
+
+{{!-- Item Effects CSS --}}
+<style>
+    .thirteen-commando .item-effects-section {
+        background: rgba(52, 73, 94, 0.3);
+        border: 2px solid var(--color-accent);
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .thirteen-commando .item-effects-section h3 {
+        color: var(--color-primary);
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 1.5em;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .thirteen-commando .effects-description {
+        color: #bdc3c7;
+        text-align: center;
+        margin-bottom: 20px;
+        font-style: italic;
+    }
+
+    .thirteen-commando .effect-category {
+        background: rgba(44, 62, 80, 0.4);
+        border: 2px solid var(--color-accent);
+        border-radius: 8px;
+        margin-bottom: 15px;
+        overflow: hidden;
+    }
+
+    .thirteen-commando .effect-category-header {
+        background: rgba(212, 175, 55, 0.2);
+        border-bottom: 1px solid var(--color-primary);
+        padding: 12px 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .thirteen-commando .effect-category-title {
+        color: var(--color-primary);
+        margin: 0;
+        font-size: 1.1em;
+        font-weight: bold;
+    }
+
+    .thirteen-commando .effect-controls a {
+        color: var(--color-primary);
+        text-decoration: none;
+        padding: 4px 8px;
+        border: 1px solid var(--color-primary);
+        border-radius: 3px;
+        font-size: 0.8em;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .thirteen-commando .effect-controls a:hover {
+        background: var(--color-primary);
+        color: var(--color-text-dark);
+    }
+
+    .thirteen-commando .effects-list {
+        padding: 12px;
+    }
+
+    .thirteen-commando .effect-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 10px 12px;
+        background: rgba(52, 73, 94, 0.6);
+        border: 1px solid var(--color-accent);
+        border-radius: 5px;
+        margin-bottom: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .thirteen-commando .effect-item:hover {
+        border-color: var(--color-primary);
+        background: rgba(52, 73, 94, 0.8);
+    }
+
+    .thirteen-commando .effect-main {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        flex: 1;
+    }
+
+    .thirteen-commando .effect-icon {
+        width: 24px;
+        height: 24px;
+        border-radius: 3px;
+        overflow: hidden;
+        border: 1px solid var(--color-accent);
+        flex-shrink: 0;
+    }
+
+    .thirteen-commando .effect-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .thirteen-commando .effect-details {
+        flex: 1;
+    }
+
+    .thirteen-commando .effect-name {
+        color: var(--color-text);
+        font-weight: bold;
+        font-size: 0.9em;
+        margin-bottom: 2px;
+    }
+
+    .thirteen-commando .effect-source {
+        color: #95a5a6;
+        font-size: 0.8em;
+        margin-bottom: 4px;
+    }
+
+    .thirteen-commando .effect-changes {
+        font-size: 0.75em;
+    }
+
+    .thirteen-commando .effect-change {
+        color: #bdc3c7;
+        margin-bottom: 2px;
+    }
+
+    .thirteen-commando .change-key {
+        color: var(--color-primary);
+        font-weight: bold;
+    }
+
+    .thirteen-commando .change-mode {
+        color: #95a5a6;
+        font-style: italic;
+    }
+
+    .thirteen-commando .change-value {
+        color: var(--color-text);
+        font-weight: bold;
+    }
+
+    .thirteen-commando .effect-item .effect-controls {
+        display: flex;
+        gap: 4px;
+        flex-shrink: 0;
+    }
+
+    .thirteen-commando .effect-item .effect-controls a {
+        color: #bdc3c7;
+        padding: 2px 6px;
+        border: 1px solid transparent;
+        border-radius: 2px;
+        font-size: 0.7em;
+    }
+
+    .thirteen-commando .effect-item .effect-controls a:hover {
+        color: var(--color-primary);
+        border-color: var(--color-primary);
+        background: rgba(212, 175, 55, 0.1);
+    }
+
+    .thirteen-commando .effects-empty {
+        padding: 15px;
+        text-align: center;
+    }
+
+    .thirteen-commando .effects-empty p {
+        color: #7f8c8d;
+        font-style: italic;
+        margin: 0;
+        font-size: 0.9em;
+    }
+
+    .thirteen-commando .common-effects {
+        background: rgba(212, 175, 55, 0.1);
+        border: 2px solid var(--color-primary);
+        border-radius: 8px;
+        padding: 15px;
+        margin-top: 20px;
+    }
+
+    .thirteen-commando .common-effects h4 {
+        color: var(--color-primary);
+        text-align: center;
+        margin-bottom: 12px;
+        font-size: 1.2em;
+    }
+
+    .thirteen-commando .common-effects-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .thirteen-commando .common-effect-category h5 {
+        color: var(--color-primary);
+        margin: 0 0 8px 0;
+        font-size: 1em;
+    }
+
+    .thirteen-commando .effect-templates {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .thirteen-commando .effect-template {
+        background: rgba(44, 62, 80, 0.6);
+        border: 1px solid var(--color-accent);
+        border-radius: 4px;
+        padding: 6px 10px;
+        color: var(--color-text);
+        font-size: 0.8em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .thirteen-commando .effect-template:hover {
+        background: var(--color-primary);
+        color: var(--color-text-dark);
+        border-color: var(--color-primary);
+    }
+
+    .thirteen-commando .effect-info {
+        background: rgba(44, 62, 80, 0.4);
+        border: 1px solid var(--color-accent);
+        border-radius: 6px;
+        padding: 15px;
+        margin-top: 15px;
+    }
+
+    .thirteen-commando .effect-info h4 {
+        color: var(--color-primary);
+        margin: 0 0 10px 0;
+        font-size: 1.1em;
+    }
+
+    .thirteen-commando .info-content p {
+        color: #bdc3c7;
+        margin: 0 0 8px 0;
+        font-size: 0.85em;
+        line-height: 1.4;
+    }
+
+    .thirteen-commando .info-content strong {
+        color: var(--color-text);
+    }
+
+    /* Temporary Effects Styling */
+    .thirteen-commando .effect-category[data-category="temporary"] .effect-item {
+        border-left: 4px solid #e74c3c;
+    }
+
+    .thirteen-commando .effect-category[data-category="temporary"] .effect-category-header {
+        background: rgba(231, 76, 60, 0.2);
+        border-bottom-color: #e74c3c;
+    }
+
+    /* Passive Effects Styling */
+    .thirteen-commando .effect-category[data-category="passive"] .effect-item {
+        border-left: 4px solid #27ae60;
+    }
+
+    .thirteen-commando .effect-category[data-category="passive"] .effect-category-header {
+        background: rgba(39, 174, 96, 0.2);
+        border-bottom-color: #27ae60;
+    }
+
+    /* Inactive Effects Styling */
+    .thirteen-commando .effect-category[data-category="inactive"] .effect-item {
+        border-left: 4px solid #7f8c8d;
+        opacity: 0.7;
+    }
+
+    .thirteen-commando .effect-category[data-category="inactive"] .effect-category-header {
+        background: rgba(127, 140, 141, 0.2);
+        border-bottom-color: #7f8c8d;
+    }
+
+    @media (max-width: 768px) {
+        .thirteen-commando .effect-item {
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .thirteen-commando .effect-item .effect-controls {
+            justify-content: center;
+        }
+
+        .thirteen-commando .effect-templates {
+            justify-content: center;
+        }
+
+        .thirteen-commando .effect-category-header {
+            flex-direction: column;
+            gap: 8px;
+            text-align: center;
+        }
+    }
+</style>

@@ -1,0 +1,1109 @@
+<!-- Equipment Section -->
+<div class="content-section">
+    <h2 class="section-title">Equipment</h2>
+    <div class="equipment-header">
+
+        <div class="equipment-controls">
+            <button class="add-item-btn" type="button" data-type="weapon" title="Add Weapon">
+                <i class="fas fa-plus"></i>
+                <i class="fas fa-gun"></i>
+                <span>Weapon</span>
+            </button>
+            <button class="add-item-btn" type="button" data-type="equipment" title="Add Equipment">
+                <i class="fas fa-plus"></i>
+                <i class="fas fa-toolbox"></i>
+                <span>Equipment</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Equipment Tabs -->
+    <div class="equipment-tabs">
+        <div class="tab-nav">
+            <button class="tab-button active" data-tab="weapons">
+                <i class="fas fa-crosshairs"></i>
+                Weapons ({{weapons.length}})
+            </button>
+            <button class="tab-button" data-tab="armor">
+                <i class="fas fa-shield-alt"></i>
+                Armor ({{#each equipment}}{{#if (eq this.system.equipmentType "armor")}}1{{/if}}{{/each}})
+            </button>
+            <button class="tab-button" data-tab="gear">
+                <i class="fas fa-backpack"></i>
+                Gear ({{#each equipment}}{{#if (eq this.system.equipmentType "gear")}}1{{/if}}{{/each}})
+            </button>
+            <button class="tab-button" data-tab="consumables">
+                <i class="fas fa-pills"></i>
+                Consumables ({{#each equipment}}{{#if (eq this.system.equipmentType "consumable")}}1{{/if}}{{/each}})
+            </button>
+        </div>
+
+        <!-- Weapons Tab -->
+        <div id="weapons-tab" class="tab-content active">
+            <div class="equipment-grid weapons-grid">
+                <div class="grid-header">
+                    <div class="header-item">Weapon</div>
+                    <div class="header-item">Stats</div>
+                    <div class="header-item">Range</div>
+                    <div class="header-item">Ammo</div>
+                    <div class="header-item">Equipped</div>
+                    <div class="header-item">Actions</div>
+                </div>
+
+                {{#each weapons as |weapon|}}
+                <div class="equipment-row weapon-row {{#if weapon.system.equipped}}equipped{{/if}}" data-item-id="{{weapon._id}}">
+                    <div class="item-main">
+                        <div class="item-icon">
+                            {{#if weapon.img}}
+                            <img src="{{weapon.img}}" alt="{{weapon.name}}" />
+                            {{else}}
+                            <i class="fas fa-gun"></i>
+                            {{/if}}
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name">
+                                {{weapon.name}}
+                            </div>
+                            <div class="item-subtitle">
+                                {{weapon.system.weaponType}} • {{weapon.system.proficiency}}
+                            </div>
+                            <!-- Shot Type Indicators -->
+                            <div class="shot-type-indicators">
+                                {{#if weapon.system.shotTypes.hipShot.available}}
+                                <span class="shot-indicator hip" title="Hip Shot - {{weapon.system.shotTypes.hipShot.cost}} Exertion">HS</span>
+                                {{/if}}
+                                {{#if weapon.system.shotTypes.deliberateFire.available}}
+                                <span class="shot-indicator deliberate" title="Deliberate Fire - {{weapon.system.shotTypes.deliberateFire.cost}} Exertion">DF</span>
+                                {{/if}}
+                                {{#if weapon.system.shotTypes.shortBurst.available}}
+                                <span class="shot-indicator burst" title="Short Burst - {{weapon.system.shotTypes.shortBurst.cost}} Exertion">SB</span>
+                                {{/if}}
+                                {{#if weapon.system.shotTypes.fullAuto.available}}
+                                <span class="shot-indicator auto" title="Full Auto - {{weapon.system.shotTypes.fullAuto.cost}} Exertion">FA</span>
+                                {{/if}}
+                                {{#if weapon.system.shotTypes.coveringFire.available}}
+                                <span class="shot-indicator covering" title="Covering Fire - {{weapon.system.shotTypes.coveringFire.cost}} Exertion">CF</span>
+                                {{/if}}
+                                {{#if weapon.system.shotTypes.overwatch.available}}
+                                <span class="shot-indicator overwatch" title="Overwatch - {{weapon.system.shotTypes.overwatch.cost}} Exertion">OW</span>
+                                {{/if}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="weapon-stats">
+                        <div class="stat-group">
+                            <label>Damage:</label>
+                            <span>{{weapon.system.damage}}d6</span>
+                        </div>
+                        <div class="stat-group">
+                            <label>RoF:</label>
+                            <span>{{weapon.system.rateOfFire}}</span>
+                        </div>
+                        {{#if weapon.system.bayonet.compatible}}
+                        <div class="stat-group">
+                            <label>Bayonet:</label>
+                            <span class="{{#if weapon.system.bayonet.attached}}attached{{else}}detached{{/if}}">
+                                {{#if weapon.system.bayonet.attached}}Yes{{else}}No{{/if}}
+                            </span>
+                        </div>
+                        {{/if}}
+                    </div>
+
+                    <div class="item-range">
+                        <div class="range-brackets">
+                            <div class="range-item">
+                                <span class="range-label">H:</span>
+                                <span class="range-value">{{weapon.system.ranges.hipFire}}m</span>
+                            </div>
+                            <div class="range-item">
+                                <span class="range-label">S:</span>
+                                <span class="range-value">{{weapon.system.ranges.short}}m</span>
+                            </div>
+                            <div class="range-item">
+                                <span class="range-label">M:</span>
+                                <span class="range-value">{{weapon.system.ranges.medium}}m</span>
+                            </div>
+                            <div class="range-item">
+                                <span class="range-label">L:</span>
+                                <span class="range-value">{{weapon.system.ranges.long}}m</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item-ammo">
+                        <div class="ammo-display {{#if (eq weapon.system.ammunition.current 0)}}empty{{/if}}">
+                            <span class="ammo-current">{{weapon.system.ammunition.current}}</span>
+                            <span class="ammo-separator">/</span>
+                            <span class="ammo-max">{{weapon.system.ammunition.max}}</span>
+                        </div>
+                        <div class="ammo-type">{{weapon.system.ammunition.type}}</div>
+                    </div>
+
+                    <div class="item-equipped">
+                        <label class="equipped-toggle">
+                            <input type="checkbox"
+                                   class="equipped-checkbox"
+                                   data-item-id="{{weapon._id}}"
+                                   {{#if weapon.system.equipped}} checked{{/if}}>
+                            <span class="equipped-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="item-actions">
+                        <!-- Attack Button -->
+                        <button class="action-btn weapon-attack-btn {{#unless weapon.system.equipped}}disabled{{/unless}}" 
+                                data-item-id="{{weapon._id}}"
+                                title="{{#if weapon.system.equipped}}Enhanced Attack Dialog{{else}}Weapon must be equipped{{/if}}"
+                                {{#unless weapon.system.equipped}}disabled{{/unless}}>
+                            <i class="fas fa-crosshairs"></i>
+                            <span>Attack</span>
+                        </button>
+                        
+                        <!-- Quick Attack Button -->
+                        <button class="action-btn weapon-quick-btn {{#unless weapon.system.equipped}}disabled{{/unless}}" 
+                                data-item-id="{{weapon._id}}"
+                                title="{{#if weapon.system.equipped}}Quick Deliberate Fire{{else}}Weapon must be equipped{{/if}}"
+                                {{#unless weapon.system.equipped}}disabled{{/unless}}>
+                            <i class="fas fa-bolt"></i>
+                            <span>Quick</span>
+                        </button>
+                        
+                        <!-- Reload Button -->
+                        <button class="action-btn weapon-reload-btn {{#if (eq weapon.system.ammunition.current weapon.system.ammunition.max)}}disabled{{/if}}" 
+                                data-item-id="{{weapon._id}}"
+                                title="{{#if (eq weapon.system.ammunition.current weapon.system.ammunition.max)}}Already fully loaded{{else}}Reload weapon (2 Exertion){{/if}}"
+                                {{#if (eq weapon.system.ammunition.current weapon.system.ammunition.max)}}disabled{{/if}}>
+                            <i class="fas fa-redo"></i>
+                            <span>Reload</span>
+                        </button>
+                        
+                        <!-- Bayonet Toggle (if compatible) -->
+                        {{#if weapon.system.bayonet.compatible}}
+                        <button class="action-btn weapon-bayonet-btn {{#if weapon.system.bayonet.attached}}active{{/if}}" 
+                                data-item-id="{{weapon._id}}"
+                                title="{{#if weapon.system.bayonet.attached}}Remove bayonet{{else}}Attach bayonet{{/if}}">
+                            <i class="fas fa-sword"></i>
+                            <span>{{#if weapon.system.bayonet.attached}}Remove{{else}}Attach{{/if}}</span>
+                        </button>
+                        {{/if}}
+                        
+                        <!-- Edit Button -->
+                        <button class="action-btn item-edit-btn" 
+                                data-item-id="{{weapon._id}}"
+                                title="Edit weapon properties">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        
+                        <!-- Delete Button -->
+                        <button class="action-btn item-delete-btn" 
+                                data-item-id="{{weapon._id}}"
+                                title="Delete weapon">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                {{else}}
+                <div class="empty-state">
+                    <i class="fas fa-gun"></i>
+                    <p>No weapons equipped</p>
+                    <button class="add-item-btn" data-type="weapon">
+                        <i class="fas fa-plus"></i>
+                        Add Weapon
+                    </button>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+
+        <!-- Armor Tab -->
+        <div id="armor-tab" class="tab-content">
+            <div class="equipment-grid armor-grid">
+                <div class="grid-header">
+                    <div class="header-item">Armor</div>
+                    <div class="header-item">Type</div>
+                    <div class="header-item">Protection</div>
+                    <div class="header-item">Weight</div>
+                    <div class="header-item">Equipped</div>
+                    <div class="header-item">Actions</div>
+                </div>
+
+                {{#each equipment as |item|}}
+                {{#if (eq item.system.equipmentType "armor")}}
+                <div class="equipment-row armor-row {{#if item.system.equipped}}equipped{{/if}}" data-item-id="{{item._id}}">
+                    <div class="item-main">
+                        <div class="item-icon">
+                            {{#if item.img}}
+                            <img src="{{item.img}}" alt="{{item.name}}" />
+                            {{else}}
+                            <i class="fas fa-shield-alt"></i>
+                            {{/if}}
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name">{{item.name}}</div>
+                            <div class="item-subtitle">{{item.system.armor.type}} Armor</div>
+                        </div>
+                    </div>
+
+                    <div class="item-type">
+                        <span class="armor-type-badge {{item.system.armor.type}}">
+                            {{item.system.armor.type}}
+                        </span>
+                    </div>
+
+                    <div class="item-protection">
+                        <span class="armor-value">{{item.system.armor.value}}</span>
+                        <span class="armor-label">AC</span>
+                    </div>
+
+                    <div class="item-weight">
+                        {{#if item.system.weight}}
+                        <span class="weight-value">{{item.system.weight}}</span>
+                        <span class="weight-unit">lbs</span>
+                        {{else}}
+                        <span class="weight-none">—</span>
+                        {{/if}}
+                    </div>
+
+                    <div class="item-equipped">
+                        <label class="equipped-toggle">
+                            <input type="checkbox"
+                                   class="equipped-checkbox"
+                                   data-item-id="{{item._id}}"
+                                   {{#if item.system.equipped}} checked{{/if}}>
+                            <span class="equipped-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="item-actions">
+                        <button class="action-btn edit-btn"
+                                data-item-id="{{item._id}}"
+                                title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete-btn"
+                                data-item-id="{{item._id}}"
+                                title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                {{/if}}
+                {{else}}
+                <div class="empty-state">
+                    <i class="fas fa-shield-alt"></i>
+                    <p>No armor equipped</p>
+                    <button class="add-item-btn" data-type="equipment" data-subtype="armor">
+                        <i class="fas fa-plus"></i>
+                        Add Armor
+                    </button>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+
+        <!-- Gear Tab -->
+        <div id="gear-tab" class="tab-content">
+            <div class="equipment-grid gear-grid">
+                <div class="grid-header">
+                    <div class="header-item">Item</div>
+                    <div class="header-item">Quantity</div>
+                    <div class="header-item">Weight</div>
+                    <div class="header-item">Value</div>
+                    <div class="header-item">Actions</div>
+                </div>
+
+                {{#each equipment as |item|}}
+                {{#if (eq item.system.equipmentType "gear")}}
+                <div class="equipment-row gear-row" data-item-id="{{item._id}}">
+                    <div class="item-main">
+                        <div class="item-icon">
+                            {{#if item.img}}
+                            <img src="{{item.img}}" alt="{{item.name}}" />
+                            {{else}}
+                            <i class="fas fa-toolbox"></i>
+                            {{/if}}
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name">{{item.name}}</div>
+                            {{#if item.system.description}}
+                            <div class="item-description">{{item.system.description}}</div>
+                            {{/if}}
+                        </div>
+                    </div>
+
+                    <div class="item-quantity">
+                        <input type="number"
+                               class="quantity-input"
+                               value="{{item.system.quantity}}"
+                               min="0"
+                               data-item-id="{{item._id}}"
+                               title="Quantity">
+                    </div>
+
+                    <div class="item-weight">
+                        {{#if item.system.weight}}
+                        <span class="weight-total">{{multiply item.system.weight item.system.quantity}}</span>
+                        <span class="weight-unit">lbs</span>
+                        {{#if (gt item.system.quantity 1)}}
+                        <div class="weight-each">({{item.system.weight}} each)</div>
+                        {{/if}}
+                        {{else}}
+                        <span class="weight-none">—</span>
+                        {{/if}}
+                    </div>
+
+                    <div class="item-value">
+                        {{#if item.system.price.value}}
+                        <span class="value-total">{{multiply item.system.price.value item.system.quantity}}</span>
+                        <span class="value-currency">{{item.system.price.denomination}}</span>
+                        {{#if (gt item.system.quantity 1)}}
+                        <div class="value-each">({{item.system.price.value}} each)</div>
+                        {{/if}}
+                        {{else}}
+                        <span class="value-none">—</span>
+                        {{/if}}
+                    </div>
+
+                    <div class="item-actions">
+                        <button class="action-btn use-btn"
+                                data-item-id="{{item._id}}"
+                                title="Use Item">
+                            <i class="fas fa-hand-paper"></i>
+                        </button>
+                        <button class="action-btn edit-btn"
+                                data-item-id="{{item._id}}"
+                                title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete-btn"
+                                data-item-id="{{item._id}}"
+                                title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                {{/if}}
+                {{else}}
+                <div class="empty-state">
+                    <i class="fas fa-toolbox"></i>
+                    <p>No gear in inventory</p>
+                    <button class="add-item-btn" data-type="equipment" data-subtype="gear">
+                        <i class="fas fa-plus"></i>
+                        Add Gear
+                    </button>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+
+        <!-- Consumables Tab -->
+        <div id="consumables-tab" class="tab-content">
+            <div class="equipment-grid consumables-grid">
+                <div class="grid-header">
+                    <div class="header-item">Item</div>
+                    <div class="header-item">Quantity</div>
+                    <div class="header-item">Uses</div>
+                    <div class="header-item">Actions</div>
+                </div>
+
+                {{#each equipment as |item|}}
+                {{#if (eq item.system.equipmentType "consumable")}}
+                <div class="equipment-row consumable-row {{#if (eq item.system.quantity 0)}}depleted{{/if}}" data-item-id="{{item._id}}">
+                    <div class="item-main">
+                        <div class="item-icon">
+                            {{#if item.img}}
+                            <img src="{{item.img}}" alt="{{item.name}}" />
+                            {{else}}
+                            <i class="fas fa-pills"></i>
+                            {{/if}}
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name">{{item.name}}</div>
+                            {{#if item.system.description}}
+                            <div class="item-description">{{item.system.description}}</div>
+                            {{/if}}
+                        </div>
+                    </div>
+
+                    <div class="item-quantity">
+                        <div class="quantity-display {{#if (eq item.system.quantity 0)}}depleted{{/if}}">
+                            <span class="quantity-value">{{item.system.quantity}}</span>
+                            {{#if (eq item.system.quantity 0)}}
+                            <span class="depleted-label">Depleted</span>
+                            {{/if}}
+                        </div>
+                    </div>
+
+                    <div class="item-uses">
+                        <button class="use-consumable-btn"
+                                data-item-id="{{item._id}}"
+                                {{#if (eq item.system.quantity 0)}} disabled{{/if}}
+                                title="Use {{item.name}}">
+                            <i class="fas fa-play"></i>
+                            Use
+                        </button>
+                    </div>
+
+                    <div class="item-actions">
+                        <button class="action-btn edit-btn"
+                                data-item-id="{{item._id}}"
+                                title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete-btn"
+                                data-item-id="{{item._id}}"
+                                title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                {{/if}}
+                {{else}}
+                <div class="empty-state">
+                    <i class="fas fa-pills"></i>
+                    <p>No consumables in inventory</p>
+                    <button class="add-item-btn" data-type="equipment" data-subtype="consumable">
+                        <i class="fas fa-plus"></i>
+                        Add Consumable
+                    </button>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+
+    <!-- Equipment Summary -->
+    <div class="equipment-summary">
+        <div class="summary-stats">
+            <div class="stat-item">
+                <div class="stat-label">Total Weight</div>
+                <div class="stat-value">
+                    <span class="weight-total">{{system.encumbrance.total}}</span>
+                    <span class="weight-unit">lbs</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Carry Capacity</div>
+                <div class="stat-value">
+                    <span class="capacity-current">{{system.encumbrance.total}}</span>
+                    <span class="capacity-separator">/</span>
+                    <span class="capacity-max">{{system.encumbrance.max}}</span>
+                    <span class="weight-unit">lbs</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Total Value</div>
+                <div class="stat-value">
+                    <span class="value-total">{{system.wealth.total}}</span>
+                    <span class="value-currency">credits</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="encumbrance-bar">
+            <div class="encumbrance-track">
+                <div class="encumbrance-fill" style="width: {{multiply (divide system.encumbrance.total system.encumbrance.max) 100}}%"></div>
+            </div>
+            <div class="encumbrance-labels">
+                <span class="encumbrance-status">
+                    {{#if (gt system.encumbrance.total system.encumbrance.max)}}
+                    Overloaded
+                    {{else if (gt system.encumbrance.total (multiply system.encumbrance.max 0.75))}}
+                    Heavy Load
+                    {{else if (gt system.encumbrance.total (multiply system.encumbrance.max 0.5))}}
+                    Medium Load
+                    {{else}}
+                    Light Load
+                    {{/if}}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Equipment Specific CSS -->
+<style>
+.thirteen-commando .equipment-section {
+  background: rgba(52, 73, 94, 0.4);
+  border: 2px solid var(--color-accent);
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.thirteen-commando .equipment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.thirteen-commando .equipment-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.thirteen-commando .add-item-btn {
+  background: rgba(46, 204, 113, 0.2);
+  border: 2px solid #2ecc71;
+  border-radius: 8px;
+  padding: 10px 15px;
+  color: #2ecc71;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.thirteen-commando .add-item-btn:hover {
+  background: rgba(46, 204, 113, 0.3);
+  transform: scale(1.05);
+}
+
+.thirteen-commando .equipment-tabs .tab-nav {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.thirteen-commando .equipment-tabs .tab-button {
+  background: rgba(52, 73, 94, 0.6);
+  border: 2px solid var(--color-accent);
+  border-radius: 10px 10px 0 0;
+  padding: 12px 20px;
+  color: #bdc3c7;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.thirteen-commando .equipment-tabs .tab-button:hover {
+  background: rgba(52, 73, 94, 0.8);
+  color: var(--color-text);
+}
+
+.thirteen-commando .equipment-tabs .tab-button.active {
+  background: rgba(212, 175, 55, 0.2);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+}
+
+.thirteen-commando .equipment-tabs .tab-content {
+  display: none;
+  background: rgba(52, 73, 94, 0.3);
+  border: 2px solid var(--color-accent);
+  border-radius: 0 10px 10px 10px;
+  padding: 15px;
+  min-height: 300px;
+}
+
+.thirteen-commando .equipment-tabs .tab-content.active {
+  display: block;
+}
+
+.thirteen-commando .equipment-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.thirteen-commando .weapons-grid {
+  grid-template-columns: 1fr;
+}
+
+.thirteen-commando .armor-grid {
+  grid-template-columns: 1fr;
+}
+
+.thirteen-commando .gear-grid {
+  grid-template-columns: 1fr;
+}
+
+.thirteen-commando .consumables-grid {
+  grid-template-columns: 1fr;
+}
+
+.thirteen-commando .grid-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 120px 100px 350px;
+  gap: 10px;
+  padding: 10px;
+  background: rgba(212, 175, 55, 0.1);
+  border: 2px solid var(--color-primary);
+  border-radius: 8px;
+  font-weight: bold;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  font-size: 0.9em;
+  letter-spacing: 1px;
+}
+
+.thirteen-commando .armor-grid .grid-header {
+  grid-template-columns: 2fr 1fr 1fr 1fr 100px 120px;
+}
+
+.thirteen-commando .gear-grid .grid-header {
+  grid-template-columns: 2fr 120px 1fr 1fr 120px;
+}
+
+.thirteen-commando .consumables-grid .grid-header {
+  grid-template-columns: 2fr 120px 150px 120px;
+}
+
+.thirteen-commando .equipment-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 120px 100px 350px;
+  gap: 10px;
+  padding: 15px;
+  background: rgba(52, 73, 94, 0.4);
+  border: 2px solid var(--color-accent);
+  border-radius: 8px;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.thirteen-commando .equipment-row:hover {
+  background: rgba(52, 73, 94, 0.6);
+  border-color: var(--color-primary);
+}
+
+.thirteen-commando .equipment-row.equipped {
+  border-color: #2ecc71;
+  box-shadow: 0 0 10px rgba(46, 204, 113, 0.3);
+}
+
+.thirteen-commando .armor-row {
+  grid-template-columns: 2fr 1fr 1fr 1fr 100px 120px;
+}
+
+.thirteen-commando .gear-row {
+  grid-template-columns: 2fr 120px 1fr 1fr 120px;
+}
+
+.thirteen-commando .consumable-row {
+  grid-template-columns: 2fr 120px 150px 120px;
+}
+
+.thirteen-commando .consumable-row.depleted {
+  opacity: 0.6;
+  border-color: #e74c3c;
+}
+
+.thirteen-commando .item-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.thirteen-commando .item-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: rgba(212, 175, 55, 0.1);
+  border: 2px solid var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.thirteen-commando .item-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thirteen-commando .item-icon i {
+  font-size: 1.2em;
+  color: var(--color-primary);
+}
+
+.thirteen-commando .item-details {
+  flex: 1;
+}
+
+.thirteen-commando .item-name {
+  font-weight: bold;
+  color: var(--color-text);
+  font-size: 1em;
+  margin-bottom: 2px;
+}
+
+.thirteen-commando .item-subtitle {
+  font-size: 0.8em;
+  color: #bdc3c7;
+  font-style: italic;
+  margin-bottom: 5px;
+}
+
+.thirteen-commando .item-description {
+  font-size: 0.8em;
+  color: #95a5a6;
+  margin-top: 2px;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Shot Type Indicators */
+.thirteen-commando .shot-type-indicators {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.thirteen-commando .shot-indicator {
+  background: rgba(44, 62, 80, 0.8);
+  border: 1px solid #34495e;
+  border-radius: 4px;
+  padding: 2px 4px;
+  font-size: 0.7em;
+  font-weight: bold;
+  color: #ecf0f1;
+  cursor: help;
+}
+
+.thirteen-commando .shot-indicator.hip {
+  border-color: #2ecc71;
+  background: rgba(46, 204, 113, 0.2);
+}
+
+.thirteen-commando .shot-indicator.deliberate {
+  border-color: #3498db;
+  background: rgba(52, 152, 219, 0.2);
+}
+
+.thirteen-commando .shot-indicator.burst {
+  border-color: #f39c12;
+  background: rgba(243, 156, 18, 0.2);
+}
+
+.thirteen-commando .shot-indicator.auto {
+  border-color: #e74c3c;
+  background: rgba(231, 76, 60, 0.2);
+}
+
+.thirteen-commando .shot-indicator.covering {
+  border-color: #9b59b6;
+  background: rgba(155, 89, 182, 0.2);
+}
+
+.thirteen-commando .shot-indicator.overwatch {
+  border-color: #1abc9c;
+  background: rgba(26, 188, 156, 0.2);
+}
+
+/* Weapon Stats */
+.thirteen-commando .weapon-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.thirteen-commando .stat-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8em;
+}
+
+.thirteen-commando .stat-group label {
+  color: #bdc3c7;
+  font-weight: bold;
+}
+
+.thirteen-commando .stat-group span {
+  color: var(--color-text);
+  font-weight: bold;
+}
+
+.thirteen-commando .stat-group .attached {
+  color: #2ecc71;
+}
+
+.thirteen-commando .stat-group .detached {
+  color: #95a5a6;
+}
+
+/* Range Brackets */
+.thirteen-commando .range-brackets {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3px;
+}
+
+.thirteen-commando .range-item {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 0.8em;
+}
+
+.thirteen-commando .range-label {
+  color: #bdc3c7;
+  font-weight: bold;
+  min-width: 12px;
+}
+
+.thirteen-commando .range-value {
+  color: var(--color-text);
+  font-weight: bold;
+}
+
+/* Ammo Display */
+.thirteen-commando .item-ammo {
+  text-align: center;
+}
+
+.thirteen-commando .ammo-display {
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-bottom: 3px;
+}
+
+.thirteen-commando .ammo-display.empty {
+  color: #e74c3c;
+}
+
+.thirteen-commando .ammo-current {
+  color: var(--color-text);
+}
+
+.thirteen-commando .ammo-separator {
+  color: #95a5a6;
+  margin: 0 2px;
+}
+
+.thirteen-commando .ammo-max {
+  color: #95a5a6;
+}
+
+.thirteen-commando .ammo-type {
+  font-size: 0.7em;
+  color: #95a5a6;
+  text-transform: uppercase;
+}
+
+/* Weapon Actions */
+.thirteen-commando .item-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  justify-content: center;
+}
+
+.thirteen-commando .action-btn {
+  background: rgba(52, 73, 94, 0.6);
+  border: 2px solid var(--color-accent);
+  border-radius: 6px;
+  padding: 6px 8px;
+  color: #bdc3c7;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 45px;
+  font-size: 0.7em;
+  font-weight: bold;
+}
+
+.thirteen-commando .action-btn:hover:not(.disabled) {
+  background: rgba(52, 73, 94, 0.8);
+  transform: scale(1.05);
+}
+
+.thirteen-commando .action-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(50%);
+}
+
+.thirteen-commando .weapon-attack-btn {
+  border-color: #27ae60;
+  background: rgba(39, 174, 96, 0.2);
+}
+
+.thirteen-commando .weapon-attack-btn:hover:not(.disabled) {
+  border-color: #2ecc71;
+  background: rgba(46, 204, 113, 0.3);
+}
+
+.thirteen-commando .weapon-quick-btn {
+  border-color: #f39c12;
+  background: rgba(243, 156, 18, 0.2);
+}
+
+.thirteen-commando .weapon-quick-btn:hover:not(.disabled) {
+  border-color: #e67e22;
+  background: rgba(230, 126, 34, 0.3);
+}
+
+.thirteen-commando .weapon-reload-btn {
+  border-color: #3498db;
+  background: rgba(52, 152, 219, 0.2);
+}
+
+.thirteen-commando .weapon-reload-btn:hover:not(.disabled) {
+  border-color: #2980b9;
+  background: rgba(41, 128, 185, 0.3);
+}
+
+.thirteen-commando .weapon-bayonet-btn {
+  border-color: #9b59b6;
+  background: rgba(155, 89, 182, 0.2);
+}
+
+.thirteen-commando .weapon-bayonet-btn.active {
+  background: rgba(155, 89, 182, 0.4);
+  border-color: #8e44ad;
+}
+
+.thirteen-commando .weapon-bayonet-btn:hover:not(.disabled) {
+  border-color: #8e44ad;
+  background: rgba(142, 68, 173, 0.3);
+}
+
+.thirteen-commando .item-edit-btn {
+  border-color: #95a5a6;
+}
+
+.thirteen-commando .item-edit-btn:hover {
+  border-color: #3498db;
+  color: #3498db;
+}
+
+.thirteen-commando .item-delete-btn {
+  border-color: #e74c3c;
+}
+
+.thirteen-commando .item-delete-btn:hover {
+  border-color: #c0392b;
+  background: rgba(192, 57, 43, 0.2);
+}
+
+.thirteen-commando .use-btn:hover {
+  border-color: #2ecc71;
+  color: #2ecc71;
+}
+
+/* Rest of existing CSS remains the same... */
+.thirteen-commando .weapon-type-badge,
+.thirteen-commando .armor-type-badge {
+  background: rgba(52, 152, 219, 0.2);
+  border: 1px solid #3498db;
+  border-radius: 12px;
+  padding: 4px 8px;
+  font-size: 0.8em;
+  color: #3498db;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+.thirteen-commando .equipped-toggle {
+  position: relative;
+  width: 50px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.thirteen-commando .equipped-checkbox {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.thirteen-commando .equipped-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(127, 140, 141, 0.3);
+  border: 2px solid #7f8c8d;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.thirteen-commando .equipped-slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background: #7f8c8d;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.thirteen-commando .equipped-checkbox:checked + .equipped-slider {
+  background: rgba(46, 204, 113, 0.3);
+  border-color: #2ecc71;
+}
+
+.thirteen-commando .equipped-checkbox:checked + .equipped-slider:before {
+  transform: translateX(26px);
+  background: #2ecc71;
+}
+
+.thirteen-commando .empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px 20px;
+  color: #7f8c8d;
+}
+
+.thirteen-commando .empty-state i {
+  font-size: 3em;
+  margin-bottom: 15px;
+  opacity: 0.5;
+}
+
+.thirteen-commando .empty-state p {
+  margin: 0 0 20px 0;
+  font-size: 1.1em;
+  font-style: italic;
+}
+
+/* Continue with existing CSS for other elements... */
+</style>
+
+<script>
+document.addEventListener('click', function(e) {
+    if (e.target.matches('.tab-button')) {
+        const targetTab = e.target.dataset.tab;
+
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.classList.remove('active');
+        });
+
+        document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.remove('active');
+        });
+
+        e.target.classList.add('active');
+
+        const targetContent = document.getElementById(targetTab + '-tab');
+        if (targetContent) {
+            targetContent.classList.add('active');
+        }
+    }
+});
+</script>

@@ -1,0 +1,52 @@
+{{!-- Breeding Section --}}
+<div class="content-section">
+    <h2 class="section-title">Breeding</h2>
+    <p class="breeding-description">Allocate breeding points to Physical, Mental, or Social categories.</p>
+    
+    <div class="breeding-flex">
+        {{!-- 5-Point Breeding Trait --}}
+        <div class="breeding-category">
+            <div class="breeding-header">
+                <h4>5 Points</h4>
+            </div>
+            <div class="breeding-select-wrapper">
+                <select name="system.breeding.fivepoints" class="breeding-select">
+                    <option value="">Choose category...</option>
+                    <option value="physical" {{#if (eq system.breeding.fivepoints "physical")}}selected{{/if}}>Physical</option>
+                    <option value="mental" {{#if (eq system.breeding.fivepoints "mental")}}selected{{/if}}>Mental</option>
+                    <option value="social" {{#if (eq system.breeding.fivepoints "social")}}selected{{/if}}>Social</option>
+                </select>
+            </div>
+        </div>
+
+        {{!-- 3-Point Breeding Trait --}}
+        <div class="breeding-category">
+            <div class="breeding-header">
+                <h4>3 Points</h4>
+            </div>
+            <div class="breeding-select-wrapper">
+                <select name="system.breeding.threepoints" class="breeding-select">
+                    <option value="">Choose category...</option>
+                    <option value="physical" {{#if (eq system.breeding.threepoints "physical")}}selected{{/if}}>Physical</option>
+                    <option value="mental" {{#if (eq system.breeding.threepoints "mental")}}selected{{/if}}>Mental</option>
+                    <option value="social" {{#if (eq system.breeding.threepoints "social")}}selected{{/if}}>Social</option>
+                </select>
+            </div>
+        </div>
+
+        {{!-- 2-Point Breeding Trait --}}
+        <div class="breeding-category">
+            <div class="breeding-header">
+                <h4>2 Points</h4>
+            </div>
+            <div class="breeding-select-wrapper">
+                <select name="system.breeding.twopoints" class="breeding-select">
+                    <option value="">Choose category...</option>
+                    <option value="physical" {{#if (eq system.breeding.twopoints "physical")}}selected{{/if}}>Physical</option>
+                    <option value="mental" {{#if (eq system.breeding.twopoints "mental")}}selected{{/if}}>Mental</option>
+                    <option value="social" {{#if (eq system.breeding.twopoints "social")}}selected{{/if}}>Social</option>
+                </select>
+            </div>
+        </div>
+    </div> 
+</div>

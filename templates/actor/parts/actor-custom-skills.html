@@ -1,0 +1,1160 @@
+<!-- Custom Skills Grid -->
+<div class="content-section">
+    <h2 class="section-title">Custom Skills</h2>
+    <div class="custom-skills-grid">
+        <!-- Column Headers -->
+        <div class="empty-corner"></div>
+        <div class="skills-header">{{localize "THIRTEEN_COMMANDO.Breeding"}}</div>
+        <div class="skills-header">{{localize "THIRTEEN_COMMANDO.Commando"}}</div>
+        <div class="skills-header" id="primary-header-custom">
+            {{#if system.fields.primary}}{{system.fields.primary}}{{else}}{{localize "THIRTEEN_COMMANDO.Primary"}}{{/if}}
+        </div>
+        <div class="skills-header" id="secondary-header-custom">
+            {{#if system.fields.secondary}}{{system.fields.secondary}}{{else}}{{localize "THIRTEEN_COMMANDO.Secondary"}}{{/if}}
+        </div>
+        <div class="skills-header" id="tertiary-header-custom">
+            {{#if system.fields.tertiary}}{{system.fields.tertiary}}{{else}}{{localize "THIRTEEN_COMMANDO.Tertiary"}}{{/if}}
+        </div>
+        <div class="skills-total-corner">{{localize "THIRTEEN_COMMANDO.Total"}}</div>
+
+        <!-- Custom Skill 1 Row -->
+        <div class="custom-skill-row" data-skill="custom1" data-slot="1">
+            <div class="skills-row-header">
+                <div class="custom-skill-icon-container">
+                    <i class="fas fa-star skill-icon custom-icon" data-slot="1"></i>
+                    <button class="icon-selector-btn" type="button" data-slot="1" title="{{localize 'Change Icon'}}">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </div>
+                <div class="custom-skill-input-container">
+                    <input type="text"
+                           class="custom-skill-name"
+                           name="system.skills.custom.custom1.name"
+                           value="{{system.skills.custom.custom1.name}}"
+                           placeholder="{{localize 'Custom Skill'}} 1"
+                           maxlength="30"
+                           data-slot="1"
+                           title="{{localize 'Enter custom skill name'}}">
+                    <button class="clear-skill-btn" type="button" data-slot="1" title="{{localize 'Clear Skill'}}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.custom.custom1.breeding"
+                       min="0" max="10"
+                       value="{{system.skills.custom.custom1.breeding}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Breeding'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.custom.custom1.commando"
+                       min="0" max="10"
+                       value="{{system.skills.custom.custom1.commando}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Commando'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.custom.custom1.primary"
+                       min="0" max="10"
+                       value="{{system.skills.custom.custom1.primary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Primary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.custom.custom1.secondary"
+                       min="0" max="10"
+                       value="{{system.skills.custom.custom1.secondary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Secondary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.custom.custom1.tertiary"
+                       min="0" max="10"
+                       value="{{system.skills.custom.custom1.tertiary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Tertiary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-total rollable" data-skill="custom1" title="{{localize 'THIRTEEN_COMMANDO.RollSkill'}}">
+                {{sum system.skills.custom.custom1.breeding system.skills.custom.custom1.commando system.skills.custom.custom1.primary system.skills.custom.custom1.secondary system.skills.custom.custom1.tertiary}}
+            </div>
+        </div>
+
+        <!-- Custom Skill 2 Row -->
+        <div class="custom-skill-row" data-skill="custom2" data-slot="2">
+            <div class="skills-row-header">
+                <div class="custom-skill-icon-container">
+                    <i class="fas fa-cog skill-icon custom-icon" data-slot="2"></i>
+                    <button class="icon-selector-btn" type="button" data-slot="2" title="{{localize 'Change Icon'}}">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </div>
+                <div class="custom-skill-input-container">
+                    <input type="text"
+                           class="custom-skill-name"
+                           name="system.skills.custom.custom2.name"
+                           value="{{system.skills.custom.custom2.name}}"
+                           placeholder="{{localize 'Custom Skill'}} 2"
+                           maxlength="30"
+                           data-slot="2"
+                           title="{{localize 'Enter custom skill name'}}">
+                    <button class="clear-skill-btn" type="button" data-slot="2" title="{{localize 'Clear Skill'}}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.custom.custom2.breeding"
+                       min="0" max="10"
+                       value="{{system.skills.custom.custom2.breeding}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Breeding'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.custom.custom2.commando"
+                       min="0" max="10"
+                       value="{{system.skills.custom.custom2.commando}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Commando'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.custom.custom2.primary"
+                       min="0" max="10"
+                       value="{{system.skills.custom.custom2.primary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Primary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.custom.custom2.secondary"
+                       min="0" max="10"
+                       value="{{system.skills.custom.custom2.secondary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Secondary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.custom.custom2.tertiary"
+                       min="0" max="10"
+                       value="{{system.skills.custom.custom2.tertiary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Tertiary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-total rollable" data-skill="custom2" title="{{localize 'THIRTEEN_COMMANDO.RollSkill'}}">
+                {{sum system.skills.custom.custom2.breeding system.skills.custom.custom2.commando system.skills.custom.custom2.primary system.skills.custom.custom2.secondary system.skills.custom.custom2.tertiary}}
+            </div>
+        </div>
+
+        <!-- Custom Skill 3 Row -->
+        <div class="custom-skill-row" data-skill="custom3" data-slot="3">
+            <div class="skills-row-header">
+                <div class="custom-skill-icon-container">
+                    <i class="fas fa-tools skill-icon custom-icon" data-slot="3"></i>
+                    <button class="icon-selector-btn" type="button" data-slot="3" title="{{localize 'Change Icon'}}">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </div>
+                <div class="custom-skill-input-container">
+                    <input type="text"
+                           class="custom-skill-name"
+                           name="system.skills.custom.custom3.name"
+                           value="{{system.skills.custom.custom3.name}}"
+                           placeholder="{{localize 'Custom Skill'}} 3"
+                           maxlength="30"
+                           data-slot="3"
+                           title="{{localize 'Enter custom skill name'}}">
+                    <button class="clear-skill-btn" type="button" data-slot="3" title="{{localize 'Clear Skill'}}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.custom.custom3.breeding"
+                       min="0" max="10"
+                       value="{{system.skills.custom.custom3.breeding}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Breeding'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.custom.custom3.commando"
+                       min="0" max="10"
+                       value="{{system.skills.custom.custom3.commando}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Commando'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.custom.custom3.primary"
+                       min="0" max="10"
+                       value="{{system.skills.custom.custom3.primary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Primary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.custom.custom3.secondary"
+                       min="0" max="10"
+                       value="{{system.skills.custom.custom3.secondary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Secondary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.custom.custom3.tertiary"
+                       min="0" max="10"
+                       value="{{system.skills.custom.custom3.tertiary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Tertiary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-total rollable" data-skill="custom3" title="{{localize 'THIRTEEN_COMMANDO.RollSkill'}}">
+                {{sum system.skills.custom.custom3.breeding system.skills.custom.custom3.commando system.skills.custom.custom3.primary system.skills.custom.custom3.secondary system.skills.custom.custom3.tertiary}}
+            </div>
+        </div>
+
+        <!-- Custom Skill 4 Row -->
+        <div class="custom-skill-row" data-skill="custom4" data-slot="4">
+            <div class="skills-row-header">
+                <div class="custom-skill-icon-container">
+                    <i class="fas fa-puzzle-piece skill-icon custom-icon" data-slot="4"></i>
+                    <button class="icon-selector-btn" type="button" data-slot="4" title="{{localize 'Change Icon'}}">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </div>
+                <div class="custom-skill-input-container">
+                    <input type="text"
+                           class="custom-skill-name"
+                           name="system.skills.custom.custom4.name"
+                           value="{{system.skills.custom.custom4.name}}"
+                           placeholder="{{localize 'Custom Skill'}} 4"
+                           maxlength="30"
+                           data-slot="4"
+                           title="{{localize 'Enter custom skill name'}}">
+                    <button class="clear-skill-btn" type="button" data-slot="4" title="{{localize 'Clear Skill'}}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.custom.custom4.breeding"
+                       min="0" max="10"
+                       value="{{system.skills.custom.custom4.breeding}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Breeding'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.custom.custom4.commando"
+                       min="0" max="10"
+                       value="{{system.skills.custom.custom4.commando}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Commando'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.custom.custom4.primary"
+                       min="0" max="10"
+                       value="{{system.skills.custom.custom4.primary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Primary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.custom.custom4.secondary"
+                       min="0" max="10"
+                       value="{{system.skills.custom.custom4.secondary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Secondary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.custom.custom4.tertiary"
+                       min="0" max="10"
+                       value="{{system.skills.custom.custom4.tertiary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Tertiary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-total rollable" data-skill="custom4" title="{{localize 'THIRTEEN_COMMANDO.RollSkill'}}">
+                {{sum system.skills.custom.custom4.breeding system.skills.custom.custom4.commando system.skills.custom.custom4.primary system.skills.custom.custom4.secondary system.skills.custom.custom4.tertiary}}
+            </div>
+        </div>
+    
+
+        <!-- Custom Skill 5 Row -->
+        <div class="custom-skill-row" data-skill="custom5" data-slot="5">
+            <div class="skills-row-header">
+                <div class="custom-skill-icon-container">
+                    <i class="fas fa-lightbulb skill-icon custom-icon" data-slot="5"></i>
+                    <button class="icon-selector-btn" type="button" data-slot="5" title="{{localize 'Change Icon'}}">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </div>
+                <div class="custom-skill-input-container">
+                    <input type="text"
+                           class="custom-skill-name"
+                           name="system.skills.custom.custom5.name"
+                           value="{{system.skills.custom.custom5.name}}"
+                           placeholder="{{localize 'Custom Skill'}} 5"
+                           maxlength="30"
+                           data-slot="5"
+                           title="{{localize 'Enter custom skill name'}}">
+                    <button class="clear-skill-btn" type="button" data-slot="5" title="{{localize 'Clear Skill'}}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.custom.custom5.breeding"
+                       min="0" max="10"
+                       value="{{system.skills.custom.custom5.breeding}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Breeding'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.custom.custom5.commando"
+                       min="0" max="10"
+                       value="{{system.skills.custom.custom5.commando}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Commando'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.custom.custom5.primary"
+                       min="0" max="10"
+                       value="{{system.skills.custom.custom5.primary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Primary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.custom.custom5.secondary"
+                       min="0" max="10"
+                       value="{{system.skills.custom.custom5.secondary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Secondary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.custom.custom5.tertiary"
+                       min="0" max="10"
+                       value="{{system.skills.custom.custom5.tertiary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Tertiary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-total rollable" data-skill="custom5" title="{{localize 'THIRTEEN_COMMANDO.RollSkill'}}">
+                {{sum system.skills.custom.custom5.breeding system.skills.custom.custom5.commando system.skills.custom.custom5.primary system.skills.custom.custom5.secondary system.skills.custom.custom5.tertiary}}
+            </div>
+        </div>
+    </div>
+
+    <!-- Icon Selector Modal -->
+    <div class="icon-selector-modal" id="icon-selector-modal" style="display: none;">
+        <div class="icon-selector-overlay"></div>
+        <div class="icon-selector-content">
+            <div class="icon-selector-header">
+                <h3>{{localize "Select Skill Icon"}}</h3>
+                <button class="close-modal-btn" type="button">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="icon-selector-body">
+                <div class="icon-categories">
+                    <button class="icon-category-btn active" data-category="general">{{localize "General"}}</button>
+                    <button class="icon-category-btn" data-category="technical">{{localize "Technical"}}</button>
+                    <button class="icon-category-btn" data-category="social">{{localize "Social"}}</button>
+                    <button class="icon-category-btn" data-category="misc">{{localize "Misc"}}</button>
+                </div>
+                <div class="icon-grid" id="icon-grid">
+                    <!-- Icons will be populated by JavaScript -->
+                </div>
+            </div>
+            <div class="icon-selector-footer">
+                <button class="btn btn-secondary close-modal-btn" type="button">{{localize "Cancel"}}</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Skills Help Panel -->
+    <div class="custom-skills-help">
+        <div class="help-header">
+            <i class="fas fa-info-circle"></i>
+            <span>{{localize "Custom Skills Guide"}}</span>
+        </div>
+        <div class="help-content">
+            <div class="help-section">
+                <h4>{{localize "Common Examples"}}</h4>
+                <div class="skill-examples">
+                    <span class="skill-example" data-name="Hacking" data-icon="fas fa-laptop-code">{{localize "Hacking"}}</span>
+                    <span class="skill-example" data-name="Piloting" data-icon="fas fa-plane">{{localize "Piloting"}}</span>
+                    <span class="skill-example" data-name="Investigation" data-icon="fas fa-search">{{localize "Investigation"}}</span>
+                    <span class="skill-example" data-name="Lockpicking" data-icon="fas fa-key">{{localize "Lockpicking"}}</span>
+                    <span class="skill-example" data-name="Engineering" data-icon="fas fa-wrench">{{localize "Engineering"}}</span>
+                    <span class="skill-example" data-name="Driving" data-icon="fas fa-car">{{localize "Driving"}}</span>
+                </div>
+            </div>
+            <div class="help-section">
+                <h4>{{localize "Tips"}}</h4>
+                <ul class="help-tips">
+                    <li>{{localize "Click the edit icon to change skill icons"}}</li>
+                    <li>{{localize "Use clear, specific names for skills"}}</li>
+                    <li>{{localize "Custom skills follow the same point allocation as other skills"}}</li>
+                    <li>{{localize "Leave unused slots empty"}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Custom Skills Specific CSS -->
+    <style>
+        .thirteen-commando .custom-skills-grid {
+            display: grid;
+            grid-template-columns: 250px repeat(5, 1fr) 100px;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .thirteen-commando .custom-skill-row {
+            display: contents;
+            transition: all 0.3s ease;
+        }
+
+            .thirteen-commando .custom-skill-row:hover .skills-row-header,
+            .thirteen-commando .custom-skill-row:hover .skills-category,
+            .thirteen-commando .custom-skill-row:hover .skills-total {
+                background: rgba(155, 89, 182, 0.1);
+                border-color: rgba(155, 89, 182, 0.6);
+            }
+
+            .thirteen-commando .custom-skill-row .skills-row-header {
+                background: rgba(155, 89, 182, 0.1);
+                border: 2px solid #9b59b6;
+                border-radius: 10px;
+                color: #9b59b6;
+                font-size: 1em;
+                font-weight: bold;
+                padding: 10px 15px;
+                display: flex;
+                align-items: center;
+                min-height: 50px;
+                transition: all 0.3s ease;
+                position: relative;
+            }
+
+            .thirteen-commando .custom-skill-row .custom-skill-icon-container {
+                display: flex;
+                align-items: center;
+                margin-right: 10px;
+                position: relative;
+            }
+
+            .thirteen-commando .custom-skill-row .skill-icon {
+                font-size: 1.2em;
+                width: 20px;
+                text-align: center;
+                color: #9b59b6;
+                margin-right: 5px;
+            }
+
+            .thirteen-commando .custom-skill-row .icon-selector-btn {
+                background: transparent;
+                border: none;
+                color: rgba(155, 89, 182, 0.6);
+                cursor: pointer;
+                font-size: 0.8em;
+                padding: 2px;
+                opacity: 0;
+                transition: all 0.3s ease;
+            }
+
+            .thirteen-commando .custom-skill-row:hover .icon-selector-btn {
+                opacity: 1;
+            }
+
+            .thirteen-commando .custom-skill-row .icon-selector-btn:hover {
+                color: #9b59b6;
+                transform: scale(1.1);
+            }
+
+            .thirteen-commando .custom-skill-row .custom-skill-input-container {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                position: relative;
+            }
+
+            .thirteen-commando .custom-skill-row .custom-skill-name {
+                background: transparent;
+                border: none;
+                color: #9b59b6;
+                font-weight: bold;
+                font-size: 0.95em;
+                width: 100%;
+                padding: 5px 25px 5px 5px;
+                line-height: 1.2;
+            }
+
+                .thirteen-commando .custom-skill-row .custom-skill-name:focus {
+                    outline: 1px solid #9b59b6;
+                    border-radius: 3px;
+                    background: rgba(155, 89, 182, 0.1);
+                }
+
+                .thirteen-commando .custom-skill-row .custom-skill-name::placeholder {
+                    color: rgba(155, 89, 182, 0.5);
+                    font-style: italic;
+                }
+
+            .thirteen-commando .custom-skill-row .clear-skill-btn {
+                background: transparent;
+                border: none;
+                color: rgba(155, 89, 182, 0.4);
+                cursor: pointer;
+                font-size: 0.8em;
+                padding: 2px;
+                position: absolute;
+                right: 5px;
+                opacity: 0;
+                transition: all 0.3s ease;
+            }
+
+            .thirteen-commando .custom-skill-row:hover .clear-skill-btn {
+                opacity: 1;
+            }
+
+            .thirteen-commando .custom-skill-row .clear-skill-btn:hover {
+                color: #e74c3c;
+                transform: scale(1.1);
+            }
+
+            .thirteen-commando .custom-skill-row .skills-category {
+                background: rgba(52, 73, 94, 0.6);
+                border: 0px solid var(--color-accent);
+                border-radius: 10px;
+                padding: 15px;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                transition: all 0.3s ease;
+                min-height: 50px;
+                justify-content: center;
+            }
+
+            .thirteen-commando .custom-skill-row .skills-input {
+                width: 45px;
+                height: 45px;
+                background: rgba(44, 62, 80, 0.8);
+                border: 1px solid #95a5a6;
+                border-radius: 4px;
+                text-align: center;
+                font-size: 1.1em;
+                font-weight: normal;
+                color: #ffffff;
+                transition: all 0.3s ease;
+                /* Foundry-specific overrides */
+                font-family: inherit;
+                line-height: normal;
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+            }
+
+                .thirteen-commando .custom-skill-row .skills-input:focus {
+                    border-color: #9b59b6;
+                    box-shadow: 0 0 15px rgba(155, 89, 182, 0.5);
+                    transform: scale(1.1);
+                    outline: none;
+                }
+
+                .thirteen-commando .custom-skill-row .skills-input:hover {
+                    border-color: rgba(155, 89, 182, 0.7);
+                    transform: scale(1.05);
+                }
+
+            .thirteen-commando .custom-skill-row .skills-total {
+                background: rgba(155, 89, 182, 0.1);
+                border: 2px solid #9b59b6;
+                border-radius: 10px;
+                color: #9b59b6;
+                font-size: 1.4em;
+                font-weight: bold;
+                padding: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 50px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                position: relative;
+            }
+
+                .thirteen-commando .custom-skill-row .skills-total:hover {
+                    background: rgba(155, 89, 182, 0.2);
+                    box-shadow: 0 0 15px rgba(155, 89, 182, 0.4);
+                    transform: scale(1.05);
+                }
+
+                .thirteen-commando .custom-skill-row .skills-total:active {
+                    transform: scale(0.95);
+                }
+
+                .thirteen-commando .custom-skill-row .skills-total::after {
+                    content: "🎲";
+                    position: absolute;
+                    top: 2px;
+                    right: 4px;
+                    font-size: 0.7em;
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                }
+
+                .thirteen-commando .custom-skill-row .skills-total:hover::after {
+                    opacity: 0.7;
+                }
+
+        /* Icon Selector Modal */
+        .thirteen-commando .icon-selector-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .thirteen-commando .icon-selector-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            cursor: pointer;
+        }
+
+        .thirteen-commando .icon-selector-content {
+            background: var(--color-secondary);
+            border: 2px solid var(--color-primary);
+            border-radius: 15px;
+            max-width: 600px;
+            max-height: 80vh;
+            width: 90%;
+            overflow: hidden;
+            position: relative;
+            z-index: 2001;
+        }
+
+        .thirteen-commando .icon-selector-header {
+            background: rgba(212, 175, 55, 0.1);
+            border-bottom: 1px solid var(--color-primary);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            .thirteen-commando .icon-selector-header h3 {
+                color: var(--color-primary);
+                margin: 0;
+                font-size: 1.3em;
+            }
+
+        .thirteen-commando .close-modal-btn {
+            background: transparent;
+            border: none;
+            color: var(--color-primary);
+            font-size: 1.2em;
+            cursor: pointer;
+            padding: 5px;
+            transition: all 0.3s ease;
+        }
+
+            .thirteen-commando .close-modal-btn:hover {
+                color: var(--color-text);
+                transform: scale(1.1);
+            }
+
+        .thirteen-commando .icon-selector-body {
+            padding: 20px;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .thirteen-commando .icon-categories {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .thirteen-commando .icon-category-btn {
+            background: rgba(52, 73, 94, 0.6);
+            border: 2px solid var(--color-accent);
+            border-radius: 5px;
+            padding: 8px 16px;
+            color: var(--color-text);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+
+            .thirteen-commando .icon-category-btn:hover {
+                background: rgba(52, 73, 94, 0.8);
+            }
+
+            .thirteen-commando .icon-category-btn.active {
+                background: rgba(212, 175, 55, 0.2);
+                border-color: var(--color-primary);
+                color: var(--color-primary);
+            }
+
+        .thirteen-commando .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            gap: 10px;
+        }
+
+        .thirteen-commando .icon-option {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: rgba(52, 73, 94, 0.6);
+            border: 2px solid var(--color-accent);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.5em;
+            color: var(--color-text);
+        }
+
+            .thirteen-commando .icon-option:hover {
+                background: rgba(155, 89, 182, 0.2);
+                border-color: #9b59b6;
+                color: #9b59b6;
+                transform: scale(1.1);
+            }
+
+        .thirteen-commando .icon-selector-footer {
+            background: rgba(52, 73, 94, 0.3);
+            border-top: 1px solid var(--color-accent);
+            padding: 15px 20px;
+            text-align: right;
+        }
+
+        /* Custom Skills Help Panel */
+        .thirteen-commando .custom-skills-help {
+            background: rgba(52, 73, 94, 0.4);
+            border: 2px solid var(--color-accent);
+            border-radius: 10px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .thirteen-commando .help-header {
+            background: rgba(155, 89, 182, 0.1);
+            border-bottom: 1px solid #9b59b6;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            color: #9b59b6;
+            font-weight: bold;
+        }
+
+            .thirteen-commando .help-header i {
+                margin-right: 10px;
+                font-size: 1.2em;
+            }
+
+        .thirteen-commando .help-content {
+            padding: 20px;
+        }
+
+        .thirteen-commando .help-section {
+            margin-bottom: 20px;
+        }
+
+            .thirteen-commando .help-section:last-child {
+                margin-bottom: 0;
+            }
+
+            .thirteen-commando .help-section h4 {
+                color: var(--color-primary);
+                margin: 0 0 10px 0;
+                font-size: 1.1em;
+            }
+
+        .thirteen-commando .skill-examples {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .thirteen-commando .skill-example {
+            background: rgba(155, 89, 182, 0.1);
+            border: 1px solid #9b59b6;
+            border-radius: 15px;
+            padding: 5px 12px;
+            font-size: 0.9em;
+            color: #9b59b6;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .thirteen-commando .skill-example:hover {
+                background: rgba(155, 89, 182, 0.2);
+                transform: scale(1.05);
+            }
+
+        .thirteen-commando .help-tips {
+            margin: 0;
+            padding-left: 20px;
+            color: var(--color-text);
+        }
+
+            .thirteen-commando .help-tips li {
+                margin-bottom: 5px;
+                font-size: 0.9em;
+            }
+
+        /* Empty state styling */
+        .thirteen-commando .custom-skill-row[data-empty="true"] .skills-row-header {
+            background: rgba(155, 89, 182, 0.05);
+            border-color: rgba(155, 89, 182, 0.3);
+        }
+
+        .thirteen-commando .custom-skill-row[data-empty="true"] .skill-icon {
+            color: rgba(155, 89, 182, 0.4);
+        }
+
+        .thirteen-commando .custom-skill-row[data-empty="true"] .custom-skill-name {
+            color: rgba(155, 89, 182, 0.4);
+        }
+
+        /* Skill value-based styling */
+        .thirteen-commando .custom-skill-row .skills-total[data-value="8"],
+        .thirteen-commando .custom-skill-row .skills-total[data-value="9"],
+        .thirteen-commando .custom-skill-row .skills-total[data-value="10"] {
+            background: rgba(39, 174, 96, 0.2);
+            border-color: #27ae60;
+            color: #27ae60;
+        }
+
+        .thirteen-commando .custom-skill-row .skills-total[data-value="5"],
+        .thirteen-commando .custom-skill-row .skills-total[data-value="6"],
+        .thirteen-commando .custom-skill-row .skills-total[data-value="7"] {
+            background: rgba(243, 156, 18, 0.2);
+            border-color: #f39c12;
+            color: #f39c12;
+        }
+
+        .thirteen-commando .custom-skill-row .skills-total[data-value="1"],
+        .thirteen-commando .custom-skill-row .skills-total[data-value="2"],
+        .thirteen-commando .custom-skill-row .skills-total[data-value="3"],
+        .thirteen-commando .custom-skill-row .skills-total[data-value="4"] {
+            background: rgba(231, 76, 60, 0.2);
+            border-color: #e74c3c;
+            color: #e74c3c;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .thirteen-commando .custom-skills-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .thirteen-commando .custom-skill-row .skills-row-header {
+                margin-bottom: 10px;
+                padding: 15px;
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .thirteen-commando .custom-skill-row .custom-skill-icon-container {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+
+            .thirteen-commando .custom-skill-row .custom-skill-input-container {
+                width: 100%;
+            }
+
+            .thirteen-commando .custom-skill-row .custom-skill-name {
+                text-align: center;
+                font-size: 1em;
+            }
+
+            .thirteen-commando .custom-skill-row .skills-category {
+                margin-bottom: 8px;
+                padding: 10px;
+            }
+
+            .thirteen-commando .custom-skill-row .skills-input {
+                width: 40px;
+                height: 40px;
+                font-size: 1em;
+            }
+
+            .thirteen-commando .custom-skill-row .skills-total {
+                margin-top: 10px;
+                font-size: 1.2em;
+            }
+
+            .thirteen-commando .icon-selector-content {
+                width: 95%;
+                max-height: 90vh;
+            }
+
+            .thirteen-commando .icon-grid {
+                grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+            }
+
+            .thirteen-commando .icon-option {
+                width: 50px;
+                height: 50px;
+                font-size: 1.3em;
+            }
+
+            .thirteen-commando .skill-examples {
+                justify-content: center;
+            }
+        }
+
+        /* Animation for skill updates */
+        @keyframes skillUpdate {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .thirteen-commando .custom-skill-row .skills-input.updated {
+            animation: skillUpdate 0.3s ease-in-out;
+        }
+
+        .thirteen-commando .custom-skill-row .skills-total.updated {
+            animation: skillUpdate 0.5s ease-in-out;
+        }
+
+        .thirteen-commando .custom-skill-row .custom-skill-name.updated {
+            animation: skillUpdate 0.4s ease-in-out;
+        }
+
+        /* Tooltip styling */
+        .thirteen-commando .custom-skill-row [title] {
+            position: relative;
+        }
+
+            .thirteen-commando .custom-skill-row [title]:hover::before {
+                content: attr(title);
+                position: absolute;
+                bottom: 120%;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(44, 62, 80, 0.95);
+                color: var(--color-text);
+                padding: 8px 12px;
+                border-radius: 6px;
+                font-size: 0.85em;
+                white-space: nowrap;
+                z-index: 1000;
+                border: 1px solid #9b59b6;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            }
+
+            .thirteen-commando .custom-skill-row [title]:hover::after {
+                content: "";
+                position: absolute;
+                bottom: 110%;
+                left: 50%;
+                transform: translateX(-50%);
+                border: 6px solid transparent;
+                border-top-color: #9b59b6;
+                z-index: 1000;
+            }
+    </style>
+
+    <script>
+        // Custom Skills JavaScript functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            // Icon categories and options
+            const iconCategories = {
+                general: [
+                    'fas fa-star', 'fas fa-cog', 'fas fa-tools', 'fas fa-puzzle-piece', 'fas fa-lightbulb',
+                    'fas fa-wrench', 'fas fa-hammer', 'fas fa-screwdriver', 'fas fa-bolt', 'fas fa-gear'
+                ],
+                technical: [
+                    'fas fa-laptop-code', 'fas fa-microchip', 'fas fa-wifi', 'fas fa-database', 'fas fa-server',
+                    'fas fa-code', 'fas fa-terminal', 'fas fa-robot', 'fas fa-satellite', 'fas fa-usb'
+                ],
+                social: [
+                    'fas fa-users', 'fas fa-handshake', 'fas fa-comments', 'fas fa-bullhorn', 'fas fa-theater-masks',
+                    'fas fa-user-tie', 'fas fa-crown', 'fas fa-gavel', 'fas fa-balance-scale', 'fas fa-graduation-cap'
+                ],
+                misc: [
+                    'fas fa-car', 'fas fa-plane', 'fas fa-ship', 'fas fa-motorcycle', 'fas fa-helicopter',
+                    'fas fa-search', 'fas fa-key', 'fas fa-lock', 'fas fa-camera', 'fas fa-binoculars'
+                ]
+            };
+
+            let currentSlot = null;
+
+            // Icon selector functionality
+            function openIconSelector(slot) {
+                currentSlot = slot;
+                const modal = document.getElementById('icon-selector-modal');
+                modal.style.display = 'flex';
+                populateIconGrid('general');
+            }
+
+            function closeIconSelector() {
+                const modal = document.getElementById('icon-selector-modal');
+                modal.style.display = 'none';
+                currentSlot = null;
+            }
+
+            function populateIconGrid(category) {
+                const grid = document.getElementById('icon-grid');
+                grid.innerHTML = '';
+
+                iconCategories[category].forEach(iconClass => {
+                    const iconDiv = document.createElement('div');
+                    iconDiv.className = 'icon-option';
+                    iconDiv.innerHTML = `<i class="${iconClass}"></i>`;
+                    iconDiv.addEventListener('click', () => selectIcon(iconClass));
+                    grid.appendChild(iconDiv);
+                });
+            }
+
+            function selectIcon(iconClass) {
+                if (currentSlot) {
+                    const iconElement = document.querySelector(`[data-slot="${currentSlot}"].custom-icon`);
+                    if (iconElement) {
+                        iconElement.className = `${iconClass} skill-icon custom-icon`;
+                        iconElement.setAttribute('data-slot', currentSlot);
+                    }
+                }
+                closeIconSelector();
+            }
+
+            // Event listeners
+            document.addEventListener('click', function (e) {
+                // Icon selector buttons
+                if (e.target.closest('.icon-selector-btn')) {
+                    const slot = e.target.closest('.icon-selector-btn').getAttribute('data-slot');
+                    openIconSelector(slot);
+                }
+
+                // Close modal buttons
+                if (e.target.closest('.close-modal-btn') || e.target.classList.contains('icon-selector-overlay')) {
+                    closeIconSelector();
+                }
+
+                // Category buttons
+                if (e.target.classList.contains('icon-category-btn')) {
+                    document.querySelectorAll('.icon-category-btn').forEach(btn => btn.classList.remove('active'));
+                    e.target.classList.add('active');
+                    populateIconGrid(e.target.getAttribute('data-category'));
+                }
+
+                // Clear skill buttons
+                if (e.target.closest('.clear-skill-btn')) {
+                    const slot = e.target.closest('.clear-skill-btn').getAttribute('data-slot');
+                    clearCustomSkill(slot);
+                }
+
+                // Skill example buttons
+                if (e.target.classList.contains('skill-example')) {
+                    const name = e.target.getAttribute('data-name');
+                    const icon = e.target.getAttribute('data-icon');
+                    applySkillExample(name, icon);
+                }
+            });
+
+            function clearCustomSkill(slot) {
+                const nameInput = document.querySelector(`[data-slot="${slot}"].custom-skill-name`);
+                const skillInputs = document.querySelectorAll(`[name*="custom${slot}"]`);
+
+                if (nameInput) nameInput.value = '';
+                skillInputs.forEach(input => {
+                    if (input.type === 'number') input.value = '0';
+                });
+
+                // Reset icon to default
+                const iconElement = document.querySelector(`[data-slot="${slot}"].custom-icon`);
+                if (iconElement) {
+                    const defaultIcons = ['fas fa-star', 'fas fa-cog', 'fas fa-tools', 'fas fa-puzzle-piece', 'fas fa-lightbulb'];
+                    iconElement.className = `${defaultIcons[slot - 1]} skill-icon custom-icon`;
+                }
+            }
+
+            function applySkillExample(name, icon) {
+                // Find first empty slot
+                for (let i = 1; i <= 5; i++) {
+                    const nameInput = document.querySelector(`[data-slot="${i}"].custom-skill-name`);
+                    if (nameInput && !nameInput.value.trim()) {
+                        nameInput.value = name;
+                        nameInput.classList.add('updated');
+                        setTimeout(() => nameInput.classList.remove('updated'), 400);
+
+                        const iconElement = document.querySelector(`[data-slot="${i}"].custom-icon`);
+                        if (iconElement) {
+                            iconElement.className = `${icon} skill-icon custom-icon`;
+                        }
+                        break;
+                    }
+                }
+            }
+        });
+    </script>

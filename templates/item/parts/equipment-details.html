@@ -1,0 +1,554 @@
+{{!-- Equipment Details Section --}}
+<div class="equipment-details-section">
+    <h3>Equipment Details</h3>
+    <p class="details-description">Physical and mechanical properties of this equipment.</p>
+
+    <div class="details-grid">
+        {{!-- Basic Properties --}}
+        <div class="detail-category">
+            <h4>Basic Properties</h4>
+            <div class="property-inputs">
+                <div class="property-item">
+                    <label for="equipment-weight">Weight:</label>
+                    <div class="input-with-unit">
+                        <input type="number" 
+                               name="system.weight" 
+                               value="{{system.weight}}" 
+                               step="0.1"
+                               min="0"
+                               placeholder="0" />
+                        <span class="unit">kg</span>
+                    </div>
+                </div>
+
+                <div class="property-item">
+                    <label for="equipment-quantity">Quantity:</label>
+                    <input type="number" 
+                           name="system.quantity" 
+                           value="{{system.quantity}}" 
+                           min="1"
+                           placeholder="1" />
+                </div>
+
+                <div class="property-item">
+                    <label for="equipment-equipped">Equipped:</label>
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" 
+                               name="system.equipped" 
+                               id="equipment-equipped"
+                               {{checked system.equipped}} />
+                        <label for="equipment-equipped" class="checkbox-label">
+                            <i class="fas {{#if system.equipped}}fa-check-square{{else}}fa-square{{/if}}"></i>
+                            {{#if system.equipped}}Equipped{{else}}Not Equipped{{/if}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{!-- Economic Properties --}}
+        <div class="detail-category">
+            <h4>Economic Properties</h4>
+            <div class="property-inputs">
+                <div class="property-item">
+                    <label for="equipment-price">Price:</label>
+                    <div class="price-input">
+                        <input type="number" 
+                               name="system.price.value" 
+                               value="{{system.price.value}}" 
+                               min="0"
+                               step="0.01"
+                               placeholder="0" />
+                        <select name="system.price.denomination">
+                            <option value="credits" {{#if (eq system.price.denomination "credits")}}selected{{/if}}>Credits</option>
+                            <option value="dollars" {{#if (eq system.price.denomination "dollars")}}selected{{/if}}>Dollars</option>
+                            <option value="euros" {{#if (eq system.price.denomination "euros")}}selected{{/if}}>Euros</option>
+                            <option value="requisition" {{#if (eq system.price.denomination "requisition")}}selected{{/if}}>Requisition</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="property-item">
+                    <label for="equipment-rarity">Rarity:</label>
+                    <select name="system.rarity">
+                        <option value="common" {{#if (eq system.rarity "common")}}selected{{/if}}>Common</option>
+                        <option value="uncommon" {{#if (eq system.rarity "uncommon")}}selected{{/if}}>Uncommon</option>
+                        <option value="rare" {{#if (eq system.rarity "rare")}}selected{{/if}}>Rare</option>
+                        <option value="very-rare" {{#if (eq system.rarity "very-rare")}}selected{{/if}}>Very Rare</option>
+                        <option value="legendary" {{#if (eq system.rarity "legendary")}}selected{{/if}}>Legendary</option>
+                        <option value="unique" {{#if (eq system.rarity "unique")}}selected{{/if}}>Unique</option>
+                    </select>
+                </div>
+
+                <div class="property-item">
+                    <label for="equipment-availability">Availability:</label>
+                    <select name="system.availability">
+                        <option value="standard" {{#if (eq system.availability "standard")}}selected{{/if}}>Standard Issue</option>
+                        <option value="specialist" {{#if (eq system.availability "specialist")}}selected{{/if}}>Specialist</option>
+                        <option value="restricted" {{#if (eq system.availability "restricted")}}selected{{/if}}>Restricted</option>
+                        <option value="classified" {{#if (eq system.availability "classified")}}selected{{/if}}>Classified</option>
+                        <option value="prototype" {{#if (eq system.availability "prototype")}}selected{{/if}}>Prototype</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        {{!-- Armor Properties (if applicable) --}}
+        {{#eq equipmentType "armor"}}
+        <div class="detail-category">
+            <h4>Armor Properties</h4>
+            <div class="property-inputs">
+                <div class="property-item">
+                    <label for="armor-value">Armor Value:</label>
+                    <input type="number" 
+                           name="system.armor.value" 
+                           value="{{system.armor.value}}" 
+                           min="0"
+                           placeholder="0" />
+                </div>
+
+                <div class="property-item">
+                    <label for="armor-type">Armor Type:</label>
+                    <select name="system.armor.type">
+                        <option value="light" {{#if (eq system.armor.type "light")}}selected{{/if}}>Light</option>
+                        <option value="medium" {{#if (eq system.armor.type "medium")}}selected{{/if}}>Medium</option>
+                        <option value="heavy" {{#if (eq system.armor.type "heavy")}}selected{{/if}}>Heavy</option>
+                        <option value="powered" {{#if (eq system.armor.type "powered")}}selected{{/if}}>Powered</option>
+                    </select>
+                </div>
+
+                <div class="property-item">
+                    <label for="armor-coverage">Coverage:</label>
+                    <select name="system.armor.coverage">
+                        <option value="full" {{#if (eq system.armor.coverage "full")}}selected{{/if}}>Full Body</option>
+                        <option value="torso" {{#if (eq system.armor.coverage "torso")}}selected{{/if}}>Torso</option>
+                        <option value="head" {{#if (eq system.armor.coverage "head")}}selected{{/if}}>Head</option>
+                        <option value="limbs" {{#if (eq system.armor.coverage "limbs")}}selected{{/if}}>Limbs</option>
+                        <option value="partial" {{#if (eq system.armor.coverage "partial")}}selected{{/if}}>Partial</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        {{/eq}}
+
+        {{!-- Consumable Properties (if applicable) --}}
+        {{#eq equipmentType "consumable"}}
+        <div class="detail-category">
+            <h4>Consumable Properties</h4>
+            <div class="property-inputs">
+                <div class="property-item">
+                    <label for="consumable-uses">Uses Remaining:</label>
+                    <div class="uses-input">
+                        <input type="number" 
+                               name="system.uses.current" 
+                               value="{{system.uses.current}}" 
+                               min="0"
+                               placeholder="0" />
+                        <span>/</span>
+                        <input type="number" 
+                               name="system.uses.max" 
+                               value="{{system.uses.max}}" 
+                               min="1"
+                               placeholder="1" />
+                    </div>
+                </div>
+
+                <div class="property-item">
+                    <label for="consumable-type">Consumable Type:</label>
+                    <select name="system.consumableType">
+                        <option value="ammunition" {{#if (eq system.consumableType "ammunition")}}selected{{/if}}>Ammunition</option>
+                        <option value="medical" {{#if (eq system.consumableType "medical")}}selected{{/if}}>Medical</option>
+                        <option value="explosive" {{#if (eq system.consumableType "explosive")}}selected{{/if}}>Explosive</option>
+                        <option value="electronic" {{#if (eq system.consumableType "electronic")}}selected{{/if}}>Electronic</option>
+                        <option value="survival" {{#if (eq system.consumableType "survival")}}selected{{/if}}>Survival</option>
+                        <option value="other" {{#if (eq system.consumableType "other")}}selected{{/if}}>Other</option>
+                    </select>
+                </div>
+
+                <div class="property-item">
+                    <label for="consumable-effect">Usage Effect:</label>
+                    <textarea name="system.usageEffect" 
+                              rows="2" 
+                              placeholder="What happens when used...">{{system.usageEffect}}</textarea>
+                </div>
+            </div>
+        </div>
+        {{/eq}}
+    </div>
+
+    {{!-- Equipment Status --}}
+    <div class="equipment-status">
+        <h4>Equipment Status</h4>
+        <div class="status-grid">
+            <div class="status-item">
+                <label>Condition:</label>
+                <select name="system.condition">
+                    <option value="excellent" {{#if (eq system.condition "excellent")}}selected{{/if}}>Excellent</option>
+                    <option value="good" {{#if (eq system.condition "good")}}selected{{/if}}>Good</option>
+                    <option value="fair" {{#if (eq system.condition "fair")}}selected{{/if}}>Fair</option>
+                    <option value="poor" {{#if (eq system.condition "poor")}}selected{{/if}}>Poor</option>
+                    <option value="damaged" {{#if (eq system.condition "damaged")}}selected{{/if}}>Damaged</option>
+                    <option value="broken" {{#if (eq system.condition "broken")}}selected{{/if}}>Broken</option>
+                </select>
+            </div>
+
+            <div class="status-item">
+                <label>Maintenance:</label>
+                <select name="system.maintenance">
+                    <option value="none" {{#if (eq system.maintenance "none")}}selected{{/if}}>None Required</option>
+                    <option value="routine" {{#if (eq system.maintenance "routine")}}selected{{/if}}>Routine</option>
+                    <option value="overdue" {{#if (eq system.maintenance "overdue")}}selected{{/if}}>Overdue</option>
+                    <option value="critical" {{#if (eq system.maintenance "critical")}}selected{{/if}}>Critical</option>
+                </select>
+            </div>
+
+            <div class="status-item">
+                <label>Location:</label>
+                <select name="system.location">
+                    <option value="carried" {{#if (eq system.location "carried")}}selected{{/if}}>Carried</option>
+                    <option value="worn" {{#if (eq system.location "worn")}}selected{{/if}}>Worn</option>
+                    <option value="backpack" {{#if (eq system.location "backpack")}}selected{{/if}}>Backpack</option>
+                    <option value="vehicle" {{#if (eq system.location "vehicle")}}selected{{/if}}>Vehicle</option>
+                    <option value="base" {{#if (eq system.location "base")}}selected{{/if}}>Base</option>
+                    <option value="storage" {{#if (eq system.location "storage")}}selected{{/if}}>Storage</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    {{!-- Equipment Notes --}}
+    <div class="equipment-notes">
+        <h4>Equipment Notes</h4>
+        <textarea name="system.notes" 
+                  rows="4" 
+                  placeholder="Additional notes, modifications, serial numbers, etc...">{{system.notes}}</textarea>
+    </div>
+
+    {{!-- Equipment Summary --}}
+    <div class="equipment-summary">
+        <h4>Equipment Summary</h4>
+        <div class="summary-content">
+            <div class="summary-row">
+                <span class="summary-label">Total Weight:</span>
+                <span class="summary-value">{{multiply system.weight system.quantity}} kg</span>
+            </div>
+            <div class="summary-row">
+                <span class="summary-label">Total Value:</span>
+                <span class="summary-value">{{multiply system.price.value system.quantity}} {{system.price.denomination}}</span>
+            </div>
+            <div class="summary-row">
+                <span class="summary-label">Status:</span>
+                <span class="summary-value status-{{system.condition}}">{{capitalize system.condition}}</span>
+            </div>
+            {{#if system.equipped}}
+            <div class="summary-row">
+                <span class="summary-label">Equipped:</span>
+                <span class="summary-value equipped">Currently Equipped</span>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+</div>
+
+{{!-- Equipment Details CSS --}}
+<style>
+    .thirteen-commando .equipment-details-section {
+        background: rgba(52, 73, 94, 0.3);
+        border: 2px solid var(--color-accent);
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .thirteen-commando .equipment-details-section h3 {
+        color: var(--color-primary);
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 1.5em;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .thirteen-commando .details-description {
+        color: #bdc3c7;
+        text-align: center;
+        margin-bottom: 20px;
+        font-style: italic;
+    }
+
+    .thirteen-commando .details-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-bottom: 25px;
+    }
+
+    .thirteen-commando .detail-category {
+        background: rgba(44, 62, 80, 0.4);
+        border: 2px solid var(--color-accent);
+        border-radius: 8px;
+        padding: 15px;
+    }
+
+    .thirteen-commando .detail-category h4 {
+        color: var(--color-primary);
+        margin: 0 0 12px 0;
+        font-size: 1.1em;
+        border-bottom: 1px solid var(--color-primary);
+        padding-bottom: 5px;
+    }
+
+    .thirteen-commando .property-inputs {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .thirteen-commando .property-item {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .thirteen-commando .property-item label {
+        color: var(--color-primary);
+        font-weight: bold;
+        font-size: 0.9em;
+    }
+
+    .thirteen-commando .property-item input,
+    .thirteen-commando .property-item select,
+    .thirteen-commando .property-item textarea {
+        background: rgba(52, 73, 94, 0.6);
+        border: 2px solid var(--color-accent);
+        border-radius: 5px;
+        padding: 6px 8px;
+        color: var(--color-text);
+        font-size: 0.9em;
+    }
+
+    .thirteen-commando .property-item input:focus,
+    .thirteen-commando .property-item select:focus,
+    .thirteen-commando .property-item textarea:focus {
+        border-color: var(--color-primary);
+        outline: none;
+        box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+    }
+
+    .thirteen-commando .input-with-unit {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .thirteen-commando .input-with-unit input {
+        flex: 1;
+    }
+
+    .thirteen-commando .input-with-unit .unit {
+        color: #95a5a6;
+        font-weight: bold;
+        font-size: 0.9em;
+    }
+
+    .thirteen-commando .price-input {
+        display: flex;
+        gap: 5px;
+    }
+
+    .thirteen-commando .price-input input {
+        flex: 2;
+    }
+
+    .thirteen-commando .price-input select {
+        flex: 1;
+    }
+
+    .thirteen-commando .uses-input {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .thirteen-commando .uses-input input {
+        flex: 1;
+    }
+
+    .thirteen-commando .uses-input span {
+        color: #95a5a6;
+        font-weight: bold;
+    }
+
+    .thirteen-commando .checkbox-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .thirteen-commando .checkbox-wrapper input[type="checkbox"] {
+        display: none;
+    }
+
+    .thirteen-commando .checkbox-label {
+        color: var(--color-text);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-weight: bold;
+    }
+
+    .thirteen-commando .checkbox-label i {
+        color: var(--color-primary);
+        font-size: 1.1em;
+    }
+
+    .thirteen-commando .equipment-status {
+        background: rgba(44, 62, 80, 0.4);
+        border: 2px solid var(--color-accent);
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .thirteen-commando .equipment-status h4 {
+        color: var(--color-primary);
+        margin: 0 0 12px 0;
+        font-size: 1.1em;
+        text-align: center;
+    }
+
+    .thirteen-commando .status-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 12px;
+    }
+
+    .thirteen-commando .status-item {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .thirteen-commando .status-item label {
+        color: var(--color-primary);
+        font-weight: bold;
+        font-size: 0.9em;
+    }
+
+    .thirteen-commando .equipment-notes {
+        background: rgba(44, 62, 80, 0.4);
+        border: 2px solid var(--color-accent);
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .thirteen-commando .equipment-notes h4 {
+        color: var(--color-primary);
+        margin: 0 0 10px 0;
+        font-size: 1.1em;
+    }
+
+    .thirteen-commando .equipment-notes textarea {
+        width: 100%;
+        background: rgba(52, 73, 94, 0.6);
+        border: 2px solid var(--color-accent);
+        border-radius: 5px;
+        padding: 10px;
+        color: var(--color-text);
+        font-family: inherit;
+        resize: vertical;
+    }
+
+    .thirteen-commando .equipment-summary {
+        background: rgba(212, 175, 55, 0.1);
+        border: 2px solid var(--color-primary);
+        border-radius: 8px;
+        padding: 15px;
+    }
+
+    .thirteen-commando .equipment-summary h4 {
+        color: var(--color-primary);
+        text-align: center;
+        margin-bottom: 12px;
+        font-size: 1.2em;
+    }
+
+    .thirteen-commando .summary-content {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .thirteen-commando .summary-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 6px 0;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    }
+
+    .thirteen-commando .summary-row:last-child {
+        border-bottom: none;
+    }
+
+    .thirteen-commando .summary-label {
+        color: var(--color-primary);
+        font-weight: bold;
+    }
+
+    .thirteen-commando .summary-value {
+        color: var(--color-text);
+        font-weight: bold;
+    }
+
+    .thirteen-commando .summary-value.equipped {
+        color: #27ae60;
+    }
+
+    .thirteen-commando .summary-value.status-excellent {
+        color: #27ae60;
+    }
+
+    .thirteen-commando .summary-value.status-good {
+        color: #2ecc71;
+    }
+
+    .thirteen-commando .summary-value.status-fair {
+        color: #f39c12;
+    }
+
+    .thirteen-commando .summary-value.status-poor {
+        color: #e67e22;
+    }
+
+    .thirteen-commando .summary-value.status-damaged {
+        color: #e74c3c;
+    }
+
+    .thirteen-commando .summary-value.status-broken {
+        color: #c0392b;
+    }
+
+    @media (max-width: 768px) {
+        .thirteen-commando .details-grid {
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .thirteen-commando .status-grid {
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        .thirteen-commando .price-input {
+            flex-direction: column;
+        }
+
+        .thirteen-commando .price-input input,
+        .thirteen-commando .price-input select {
+            flex: none;
+        }
+    }
+</style>

@@ -1,0 +1,262 @@
+<div class="effect-editor-dialog">
+  <style>
+    .effect-editor-dialog {
+      font-family: "Modesto Condensed", "Palatino Linotype", serif;
+      color: #191813;
+      background: #f8f4e6;
+      padding: 20px;
+      max-height: 900px;
+      overflow-y: auto;
+    }
+
+    .editor-section {
+      margin-bottom: 20px;
+      border: 1px solid #4b4a44;
+      border-radius: 4px;
+      background: #fff;
+    }
+
+    .section-header {
+      background: linear-gradient(to bottom, #4b4a44, #3a3934);
+      color: #f8f4e6;
+      padding: 8px 12px;
+      font-weight: bold;
+      border-radius: 4px 4px 0 0;
+    }
+
+    .section-content {
+      padding: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 4px;
+      color: #4b4a44;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 6px 8px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      font-family: inherit;
+      font-size: 0.9em;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+    }
+
+    .effect-change {
+      background: #f0f0f0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 12px;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    .change-title {
+      font-weight: bold;
+      color: #8b4513;
+      margin-bottom: 10px;
+    }
+
+    .remove-change {
+      background: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      font-size: 0.8em;
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .remove-change:hover {
+      background: #c82333;
+    }
+
+    .add-change {
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-size: 0.9em;
+      margin-top: 10px;
+    }
+
+    .add-change:hover {
+      background: #218838;
+    }
+
+    .duration-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: auto;
+    }
+
+    .help-text {
+      font-size: 0.8em;
+      color: #666;
+      margin-top: 4px;
+      font-style: italic;
+    }
+  </style>
+
+  <!-- Basic Information -->
+  <div class="editor-section">
+    <div class="section-header">
+      <i class="fas fa-info-circle"></i> Basic Information
+    </div>
+    <div class="section-content">
+      <div class="form-group">
+        <label for="template-name">Template Name</label>
+        <input type="text" id="template-name" name="name" value="{{template.name}}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="template-icon">Icon Path</label>
+        <input type="text" id="template-icon" name="icon" value="{{template.icon}}" placeholder="icons/svg/aura.svg">
+        <div class="help-text">Path to icon image (e.g., icons/svg/aura.svg)</div>
+      </div>
+
+      <div class="form-group">
+        <label for="template-description">Description</label>
+        <textarea id="template-description" name="description" placeholder="Describe what this effect does...">{{template.description}}</textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Effect Changes -->
+  <div class="editor-section">
+    <div class="section-header">
+      <i class="fas fa-magic"></i> Effect Changes
+    </div>
+    <div class="section-content">
+      <div id="changes-list">
+        {{#each template.changes}}
+        <div class="effect-change" data-index="{{@index}}">
+          <div class="change-title">Effect {{add @index 1}}</div>
+          <button type="button" class="remove-change" data-index="{{@index}}">
+            <i class="fas fa-times"></i>
+          </button>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="change-{{@index}}-category">Effect Category</label>
+              <select name="change-{{@index}}-category" id="change-{{@index}}-category" class="effect-category-select" data-index="{{@index}}">
+                {{#each ../categoryOptions}}
+                <option value="{{value}}">{{label}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="change-{{@index}}-key">Target</label>
+              <select name="change-{{@index}}-key" id="change-{{@index}}-key" class="effect-target-select" data-index="{{@index}}">
+                <option value="">-- Select Category First --</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="change-{{@index}}-mode">Mode</label>
+              <select name="change-{{@index}}-mode" id="change-{{@index}}-mode">
+                {{#each ../modeOptions}}
+                <option value="{{value}}" {{#if (eq value ../mode)}}selected{{/if}}>{{label}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="change-{{@index}}-value">Value</label>
+              <input type="text" name="change-{{@index}}-value" id="change-{{@index}}-value" value="{{value}}" placeholder="-1">
+              <div class="help-text">Positive numbers add, negative subtract</div>
+            </div>
+
+            <div class="form-group">
+              <label for="change-{{@index}}-priority">Priority</label>
+              <input type="number" name="change-{{@index}}-priority" id="change-{{@index}}-priority" value="{{priority}}" min="0" max="99">
+              <div class="help-text">Higher numbers apply later (default: 20)</div>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+
+      <button type="button" class="add-change">
+        <i class="fas fa-plus"></i> Add Effect Change
+      </button>
+    </div>
+  </div>
+
+  <!-- Duration Settings -->
+  <div class="editor-section">
+    <div class="section-header">
+      <i class="fas fa-clock"></i> Duration Settings
+    </div>
+    <div class="section-content">
+      <div class="duration-options">
+        <div class="checkbox-group">
+          <input type="checkbox" id="duration-permanent" name="duration-permanent" {{#if template.duration.permanent}}checked{{/if}}>
+          <label for="duration-permanent">Permanent Effect</label>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="duration-rounds">Duration (Rounds)</label>
+            <input type="number" id="duration-rounds" name="duration-rounds" value="{{template.duration.rounds}}" min="1" placeholder="Leave empty for permanent">
+          </div>
+
+          <div class="form-group">
+            <label for="duration-seconds">Duration (Seconds)</label>
+            <input type="number" id="duration-seconds" name="duration-seconds" value="{{template.duration.seconds}}" min="1" placeholder="Leave empty for permanent">
+          </div>
+        </div>
+
+        <div class="help-text">
+          If permanent is checked, duration values are ignored. Otherwise, specify rounds for combat effects or seconds for real-time effects.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

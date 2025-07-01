@@ -1,0 +1,971 @@
+<!-- General Skills Grid -->
+<div class="content-section">
+    <h2 class="section-title">General Skills</h2>
+    <div class="general-skills-grid">
+        <!-- Column Headers -->
+        <div class="empty-corner"></div>
+        <div class="skills-header">{{localize "THIRTEEN_COMMANDO.Breeding"}}</div>
+        <div class="skills-header">{{localize "THIRTEEN_COMMANDO.Commando"}}</div>
+        <div class="skills-header" id="primary-header-general">
+            {{#if system.fields.primary}}{{system.fields.primary}}{{else}}{{localize "THIRTEEN_COMMANDO.Primary"}}{{/if}}
+        </div>
+        <div class="skills-header" id="secondary-header-general">
+            {{#if system.fields.secondary}}{{system.fields.secondary}}{{else}}{{localize "THIRTEEN_COMMANDO.Secondary"}}{{/if}}
+        </div>
+        <div class="skills-header" id="tertiary-header-general">
+            {{#if system.fields.tertiary}}{{system.fields.tertiary}}{{else}}{{localize "THIRTEEN_COMMANDO.Tertiary"}}{{/if}}
+        </div>
+        <div class="skills-total-corner">{{localize "THIRTEEN_COMMANDO.Total"}}</div>
+
+        <!-- Athletics Row -->
+        <div class="general-skill-row" data-skill="athletics">
+            <div class="skills-row-header">
+                <i class="fas fa-running skill-icon"></i>
+                <span class="skill-name">{{localize "THIRTEEN_COMMANDO.Athletics"}}</span>
+                <span class="skill-attribute">+ Might</span>
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.athletics.breeding"
+                       min="0" max="10"
+                       value="{{system.skills.general.athletics.breeding}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Breeding'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.athletics.commando"
+                       min="0" max="10"
+                       value="{{system.skills.general.athletics.commando}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Commando'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.athletics.primary"
+                       min="0" max="10"
+                       value="{{system.skills.general.athletics.primary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Primary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.athletics.secondary"
+                       min="0" max="10"
+                       value="{{system.skills.general.athletics.secondary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Secondary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.athletics.tertiary"
+                       min="0" max="10"
+                       value="{{system.skills.general.athletics.tertiary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Tertiary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-total rollable" data-skill="athletics" title="{{localize 'THIRTEEN_COMMANDO.RollSkill'}}">
+                {{sum system.skills.general.athletics.breeding system.skills.general.athletics.commando system.skills.general.athletics.primary system.skills.general.athletics.secondary system.skills.general.athletics.tertiary}}
+            </div>
+        </div>
+
+        <!-- Climb Row -->
+        <div class="general-skill-row" data-skill="climb">
+            <div class="skills-row-header">
+                <i class="fas fa-mountain skill-icon"></i>
+                <span class="skill-name">{{localize "THIRTEEN_COMMANDO.Climb"}}</span>
+                <span class="skill-attribute">+ Might</span>
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.climb.breeding"
+                       min="0" max="10"
+                       value="{{system.skills.general.climb.breeding}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Breeding'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.climb.commando"
+                       min="0" max="10"
+                       value="{{system.skills.general.climb.commando}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Commando'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.climb.primary"
+                       min="0" max="10"
+                       value="{{system.skills.general.climb.primary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Primary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.climb.secondary"
+                       min="0" max="10"
+                       value="{{system.skills.general.climb.secondary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Secondary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.climb.tertiary"
+                       min="0" max="10"
+                       value="{{system.skills.general.climb.tertiary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Tertiary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-total rollable" data-skill="climb" title="{{localize 'THIRTEEN_COMMANDO.RollSkill'}}">
+                {{sum system.skills.general.climb.breeding system.skills.general.climb.commando system.skills.general.climb.primary system.skills.general.climb.secondary system.skills.general.climb.tertiary}}
+            </div>
+        </div>
+
+        <!-- Concealment and Camouflage Row -->
+        <div class="general-skill-row" data-skill="concealmentcamouflage">
+            <div class="skills-row-header">
+                <i class="fas fa-eye-slash skill-icon"></i>
+                <span class="skill-name">{{localize "THIRTEEN_COMMANDO.ConcealmentCamouflage"}}</span>
+                <span class="skill-attribute">+ Intelligence</span>
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.concealmentcamouflage.breeding"
+                       min="0" max="10"
+                       value="{{system.skills.general.concealmentcamouflage.breeding}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Breeding'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.concealmentcamouflage.commando"
+                       min="0" max="10"
+                       value="{{system.skills.general.concealmentcamouflage.commando}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Commando'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.concealmentcamouflage.primary"
+                       min="0" max="10"
+                       value="{{system.skills.general.concealmentcamouflage.primary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Primary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.concealmentcamouflage.secondary"
+                       min="0" max="10"
+                       value="{{system.skills.general.concealmentcamouflage.secondary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Secondary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.concealmentcamouflage.tertiary"
+                       min="0" max="10"
+                       value="{{system.skills.general.concealmentcamouflage.tertiary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Tertiary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-total rollable" data-skill="concealmentcamouflage" title="{{localize 'THIRTEEN_COMMANDO.RollSkill'}}">
+                {{sum system.skills.general.concealmentcamouflage.breeding system.skills.general.concealmentcamouflage.commando system.skills.general.concealmentcamouflage.primary system.skills.general.concealmentcamouflage.secondary system.skills.general.concealmentcamouflage.tertiary}}
+            </div>
+        </div>
+
+        <!-- Cryptography Row -->
+        <div class="general-skill-row" data-skill="cryptography">
+            <div class="skills-row-header">
+                <i class="fas fa-key skill-icon"></i>
+                <div class="skill-info">
+                    <span class="skill-name">{{localize "THIRTEEN_COMMANDO.Cryptography"}}</span>
+                    <span class="skill-attribute">+ Intelligence</span>
+                </div>
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.cryptography.breeding"
+                       min="0" max="10"
+                       value="{{system.skills.general.cryptography.breeding}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Breeding'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.cryptography.commando"
+                       min="0" max="10"
+                       value="{{system.skills.general.cryptography.commando}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Commando'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.cryptography.primary"
+                       min="0" max="10"
+                       value="{{system.skills.general.cryptography.primary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Primary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.cryptography.secondary"
+                       min="0" max="10"
+                       value="{{system.skills.general.cryptography.secondary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Secondary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.cryptography.tertiary"
+                       min="0" max="10"
+                       value="{{system.skills.general.cryptography.tertiary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Tertiary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-total rollable" data-skill="cryptography" title="{{localize 'THIRTEEN_COMMANDO.RollSkill'}}">
+                {{sum system.skills.general.cryptography.breeding system.skills.general.cryptography.commando system.skills.general.cryptography.primary system.skills.general.cryptography.secondary system.skills.general.cryptography.tertiary}}
+            </div>
+        </div>
+
+        <!-- Endurance Row -->
+        <div class="general-skill-row" data-skill="endurance">
+            <div class="skills-row-header">
+                <i class="fas fa-heartbeat skill-icon"></i>
+                <div class="skill-info">
+                    <span class="skill-name">{{localize "THIRTEEN_COMMANDO.Endurance"}}</span>
+                    <span class="skill-attribute">+ Endurance</span>
+                </div>
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.endurance.breeding"
+                       min="0" max="10"
+                       value="{{system.skills.general.endurance.breeding}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Breeding'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.endurance.commando"
+                       min="0" max="10"
+                       value="{{system.skills.general.endurance.commando}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Commando'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.endurance.primary"
+                       min="0" max="10"
+                       value="{{system.skills.general.endurance.primary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Primary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.endurance.secondary"
+                       min="0" max="10"
+                       value="{{system.skills.general.endurance.secondary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Secondary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.endurance.tertiary"
+                       min="0" max="10"
+                       value="{{system.skills.general.endurance.tertiary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Tertiary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-total rollable" data-skill="endurance" title="{{localize 'THIRTEEN_COMMANDO.RollSkill'}}">
+                {{sum system.skills.general.endurance.breeding system.skills.general.endurance.commando system.skills.general.endurance.primary system.skills.general.endurance.secondary system.skills.general.endurance.tertiary}}
+            </div>
+        </div>
+
+        <!-- First Aid Row -->
+        <div class="general-skill-row" data-skill="firstaid">
+            <div class="skills-row-header">
+                <i class="fas fa-first-aid skill-icon"></i>
+                <div class="skill-info">
+                    <span class="skill-name">{{localize "THIRTEEN_COMMANDO.FirstAid"}}</span>
+                    <span class="skill-attribute">+ Intelligence</span>
+                </div>
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.firstaid.breeding"
+                       min="0" max="10"
+                       value="{{system.skills.general.firstaid.breeding}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Breeding'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.firstaid.commando"
+                       min="0" max="10"
+                       value="{{system.skills.general.firstaid.commando}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Commando'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.firstaid.primary"
+                       min="0" max="10"
+                       value="{{system.skills.general.firstaid.primary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Primary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.firstaid.secondary"
+                       min="0" max="10"
+                       value="{{system.skills.general.firstaid.secondary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Secondary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.firstaid.tertiary"
+                       min="0" max="10"
+                       value="{{system.skills.general.firstaid.tertiary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Tertiary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-total rollable" data-skill="firstaid" title="{{localize 'THIRTEEN_COMMANDO.RollSkill'}}">
+                {{sum system.skills.general.firstaid.breeding system.skills.general.firstaid.commando system.skills.general.firstaid.primary system.skills.general.firstaid.secondary system.skills.general.firstaid.tertiary}}
+            </div>
+        </div>
+
+        <!-- Linguistics Row -->
+        <div class="general-skill-row" data-skill="linguistics">
+            <div class="skills-row-header">
+                <i class="fas fa-language skill-icon"></i>
+                <div class="skill-info">
+                    <span class="skill-name">{{localize "THIRTEEN_COMMANDO.Linguistics"}}</span>
+                    <span class="skill-attribute">+ Intelligence</span>
+                </div>
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.linguistics.breeding"
+                       min="0" max="10"
+                       value="{{system.skills.general.linguistics.breeding}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Breeding'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.linguistics.commando"
+                       min="0" max="10"
+                       value="{{system.skills.general.linguistics.commando}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Commando'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.linguistics.primary"
+                       min="0" max="10"
+                       value="{{system.skills.general.linguistics.primary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Primary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.linguistics.secondary"
+                       min="0" max="10"
+                       value="{{system.skills.general.linguistics.secondary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Secondary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.linguistics.tertiary"
+                       min="0" max="10"
+                       value="{{system.skills.general.linguistics.tertiary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Tertiary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-total rollable" data-skill="linguistics" title="{{localize 'THIRTEEN_COMMANDO.RollSkill'}}">
+                {{sum system.skills.general.linguistics.breeding system.skills.general.linguistics.commando system.skills.general.linguistics.primary system.skills.general.linguistics.secondary system.skills.general.linguistics.tertiary}}
+            </div>
+        </div>
+
+        <!-- Navigation Row -->
+        <div class="general-skill-row" data-skill="navigation">
+            <div class="skills-row-header">
+                <i class="fas fa-compass skill-icon"></i>
+                <div class="skill-info">
+                    <span class="skill-name">{{localize "THIRTEEN_COMMANDO.Navigation"}}</span>
+                    <span class="skill-attribute">+ Intelligence</span>
+                </div>
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.navigation.breeding"
+                       min="0" max="10"
+                       value="{{system.skills.general.navigation.breeding}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Breeding'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.navigation.commando"
+                       min="0" max="10"
+                       value="{{system.skills.general.navigation.commando}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Commando'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.navigation.primary"
+                       min="0" max="10"
+                       value="{{system.skills.general.navigation.primary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Primary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.navigation.secondary"
+                       min="0" max="10"
+                       value="{{system.skills.general.navigation.secondary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Secondary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.navigation.tertiary"
+                       min="0" max="10"
+                       value="{{system.skills.general.navigation.tertiary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Tertiary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-total rollable" data-skill="navigation" title="{{localize 'THIRTEEN_COMMANDO.RollSkill'}}">
+                {{sum system.skills.general.navigation.breeding system.skills.general.navigation.commando system.skills.general.navigation.primary system.skills.general.navigation.secondary system.skills.general.navigation.tertiary}}
+            </div>
+        </div>
+
+        <!-- Radio Operations Row -->
+        <div class="general-skill-row" data-skill="radiooperations">
+            <div class="skills-row-header">
+                <i class="fas fa-broadcast-tower skill-icon"></i>
+                <div class="skill-info">
+                    <span class="skill-name">{{localize "THIRTEEN_COMMANDO.RadioOperations"}}</span>
+                    <span class="skill-attribute">+ Intelligence</span>
+                </div>
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.radiooperations.breeding"
+                       min="0" max="10"
+                       value="{{system.skills.general.radiooperations.breeding}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Breeding'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.radiooperations.commando"
+                       min="0" max="10"
+                       value="{{system.skills.general.radiooperations.commando}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Commando'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.radiooperations.primary"
+                       min="0" max="10"
+                       value="{{system.skills.general.radiooperations.primary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Primary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.radiooperations.secondary"
+                       min="0" max="10"
+                       value="{{system.skills.general.radiooperations.secondary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Secondary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.radiooperations.tertiary"
+                       min="0" max="10"
+                       value="{{system.skills.general.radiooperations.tertiary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Tertiary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-total rollable" data-skill="radiooperations" title="{{localize 'THIRTEEN_COMMANDO.RollSkill'}}">
+                {{sum system.skills.general.radiooperations.breeding system.skills.general.radiooperations.commando system.skills.general.radiooperations.primary system.skills.general.radiooperations.secondary system.skills.general.radiooperations.tertiary}}
+            </div>
+        </div>
+
+        <!-- Stalking Row -->
+        <div class="general-skill-row" data-skill="stalking">
+            <div class="skills-row-header">
+                <i class="fas fa-user-secret skill-icon"></i>
+                <div class="skill-info">
+                    <span class="skill-name">{{localize "THIRTEEN_COMMANDO.Stalking"}}</span>
+                    <span class="skill-attribute">+ Coordination</span>
+                </div>
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.stalking.breeding"
+                       min="0" max="10"
+                       value="{{system.skills.general.stalking.breeding}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Breeding'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.stalking.commando"
+                       min="0" max="10"
+                       value="{{system.skills.general.stalking.commando}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Commando'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.stalking.primary"
+                       min="0" max="10"
+                       value="{{system.skills.general.stalking.primary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Primary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.stalking.secondary"
+                       min="0" max="10"
+                       value="{{system.skills.general.stalking.secondary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Secondary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.stalking.tertiary"
+                       min="0" max="10"
+                       value="{{system.skills.general.stalking.tertiary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Tertiary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-total rollable" data-skill="stalking" title="{{localize 'THIRTEEN_COMMANDO.RollSkill'}}">
+                {{sum system.skills.general.stalking.breeding system.skills.general.stalking.commando system.skills.general.stalking.primary system.skills.general.stalking.secondary system.skills.general.stalking.tertiary}}
+            </div>
+        </div>
+
+        <!-- Survival Row -->
+        <div class="general-skill-row" data-skill="survival">
+            <div class="skills-row-header">
+                <i class="fas fa-campfire skill-icon"></i>
+                <div class="skill-info">
+                    <span class="skill-name">{{localize "THIRTEEN_COMMANDO.Survival"}}</span>
+                    <span class="skill-attribute">+ Guts</span>
+                </div>
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.survival.breeding"
+                       min="0" max="10"
+                       value="{{system.skills.general.survival.breeding}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Breeding'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.survival.commando"
+                       min="0" max="10"
+                       value="{{system.skills.general.survival.commando}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Commando'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.survival.primary"
+                       min="0" max="10"
+                       value="{{system.skills.general.survival.primary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Primary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.survival.secondary"
+                       min="0" max="10"
+                       value="{{system.skills.general.survival.secondary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Secondary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.survival.tertiary"
+                       min="0" max="10"
+                       value="{{system.skills.general.survival.tertiary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Tertiary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-total rollable" data-skill="survival" title="{{localize 'THIRTEEN_COMMANDO.RollSkill'}}">
+                {{sum system.skills.general.survival.breeding system.skills.general.survival.commando system.skills.general.survival.primary system.skills.general.survival.secondary system.skills.general.survival.tertiary}}
+            </div>
+        </div>
+
+        <!-- Swimming Row -->
+        <div class="general-skill-row" data-skill="swimming">
+            <div class="skills-row-header">
+                <i class="fas fa-swimmer skill-icon"></i>
+                <div class="skill-info">
+                    <span class="skill-name">{{localize "THIRTEEN_COMMANDO.Swimming"}}</span>
+                    <span class="skill-attribute">+ Endurance</span>
+                </div>
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.swimming.breeding"
+                       min="0" max="10"
+                       value="{{system.skills.general.swimming.breeding}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Breeding'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.swimming.commando"
+                       min="0" max="10"
+                       value="{{system.skills.general.swimming.commando}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Commando'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.swimming.primary"
+                       min="0" max="10"
+                       value="{{system.skills.general.swimming.primary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Primary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.swimming.secondary"
+                       min="0" max="10"
+                       value="{{system.skills.general.swimming.secondary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Secondary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.swimming.tertiary"
+                       min="0" max="10"
+                       value="{{system.skills.general.swimming.tertiary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Tertiary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-total rollable" data-skill="swimming" title="{{localize 'THIRTEEN_COMMANDO.RollSkill'}}">
+                {{sum system.skills.general.swimming.breeding system.skills.general.swimming.commando system.skills.general.swimming.primary system.skills.general.swimming.secondary system.skills.general.swimming.tertiary}}
+            </div>
+        </div>
+
+        <!-- Parachuting Row - FIXED to match working structure -->
+        <div class="general-skill-row" data-skill="parachuting">
+            <div class="skills-row-header">
+                <i class="fas fa-parachute-box skill-icon"></i>
+                <span class="skill-name">{{localize "THIRTEEN_COMMANDO.Parachuting"}}</span>
+                <span class="skill-attribute">+ Coordination</span>
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.parachuting.breeding"
+                       min="0" max="10"
+                       value="{{system.skills.general.parachuting.breeding}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Breeding'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.parachuting.commando"
+                       min="0" max="10"
+                       value="{{system.skills.general.parachuting.commando}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Commando'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.parachuting.primary"
+                       min="0" max="10"
+                       value="{{system.skills.general.parachuting.primary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Primary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.parachuting.secondary"
+                       min="0" max="10"
+                       value="{{system.skills.general.parachuting.secondary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Secondary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-category">
+                <input type="number"
+                       class="skills-input"
+                       name="system.skills.general.parachuting.tertiary"
+                       min="0" max="10"
+                       value="{{system.skills.general.parachuting.tertiary}}"
+                       data-dtype="Number"
+                       title="{{localize 'THIRTEEN_COMMANDO.Tertiary'}} {{localize 'THIRTEEN_COMMANDO.Points'}}">
+            </div>
+            <div class="skills-total rollable" data-skill="parachuting" title="{{localize 'THIRTEEN_COMMANDO.RollSkill'}}">
+                {{sum system.skills.general.parachuting.breeding system.skills.general.parachuting.commando system.skills.general.parachuting.primary system.skills.general.parachuting.secondary system.skills.general.parachuting.tertiary}}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- General Skills Specific CSS -->
+<style>
+    .thirteen-commando .general-skills-grid {
+        display: grid;
+        grid-template-columns: 220px repeat(5, 1fr) 100px;
+        gap: 15px;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .thirteen-commando .general-skill-row {
+        display: contents;
+        transition: all 0.3s ease;
+    }
+
+    .thirteen-commando .general-skill-row .skills-row-header {
+        background: rgba(52, 152, 219, 0.1);
+        border: 2px solid #3498db;
+        border-radius: 10px;
+        color: #3498db;
+        font-size: 1em;
+        font-weight: bold;
+        text-align: left;
+        padding: 10px 15px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        min-height: 50px;
+        transition: all 0.3s ease;
+    }
+
+    .thirteen-commando .general-skill-row .skill-icon {
+        margin-right: 10px;
+        font-size: 1.2em;
+        width: 20px;
+        text-align: center;
+        color: #3498db;
+    }
+
+    .thirteen-commando .general-skill-row .skill-name {
+        font-size: 0.9em;
+        line-height: 1.2;
+        margin-bottom: 2px;
+    }
+
+    .thirteen-commando .general-skill-row .skill-attribute {
+        font-size: 0.75em;
+        color: #95a5a6;
+        font-weight: normal;
+        font-style: italic;
+    }
+
+    .thirteen-commando .general-skill-row .skills-category {
+        background: rgba(52, 73, 94, 0.6);
+        border: 0px solid var(--color-accent);
+        border-radius: 10px;
+        padding: 15px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: all 0.3s ease;
+        min-height: 50px;
+        justify-content: center;
+    }
+
+    .thirteen-commando .general-skill-row .skills-input {
+        width: 45px;
+        height: 45px;
+        background: rgba(44, 62, 80, 0.8);
+        border: 1px solid #95a5a6;
+        border-radius: 4px;
+        text-align: center;
+        font-size: 1.1em;
+        font-weight: normal;
+        color: #ffffff;
+        transition: all 0.3s ease;
+        font-family: inherit;
+        line-height: normal;
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    .thirteen-commando .general-skill-row .skills-input:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 15px rgba(52, 152, 219, 0.5);
+        transform: scale(1.1);
+        outline: none;
+    }
+
+    .thirteen-commando .general-skill-row .skills-input:hover {
+        border-color: rgba(52, 152, 219, 0.7);
+        transform: scale(1.05);
+    }
+
+    .thirteen-commando .general-skill-row .skills-total {
+        background: rgba(52, 152, 219, 0.1);
+        border: 2px solid #3498db;
+        border-radius: 10px;
+        color: #3498db;
+        font-size: 1.4em;
+        font-weight: bold;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .thirteen-commando .general-skill-row .skills-total:hover {
+        background: rgba(52, 152, 219, 0.2);
+        box-shadow: 0 0 15px rgba(52, 152, 219, 0.4);
+        transform: scale(1.05);
+    }
+
+    .thirteen-commando .general-skill-row .skills-total:active {
+        transform: scale(0.95);
+    }
+
+    .thirteen-commando .general-skill-row .skills-total::after {
+        content: "🎲";
+        position: absolute;
+        top: 2px;
+        right: 4px;
+        font-size: 0.7em;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .thirteen-commando .general-skill-row .skills-total:hover::after {
+        opacity: 0.7;
+    }
+
+    /* Skill-specific icon colors for general skills */
+    .thirteen-commando .general-skill-row[data-skill="athletics"] .skill-icon {
+        color: #e74c3c;
+    }
+
+    .thirteen-commando .general-skill-row[data-skill="climb"] .skill-icon {
+        color: #8e44ad;
+    }
+
+    .thirteen-commando .general-skill-row[data-skill="concealmentcamouflage"] .skill-icon {
+        color: #27ae60;
+    }
+
+    .thirteen-commando .general-skill-row[data-skill="cryptography"] .skill-icon {
+        color: #f39c12;
+    }
+
+    .thirteen-commando .general-skill-row[data-skill="endurance"] .skill-icon {
+        color: #e74c3c;
+    }
+
+    .thirteen-commando .general-skill-row[data-skill="firstaid"] .skill-icon {
+        color: #e74c3c;
+    }
+
+    .thirteen-commando .general-skill-row[data-skill="linguistics"] .skill-icon {
+        color: #9b59b6;
+    }
+
+    .thirteen-commando .general-skill-row[data-skill="navigation"] .skill-icon {
+        color: #16a085;
+    }
+
+    .thirteen-commando .general-skill-row[data-skill="parachuting"] .skill-icon {
+        color: #3498db;
+    }
+
+    .thirteen-commando .general-skill-row[data-skill="radiooperations"] .skill-icon {
+        color: #2ecc71;
+    }
+
+    .thirteen-commando .general-skill-row[data-skill="stalking"] .skill-icon {
+        color: #34495e;
+    }
+
+    .thirteen-commando .general-skill-row[data-skill="survival"] .skill-icon {
+        color: #d35400;
+    }
+
+    .thirteen-commando .general-skill-row[data-skill="swimming"] .skill-icon {
+        color: #3498db;
+    }
+</style>

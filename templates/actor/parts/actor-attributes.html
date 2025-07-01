@@ -1,0 +1,123 @@
+<div class="content-section">
+  <div class="attributes-matrix">
+    <h3 class="section-title">Attributes</h3>
+    <div class="matrix-grid">
+      <div class="matrix-header"></div>
+      <div class="matrix-header physical-header">Physical</div>
+      <div class="matrix-header mental-header">Mental</div>
+      <div class="matrix-header social-header">Social</div>
+      
+      <div class="matrix-category-label">Force</div>
+      <div class="attribute-cell">
+        <label>Might</label>
+          <br>
+        <div class="attribute-input-group">
+          <input type="number" name="system.attributes.physical.might.value" value="{{safeNumber system.attributes.physical.might.value}}" min="0" max="10" step="1">
+          <!--<span class="breeding-bonus">+{{safeNumber system.attributes.physical.might.breedingBonus}}</span>
+          <span class="total-value">{{sum (safeNumber system.attributes.physical.might.value) (safeNumber system.attributes.physical.might.breedingBonus)}}</span>-->
+        </div>
+      </div>
+      <div class="attribute-cell">
+        <label>Intelligence</label>
+        <div class="attribute-input-group">
+          <input type="number" name="system.attributes.mental.intelligence.value" value="{{safeNumber system.attributes.mental.intelligence.value}}" min="0" max="10" step="1">
+          <!--<span class="breeding-bonus">+{{safeNumber system.attributes.mental.intelligence.breedingBonus}}</span>
+          <span class="total-value">{{sum (safeNumber system.attributes.mental.intelligence.value) (safeNumber system.attributes.mental.intelligence.breedingBonus)}}</span>-->
+        </div>
+      </div>
+      <div class="attribute-cell">
+        <label>Bearing</label>
+        <div class="attribute-input-group">
+          <input type="number" name="system.attributes.social.bearing.value" value="{{safeNumber system.attributes.social.bearing.value}}" min="0" max="10" step="1">
+          <span class="breeding-bonus">+{{safeNumber system.attributes.social.bearing.breedingBonus}}</span>
+          <span class="total-value">{{sum (safeNumber system.attributes.social.bearing.value) (safeNumber system.attributes.social.bearing.breedingBonus)}}</span>
+        </div>
+      </div>
+      
+      <div class="matrix-category-label">Finesse</div>
+      <div class="attribute-cell physical">
+        <label>Coordination</label>
+        <div class="attribute-input-group">
+          <input type="number" name="system.attributes.physical.coordination.value" value="{{safeNumber system.attributes.physical.coordination.value}}" min="0" max="10" step="1">
+          <!--<span class="breeding-bonus">+{{safeNumber system.attributes.physical.coordination.breedingBonus}}</span>
+          <span class="total-value">{{sum (safeNumber system.attributes.physical.coordination.value) (safeNumber system.attributes.physical.coordination.breedingBonus)}}</span>-->
+        </div>
+      </div>
+      <div class="attribute-cell mental">
+        <label>Guile</label>
+        <div class="attribute-input-group">
+          <input type="number" name="system.attributes.mental.guile.value" value="{{safeNumber system.attributes.mental.guile.value}}" min="0" max="10" step="1">
+          <!--<span class="breeding-bonus">+{{safeNumber system.attributes.mental.guile.breedingBonus}}</span>
+          <span class="total-value">{{sum (safeNumber system.attributes.mental.guile.value) (safeNumber system.attributes.mental.guile.breedingBonus)}}</span>-->
+        </div>
+      </div>
+      <div class="attribute-cell social">
+        <label>Charm</label>
+        <div class="attribute-input-group">
+          <input type="number" name="system.attributes.social.charm.value" value="{{safeNumber system.attributes.social.charm.value}}" min="0" max="10" step="1">
+          <!--<span class="breeding-bonus">+{{safeNumber system.attributes.social.charm.breedingBonus}}</span>
+          <span class="total-value">{{sum (safeNumber system.attributes.social.charm.value) (safeNumber system.attributes.social.charm.breedingBonus)}}</span>-->
+        </div>
+      </div>
+      
+      <div class="matrix-category-label">Resilience</div>
+      <div class="attribute-cell physical">
+        <label>Endurance</label>
+        <div class="attribute-input-group">
+          <input type="number" name="system.attributes.physical.endurance.value" value="{{safeNumber system.attributes.physical.endurance.value}}" min="0" max="10" step="1">
+          <!--<span class="breeding-bonus">+{{safeNumber system.attributes.physical.endurance.breedingBonus}}</span>
+          <span class="total-value">{{sum (safeNumber system.attributes.physical.endurance.value) (safeNumber system.attributes.physical.endurance.breedingBonus)}}</span>-->
+        </div>
+      </div>
+      <div class="attribute-cell mental">
+        <label>Guts</label>
+        <div class="attribute-input-group">
+          <input type="number" name="system.attributes.mental.guts.value" value="{{safeNumber system.attributes.mental.guts.value}}" min="0" max="10" step="1">
+          <!--<span class="breeding-bonus">+{{safeNumber system.attributes.mental.guts.breedingBonus}}</span>
+          <span class="total-value">{{sum (safeNumber system.attributes.mental.guts.value) (safeNumber system.attributes.mental.guts.breedingBonus)}}</span>-->
+        </div>
+      </div>
+      <div class="attribute-cell social">
+        <label>Composure</label>
+        <div class="attribute-input-group">
+          <input type="number" name="system.attributes.social.composure.value" value="{{safeNumber system.attributes.social.composure.value}}" min="0" max="10" step="1">
+          <!--<span class="breeding-bonus">+{{safeNumber system.attributes.social.composure.breedingBonus}}</span>
+          <span class="total-value">{{sum (safeNumber system.attributes.social.composure.value) (safeNumber system.attributes.social.composure.breedingBonus)}}</span>-->
+        </div>
+      </div>
+    </div>
+    
+    <!--<div class="category-totals">
+      <div class="category-total physical">
+        <span class="total-label">Physical Total:</span>
+        <span class="total-value">
+          {{sum 
+            (sum (safeNumber system.attributes.physical.might.value) (safeNumber system.attributes.physical.might.breedingBonus))
+            (sum (safeNumber system.attributes.physical.coordination.value) (safeNumber system.attributes.physical.coordination.breedingBonus))
+            (sum (safeNumber system.attributes.physical.endurance.value) (safeNumber system.attributes.physical.endurance.breedingBonus))
+          }}
+        </span>
+      </div>
+      <div class="category-total mental">
+        <span class="total-label">Mental Total:</span>
+        <span class="total-value">
+          {{sum 
+            (sum (safeNumber system.attributes.mental.intelligence.value) (safeNumber system.attributes.mental.intelligence.breedingBonus))
+            (sum (safeNumber system.attributes.mental.guile.value) (safeNumber system.attributes.mental.guile.breedingBonus))
+            (sum (safeNumber system.attributes.mental.guts.value) (safeNumber system.attributes.mental.guts.breedingBonus))
+          }}
+        </span>
+      </div>
+      <div class="category-total social">
+        <span class="total-label">Social Total:</span>
+        <span class="total-value">
+          {{sum 
+            (sum (safeNumber system.attributes.social.bearing.value) (safeNumber system.attributes.social.bearing.breedingBonus))
+            (sum (safeNumber system.attributes.social.charm.value) (safeNumber system.attributes.social.charm.breedingBonus))
+            (sum (safeNumber system.attributes.social.composure.value) (safeNumber system.attributes.social.composure.breedingBonus))
+          }}
+        </span>
+      </div>
+    </div>-->
+  </div>
+</div>

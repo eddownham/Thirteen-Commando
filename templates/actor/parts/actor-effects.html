@@ -1,0 +1,405 @@
+{{!-- Active Effects Section --}}
+<div class="content-section">
+    <h2 class="section-title">Active Effects</h2>
+    <p class="effects-description">Manage temporary and permanent effects affecting your character.</p>
+
+    {{!-- Effect Categories --}}
+    {{#each effectCategories as |category key|}}
+    <div class="effect-category" data-category="{{key}}">
+        <div class="effect-category-header">
+            <h4 class="effect-category-title">{{category.label}}</h4>
+            <div class="effect-controls">
+                <a class="effect-control" data-action="create" data-effect-type="{{key}}" title="Create {{category.label}}">
+                    <i class="fas fa-plus"></i> Add Effect
+                </a>
+            </div>
+        </div>
+
+        {{#if category.effects}}
+        <div class="effects-list">
+            {{#each category.effects as |effect|}}
+            <div class="effect-item {{#if effect.isWoundEffect}}wound-effect{{/if}}" data-effect-id="{{effect.id}}">
+                <div class="effect-main">
+                    <div class="effect-icon">
+                        <img src="{{effect.icon}}" alt="{{effect.label}}" />
+                    </div>
+                    <div class="effect-details">
+                        <div class="effect-name">
+                            {{effect.label}}
+                            {{#if effect.isWoundEffect}}
+                                <span class="wound-badge">WOUND</span>
+                            {{/if}}
+                        </div>
+                        <div class="effect-source">{{effect._getSourceName}}</div>
+                        {{#if effect.duration}}
+                        <div class="effect-duration">
+                            {{#if effect.duration.rounds}}
+                                Rounds: {{effect.duration.rounds}}
+                            {{else if effect.duration.seconds}}
+                                Duration: {{effect.duration.seconds}}s
+                            {{else if effect.duration.turns}}
+                                Turns: {{effect.duration.turns}}
+                            {{else if effect.duration.permanent}}
+                                Permanent
+                            {{else}}
+                                Active
+                            {{/if}}
+                        </div>
+                        {{/if}}
+                    </div>
+                </div>
+                <div class="effect-controls">
+                    {{#unless effect.isWoundEffect}}
+                    <a class="effect-control" data-action="edit" title="Edit Effect">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a class="effect-control" data-action="toggle" title="{{#if effect.disabled}}Enable{{else}}Disable{{/if}} Effect">
+                        <i class="fas {{#if effect.disabled}}fa-eye-slash{{else}}fa-eye{{/if}}"></i>
+                    </a>
+                    <a class="effect-control" data-action="delete" title="Delete Effect">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                    {{else}}
+                    <span class="wound-effect-note">Auto-managed</span>
+                    {{/unless}}
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        {{else}}
+        <div class="effects-empty">
+            <p>No {{lowercase category.label}} currently active.</p>
+        </div>
+        {{/if}}
+    </div>
+    {{/each}}
+
+    {{!-- Effects Help Section --}}
+    <div class="effects-help">
+        <h4>Effect Types</h4>
+        <div class="help-grid">
+            <div class="help-item">
+                <h5>Temporary Effects</h5>
+                <p>Short-term effects with a duration (rounds, turns, or time-based). These automatically expire.</p>
+                <div class="help-examples">
+                    <strong>Examples:</strong> Aiming, Suppressed, Stunned, Inspired
+                </div>
+            </div>
+            <div class="help-item">
+                <h5>Passive Effects</h5>
+                <p>Long-term or permanent effects that modify attributes, skills, or abilities. Includes automatic wound effects.</p>
+                <div class="help-examples">
+                    <strong>Examples:</strong> Equipment bonuses, Wound penalties, Breeding traits
+                </div>
+            </div>
+            <div class="help-item">
+                <h5>Inactive Effects</h5>
+                <p>Effects that are disabled but remain for quick reactivation.</p>
+                <div class="help-examples">
+                    <strong>Examples:</strong> Situational equipment, Optional rules
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Effects CSS --}}
+<style>
+    .thirteen-commando .effects-section {
+        background: rgba(52, 73, 94, 0.3);
+        border: 2px solid var(--color-accent);
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .thirteen-commando .effects-section h3 {
+        color: var(--color-primary);
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 1.5em;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .thirteen-commando .effects-description {
+        color: #bdc3c7;
+        text-align: center;
+        margin-bottom: 25px;
+        font-style: italic;
+    }
+
+    .thirteen-commando .effect-category {
+        background: rgba(44, 62, 80, 0.4);
+        border: 2px solid var(--color-accent);
+        border-radius: 8px;
+        margin-bottom: 20px;
+        overflow: hidden;
+    }
+
+    .thirteen-commando .effect-category-header {
+        background: rgba(212, 175, 55, 0.2);
+        border-bottom: 1px solid var(--color-primary);
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .thirteen-commando .effect-category-title {
+        color: var(--color-primary);
+        margin: 0;
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+
+    .thirteen-commando .effect-controls a {
+        color: var(--color-primary);
+        text-decoration: none;
+        padding: 6px 12px;
+        border: 1px solid var(--color-primary);
+        border-radius: 4px;
+        font-size: 0.9em;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .thirteen-commando .effect-controls a:hover {
+        background: var(--color-primary);
+        color: var(--color-text-dark);
+    }
+
+    .thirteen-commando .effects-list {
+        padding: 15px;
+    }
+
+    .thirteen-commando .effect-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 15px;
+        background: rgba(52, 73, 94, 0.6);
+        border: 1px solid var(--color-accent);
+        border-radius: 6px;
+        margin-bottom: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .thirteen-commando .effect-item:hover {
+        border-color: var(--color-primary);
+        background: rgba(52, 73, 94, 0.8);
+    }
+
+    .thirteen-commando .effect-item.wound-effect {
+        border-left: 4px solid #e74c3c;
+        background: rgba(231, 76, 60, 0.1);
+    }
+
+    .thirteen-commando .effect-item[data-effect-type="inactive"] {
+        opacity: 0.6;
+        border-color: #7f8c8d;
+    }
+
+    .thirteen-commando .effect-main {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex: 1;
+    }
+
+    .thirteen-commando .effect-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 4px;
+        overflow: hidden;
+        border: 1px solid var(--color-accent);
+    }
+
+    .thirteen-commando .effect-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .thirteen-commando .effect-details {
+        flex: 1;
+    }
+
+    .thirteen-commando .effect-name {
+        color: var(--color-text);
+        font-weight: bold;
+        font-size: 1em;
+        margin-bottom: 2px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .thirteen-commando .wound-badge {
+        background: #e74c3c;
+        color: white;
+        font-size: 0.7em;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-weight: bold;
+    }
+
+    .thirteen-commando .effect-source {
+        color: #95a5a6;
+        font-size: 0.85em;
+        margin-bottom: 2px;
+    }
+
+    .thirteen-commando .effect-duration {
+        color: var(--color-primary);
+        font-size: 0.8em;
+        font-weight: bold;
+    }
+
+    .thirteen-commando .effect-item .effect-controls {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .thirteen-commando .effect-item .effect-controls a {
+        color: #bdc3c7;
+        padding: 4px 8px;
+        border: 1px solid transparent;
+        border-radius: 3px;
+        font-size: 0.8em;
+        min-width: auto;
+    }
+
+    .thirteen-commando .effect-item .effect-controls a:hover {
+        color: var(--color-primary);
+        border-color: var(--color-primary);
+        background: rgba(212, 175, 55, 0.1);
+    }
+
+    .thirteen-commando .wound-effect-note {
+        color: #95a5a6;
+        font-size: 0.8em;
+        font-style: italic;
+    }
+
+    .thirteen-commando .effects-empty {
+        padding: 20px;
+        text-align: center;
+    }
+
+    .thirteen-commando .effects-empty p {
+        color: #7f8c8d;
+        font-style: italic;
+        margin: 0;
+    }
+
+    .thirteen-commando .effects-help {
+        background: rgba(212, 175, 55, 0.1);
+        border: 2px solid var(--color-primary);
+        border-radius: 8px;
+        padding: 20px;
+        margin-top: 25px;
+    }
+
+    .thirteen-commando .effects-help h4 {
+        color: var(--color-primary);
+        text-align: center;
+        margin-bottom: 15px;
+        font-size: 1.3em;
+    }
+
+    .thirteen-commando .help-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 20px;
+    }
+
+    .thirteen-commando .help-item {
+        background: rgba(44, 62, 80, 0.4);
+        border-radius: 6px;
+        padding: 15px;
+    }
+
+    .thirteen-commando .help-item h5 {
+        color: var(--color-primary);
+        margin: 0 0 8px 0;
+        font-size: 1.1em;
+    }
+
+    .thirteen-commando .help-item p {
+        color: #bdc3c7;
+        margin: 0 0 10px 0;
+        font-size: 0.9em;
+        line-height: 1.4;
+    }
+
+    .thirteen-commando .help-examples {
+        font-size: 0.85em;
+        color: #95a5a6;
+    }
+
+    .thirteen-commando .help-examples strong {
+        color: var(--color-text);
+    }
+
+    /* Temporary Effects Styling */
+    .thirteen-commando .effect-category[data-category="temporary"] .effect-item {
+        border-left: 4px solid #e67e22;
+    }
+
+    .thirteen-commando .effect-category[data-category="temporary"] .effect-category-header {
+        background: rgba(230, 126, 34, 0.2);
+        border-bottom-color: #e67e22;
+    }
+
+    /* Passive Effects Styling */
+    .thirteen-commando .effect-category[data-category="passive"] .effect-item {
+        border-left: 4px solid #27ae60;
+    }
+
+    .thirteen-commando .effect-category[data-category="passive"] .effect-category-header {
+        background: rgba(39, 174, 96, 0.2);
+        border-bottom-color: #27ae60;
+    }
+
+    /* Inactive Effects Styling */
+    .thirteen-commando .effect-category[data-category="inactive"] .effect-item {
+        border-left: 4px solid #7f8c8d;
+        opacity: 0.7;
+    }
+
+    .thirteen-commando .effect-category[data-category="inactive"] .effect-category-header {
+        background: rgba(127, 140, 141, 0.2);
+        border-bottom-color: #7f8c8d;
+    }
+
+    @media (max-width: 768px) {
+        .thirteen-commando .help-grid {
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .thirteen-commando .effect-category-header {
+            flex-direction: column;
+            gap: 10px;
+            text-align: center;
+        }
+
+        .thirteen-commando .effect-item {
+            flex-direction: column;
+            gap: 10px;
+            align-items: stretch;
+        }
+
+        .thirteen-commando .effect-main {
+            justify-content: center;
+        }
+
+        .thirteen-commando .effect-item .effect-controls {
+            justify-content: center;
+        }
+    }
+</style>

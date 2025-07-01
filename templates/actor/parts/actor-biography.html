@@ -1,0 +1,135 @@
+{{!-- Biography Section --}}
+<div class="content-section">
+    <h2 class="section-title">Character Details</h2>
+    
+    <div class="character-details">
+        <div class="details-flex">
+            {{!-- Primary Role --}}
+            <div class="detail-group">
+                <label for="system.character_data.details.primary-role">Primary Role:</label>
+                <input type="text" 
+                       name="system.character_data.details.primary-role" 
+                       value="{{system.character_data.details.primary-role}}" 
+                       placeholder="Enter primary role" />
+            </div>
+
+            {{!-- Languages --}}
+            <div class="detail-group">
+                <label for="system.character_data.details.languages">Languages:</label>
+                <input type="text" 
+                       name="system.character_data.details.languages" 
+                       value="{{system.character_data.details.languages}}" 
+                       placeholder="Known languages (e.g., English, Spanish, French)" />
+            </div>
+        </div>
+
+        {{!-- Character Traits Flex --}}
+        <div class="traits-flex">
+            {{!-- Flaws --}}
+            <div class="trait-group flaws-group">
+                <label for="system.character_data.details.flaws">Flaws:</label>
+                <textarea class="textarea-red" name="system.character_data.details.flaws" rows="4" placeholder="Character weaknesses, disadvantages, or negative traits...">{{system.character_data.details.flaws}}</textarea>
+                <textarea class="textarea-red" name="system.character_data.details.flaws2" rows="4">{{system.character_data.details.flaws2}}</textarea>
+                <textarea class="textarea-red" name="system.character_data.details.flaws3" rows="4">{{system.character_data.details.flaws3}}</textarea>
+                <div class="help-text">
+                    <small>Examples: Overconfident, Short-tempered, Phobic, Addicted, Haunted by past</small>
+                </div>
+            </div>
+
+            {{!-- Merits --}}
+        <div class="trait-group merits-group">
+            <label for="system.character_data.details.merits">Merits:</label>
+            <textarea class="textarea-green" name="system.character_data.details.merits" rows="4" placeholder="Character strengths, advantages, or positive traits...">{{system.character_data.details.merits}}</textarea>
+            <textarea class="textarea-green" name="system.character_data.details.merits2" rows="4">{{system.character_data.details.merits2}}</textarea>
+            <textarea class="textarea-green" name="system.character_data.details.merits3" rows="4">{{system.character_data.details.merits3}}</textarea>
+            <div class="help-text">
+                <small>Examples: Keen Eye, Combat Reflexes, Iron Will, Photographic Memory</small>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+<style>
+
+/* Flex Layout for Biography Section */
+
+/* CSS Variables for theming */
+:root {
+    --color-primary: #d4af37;
+    --color-accent: #95a5a6;
+    --color-text: #ecf0f1;
+    --color-background: #2c3e50;
+    --tab-title-size: 1.5em;
+    --tab-title-letter-spc: 1px;
+    --tab-title-weight: normal;
+        
+.details-flex {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.traits-flex {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.detail-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: var(--color-primary);
+}
+
+.trait-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: var(--color-primary);
+}
+
+.summary-flex {
+    display: flex;
+    gap: 15px;
+}
+
+.summary-item {
+    flex: 1;
+    text-align: center;
+}
+
+textarea {
+    color: var(--color-accent);
+    border-radius: 6px;
+    line-height: 20px;
+    height: 60px;
+    padding: 10px 20px;
+    font-family: Arial, sans-serif;
+    white-space: pre-wrap;
+}
+
+.textarea-green {
+    border-left: 8px solid #27ae60;
+}
+
+.textarea-red {
+    border-left: 8px solid #e74c3c;
+}
+
+input {
+    color: var(--color-accent);
+    border-radius: 6px;
+    padding: 20px 40px;
+}
+    /* Responsive flex layout */
+    @media (max-width: 768px) {
+        .details-flex, .traits-flex, .summary-flex {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+</style>
