@@ -1,0 +1,57 @@
+{
+  "id": "thirteen-commando",
+  "title": "Thirteen Commando",
+  "description": "A tactical military RPG system featuring specialized commando operations",
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": "11",
+    "verified": "12"
+  },
+  "authors": [
+    {
+      "name": "Your Name",
+      "email": "your.email@example.com"
+    }
+  ],
+  "esmodules": [
+    "module/thirteen-commando.mjs"
+  ],
+  "packs": [
+    {
+      "name": "skills",
+      "label": "Thirteen Commando Skills",
+      "path": "packs/skills.db",
+      "type": "Item",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "equipment",
+      "label": "Thirteen Commando Equipment",
+      "path": "packs/equipment.db",
+      "type": "Item",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    }
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "gridDistance": 5,
+  "gridUnits": "ft",
+  "primaryTokenAttribute": "health",
+  "secondaryTokenAttribute": "stress",
+  "url": "",
+  "manifest": "",
+  "download": "",
+  "protected": false,
+  "flags": {}
+}
