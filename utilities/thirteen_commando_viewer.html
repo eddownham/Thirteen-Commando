@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thirteen Commando Character Viewer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: #ecf0f1;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(44, 62, 80, 0.95);
+            border: 2px solid #d4af37;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #d4af37;
+        }
+
+        .header h1 {
+            color: #d4af37;
+            font-size: 2.5em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .load-section {
+            background: rgba(52, 73, 94, 0.8);
+            border: 2px solid #34495e;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            background: #d4af37;
+            color: #2c3e50;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .file-input-wrapper:hover {
+            background: #f1c40f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .character-sheet {
+            display: none;
+            grid-template-columns: 300px 1fr 300px;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .character-sheet.active {
+            display: grid;
+        }
+
+        .left-panel, .right-panel {
+            background: rgba(52, 73, 94, 0.6);
+            border: 2px solid #34495e;
+            border-radius: 10px;
+            padding: 20px;
+            height: fit-content;
+        }
+
+        .center-panel {
+            background: rgba(52, 73, 94, 0.6);
+            border: 2px solid #34495e;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .character-portrait {
+            width: 100%;
+            max-width: 200px;
+            height: 200px;
+            border: 3px solid #d4af37;
+            border-radius: 10px;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            display: block;
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .character-name {
+            text-align: center;
+            font-size: 1.8em;
+            color: #d4af37;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .character-role {
+            text-align: center;
+            color: #bdc3c7;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .section {
+            margin-bottom: 25px;
+            background: rgba(44, 62, 80, 0.6);
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .section-title {
+            color: #d4af37;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #d4af37;
+        }
+
+        .attributes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .attribute-category {
+            background: rgba(52, 73, 94, 0.8);
+            border: 1px solid #34495e;
+            border-radius: 6px;
+            padding: 12px;
+        }
+
+        .attribute-category h4 {
+            color: #d4af37;
+            text-align: center;
+            font-size: 1em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .attribute {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            padding: 4px 8px;
+            background: rgba(44, 62, 80, 0.6);
+            border-radius: 4px;
+        }
+
+        .attribute:last-child {
+            margin-bottom: 0;
+        }
+
+        .attribute-name {
+            color: #bdc3c7;
+            font-size: 0.9em;
+            text-transform: capitalize;
+        }
+
+        .attribute-value {
+            color: #2ecc71;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .health-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .health-box {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            background: rgba(44, 62, 80, 0.6);
+            border-radius: 4px;
+        }
+
+        .health-checkbox {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #34495e;
+            border-radius: 3px;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .health-checkbox.checked {
+            background: #e74c3c;
+            border-color: #c0392b;
+        }
+
+        .health-checkbox.checked::after {
+            content: '✓';
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .skill-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: rgba(44, 62, 80, 0.6);
+            border-radius: 4px;
+            border-left: 3px solid #d4af37;
+        }
+
+        .skill-name {
+            color: #bdc3c7;
+            font-size: 0.9em;
+        }
+
+        .skill-total {
+            color: #2ecc71;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .equipment-list {
+            list-style: none;
+        }
+
+        .equipment-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 8px;
+            background: rgba(44, 62, 80, 0.6);
+            border-radius: 6px;
+            border-left: 4px solid #d4af37;
+        }
+
+        .equipment-name {
+            color: #ecf0f1;
+            font-weight: bold;
+        }
+
+        .equipment-type {
+            color: #95a5a6;
+            font-size: 0.8em;
+            text-transform: capitalize;
+        }
+
+        .weapon-item {
+            border-left-color: #e74c3c;
+        }
+
+        .resource-bar {
+            background: rgba(44, 62, 80, 0.8);
+            border: 2px solid #34495e;
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 15px;
+        }
+
+        .resource-label {
+            color: #d4af37;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .resource-value {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.2em;
+        }
+
+        .resource-current {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+
+        .resource-max {
+            color: #95a5a6;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-undaunted {
+            background: #27ae60;
+            color: white;
+        }
+
+        .biography-section {
+            background: rgba(44, 62, 80, 0.6);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .biography-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .biography-item {
+            background: rgba(52, 73, 94, 0.6);
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        .biography-label {
+            color: #d4af37;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .biography-value {
+            color: #ecf0f1;
+            font-size: 0.95em;
+        }
+
+        @media (max-width: 1024px) {
+            .character-sheet {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .attributes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Thirteen Commando</h1>
+            <p>Character Viewer</p>
+        </div>
+
+        <div class="load-section">
+            <label for="jsonFile" class="file-input-wrapper">
+                Load Character JSON
+                <input type="file" id="jsonFile" accept=".json" />
+            </label>
+            <p style="margin-top: 10px; color: #95a5a6;">Select a Thirteen Commando character JSON file to view</p>
+        </div>
+
+        <div id="characterSheet" class="character-sheet">
+            <!-- Left Panel -->
+            <div class="left-panel">
+                <img id="characterPortrait" class="character-portrait" src="" alt="Character Portrait" />
+                <div id="characterName" class="character-name">Character Name</div>
+                <div id="characterRole" class="character-role">Primary Role</div>
+
+                <!-- Resources -->
+                <div class="section">
+                    <div class="section-title">Resources</div>
+                    <div class="resource-bar">
+                        <div class="resource-label">Exertion</div>
+                        <div class="resource-value">
+                            <span id="exertionCurrent" class="resource-current">0</span>
+                            <span>/</span>
+                            <span id="exertionMax" class="resource-max">0</span>
+                        </div>
+                    </div>
+                    <div class="resource-bar">
+                        <div class="resource-label">Morale</div>
+                        <div class="resource-value">
+                            <span id="moraleState" class="status-indicator status-undaunted">Undaunted</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Health -->
+                <div class="section">
+                    <div class="section-title">Health Status</div>
+                    <div id="healthGrid" class="health-grid">
+                        <!-- Health boxes will be populated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Center Panel -->
+            <div class="center-panel">
+                <!-- Attributes -->
+                <div class="section">
+                    <div class="section-title">Attributes</div>
+                    <div class="attributes-grid">
+                        <div class="attribute-category">
+                            <h4>Physical</h4>
+                            <div id="physicalAttributes">
+                                <!-- Physical attributes will be populated here -->
+                            </div>
+                        </div>
+                        <div class="attribute-category">
+                            <h4>Mental</h4>
+                            <div id="mentalAttributes">
+                                <!-- Mental attributes will be populated here -->
+                            </div>
+                        </div>
+                        <div class="attribute-category">
+                            <h4>Social</h4>
+                            <div id="socialAttributes">
+                                <!-- Social attributes will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skills -->
+                <div class="section">
+                    <div class="section-title">Combat Skills</div>
+                    <div id="combatSkills" class="skills-grid">
+                        <!-- Combat skills will be populated here -->
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">General Skills</div>
+                    <div id="generalSkills" class="skills-grid">
+                        <!-- General skills will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Character Details -->
+                <div class="biography-section">
+                    <div class="section-title">Character Details</div>
+                    <div id="characterDetails" class="biography-grid">
+                        <!-- Character details will be populated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel -->
+            <div class="right-panel">
+                <!-- Equipment -->
+                <div class="section">
+                    <div class="section-title">Equipment</div>
+                    <ul id="equipmentList" class="equipment-list">
+                        <!-- Equipment will be populated here -->
+                    </ul>
+                </div>
+
+                <!-- Character Traits -->
+                <div class="section">
+                    <div class="section-title">Character Traits</div>
+                    <div id="characterTraits">
+                        <!-- Traits will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('jsonFile').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const characterData = JSON.parse(e.target.result);
+                        displayCharacter(characterData);
+                    } catch (error) {
+                        alert('Invalid JSON file. Please select a valid character file.');
+                        console.error('JSON Parse Error:', error);
+                    }
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        function displayCharacter(data) {
+            const system = data.system;
+            
+            // Character basic info
+            document.getElementById('characterName').textContent = data.name || 'Unknown Character';
+            document.getElementById('characterRole').textContent = system.character_data?.details?.['primary-role'] || 'Commando';
+            
+            // Set portrait (fallback to placeholder if no image)
+            const portrait = document.getElementById('characterPortrait');
+            if (data.img && data.img !== 'Bunny.jpg') {
+                portrait.src = data.img;
+            } else {
+                portrait.style.display = 'none';
+            }
+
+            // Resources
+            document.getElementById('exertionCurrent').textContent = system.exertion?.value || 0;
+            document.getElementById('exertionMax').textContent = system.exertion?.max || 0;
+            
+            const moraleState = document.getElementById('moraleState');
+            moraleState.textContent = (system.morale?.state || 'undaunted').toUpperCase();
+            moraleState.className = `status-indicator status-${system.morale?.state || 'undaunted'}`;
+
+            // Health
+            displayHealth(system.health);
+
+            // Attributes
+            displayAttributes(system.attributes);
+
+            // Skills
+            displaySkills(system.skills);
+
+            // Equipment
+            displayEquipment(data.items);
+
+            // Character Details
+            displayCharacterDetails(system);
+
+            // Character Traits
+            displayCharacterTraits(system);
+
+            // Show the character sheet
+            document.getElementById('characterSheet').classList.add('active');
+        }
+
+        function displayHealth(health) {
+            const healthGrid = document.getElementById('healthGrid');
+            healthGrid.innerHTML = '';
+
+            const healthLevels = [
+                'bruised1', 'bruised2', 'grazed1', 'grazed2',
+                'hurt1', 'hurt2', 'injured1', 'injured2',
+                'critical1', 'critical2', 'dead'
+            ];
+
+            healthLevels.forEach(level => {
+                const healthBox = document.createElement('div');
+                healthBox.className = 'health-box';
+                
+                const checkbox = document.createElement('div');
+                checkbox.className = `health-checkbox ${health[level] ? 'checked' : ''}`;
+                
+                const label = document.createElement('span');
+                label.textContent = level.replace(/\d+/, '').toUpperCase();
+                
+                healthBox.appendChild(checkbox);
+                healthBox.appendChild(label);
+                healthGrid.appendChild(healthBox);
+            });
+        }
+
+        function displayAttributes(attributes) {
+            const categories = ['physical', 'mental', 'social'];
+            
+            categories.forEach(category => {
+                const container = document.getElementById(`${category}Attributes`);
+                container.innerHTML = '';
+                
+                Object.entries(attributes[category] || {}).forEach(([name, attr]) => {
+                    const attrDiv = document.createElement('div');
+                    attrDiv.className = 'attribute';
+                    
+                    const nameSpan = document.createElement('span');
+                    nameSpan.className = 'attribute-name';
+                    nameSpan.textContent = name;
+                    
+                    const valueSpan = document.createElement('span');
+                    valueSpan.className = 'attribute-value';
+                    valueSpan.textContent = attr.value || 0;
+                    
+                    attrDiv.appendChild(nameSpan);
+                    attrDiv.appendChild(valueSpan);
+                    container.appendChild(attrDiv);
+                });
+            });
+        }
+
+        function displaySkills(skills) {
+            displaySkillCategory('combatSkills', skills.combat || {});
+            displaySkillCategory('generalSkills', skills.general || {});
+        }
+
+        function displaySkillCategory(containerId, skillsData) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+
+            Object.entries(skillsData).forEach(([skillName, skill]) => {
+                const total = calculateSkillTotal(skill);
+                
+                if (total > 0) {
+                    const skillDiv = document.createElement('div');
+                    skillDiv.className = 'skill-item';
+                    
+                    const nameSpan = document.createElement('span');
+                    nameSpan.className = 'skill-name';
+                    nameSpan.textContent = formatSkillName(skillName);
+                    
+                    const totalSpan = document.createElement('span');
+                    totalSpan.className = 'skill-total';
+                    totalSpan.textContent = total;
+                    
+                    skillDiv.appendChild(nameSpan);
+                    skillDiv.appendChild(totalSpan);
+                    container.appendChild(skillDiv);
+                }
+            });
+        }
+
+        function calculateSkillTotal(skill) {
+            return (skill.breeding || 0) + (skill.commando || 0) + 
+                   (skill.primary || 0) + (skill.secondary || 0) + 
+                   (skill.tertiary || 0) + (skill.modifier || 0);
+        }
+
+        function formatSkillName(skillName) {
+            return skillName.replace(/([A-Z])/g, ' $1')
+                           .replace(/^./, str => str.toUpperCase())
+                           .trim();
+        }
+
+        function displayEquipment(items) {
+            const equipmentList = document.getElementById('equipmentList');
+            equipmentList.innerHTML = '';
+
+            (items || []).forEach(item => {
+                const li = document.createElement('li');
+                li.className = `equipment-item ${item.type === 'weapon' ? 'weapon-item' : ''}`;
+                
+                const nameDiv = document.createElement('div');
+                const nameSpan = document.createElement('div');
+                nameSpan.className = 'equipment-name';
+                nameSpan.textContent = item.name;
+                
+                const typeSpan = document.createElement('div');
+                typeSpan.className = 'equipment-type';
+                typeSpan.textContent = item.type;
+                
+                nameDiv.appendChild(nameSpan);
+                nameDiv.appendChild(typeSpan);
+                
+                li.appendChild(nameDiv);
+                equipmentList.appendChild(li);
+            });
+        }
+
+        function displayCharacterDetails(system) {
+            const container = document.getElementById('characterDetails');
+            container.innerHTML = '';
+
+            const details = system.character_data?.details || {};
+            
+            const detailFields = [
+                { key: 'languages', label: 'Languages' },
+                { key: 'flaws', label: 'Flaws' },
+                { key: 'flaws2', label: 'Additional Flaws' },
+                { key: 'merits', label: 'Merits' },
+                { key: 'merits2', label: 'Additional Merits' },
+                { key: 'playerName', label: 'Player' }
+            ];
+
+            detailFields.forEach(field => {
+                if (details[field.key] && details[field.key].trim()) {
+                    const detailDiv = document.createElement('div');
+                    detailDiv.className = 'biography-item';
+                    
+                    const label = document.createElement('div');
+                    label.className = 'biography-label';
+                    label.textContent = field.label;
+                    
+                    const value = document.createElement('div');
+                    value.className = 'biography-value';
+                    value.textContent = details[field.key];
+                    
+                    detailDiv.appendChild(label);
+                    detailDiv.appendChild(value);
+                    container.appendChild(detailDiv);
+                }
+            });
+        }
+
+        function displayCharacterTraits(system) {
+            const container = document.getElementById('characterTraits');
+            container.innerHTML = '';
+
+            // Breeding traits
+            if (system.breeding) {
+                const breedingDiv = document.createElement('div');
+                breedingDiv.className = 'biography-item';
+                breedingDiv.innerHTML = `
+                    <div class="biography-label">Breeding</div>
+                    <div class="biography-value">
+                        Five Points: ${system.breeding.fivepoints || 'None'}<br>
+                        Three Points: ${system.breeding.threepoints || 'None'}<br>
+                        Two Points: ${system.breeding.twopoints || 'None'}
+                    </div>
+                `;
+                container.appendChild(breedingDiv);
+            }
+
+            // Mindset
+            if (system.mindset?.selected) {
+                const mindsetDiv = document.createElement('div');
+                mindsetDiv.className = 'biography-item';
+                mindsetDiv.innerHTML = `
+                    <div class="biography-label">Mindset</div>
+                    <div class="biography-value">${system.mindset.selected}</div>
+                `;
+                container.appendChild(mindsetDiv);
+            }
+
+            // Fields
+            if (system.fields) {
+                const fieldsDiv = document.createElement('div');
+                fieldsDiv.className = 'biography-item';
+                fieldsDiv.innerHTML = `
+                    <div class="biography-label">Field Specializations</div>
+                    <div class="biography-value">
+                        Primary: ${system.fields.primary || 'None'}<br>
+                        Secondary: ${system.fields.secondary || 'None'}<br>
+                        Tertiary: ${system.fields.tertiary || 'None'}
+                    </div>
+                `;
+                container.appendChild(fieldsDiv);
+            }
+        }
+    </script>
+</body>
+</html>
