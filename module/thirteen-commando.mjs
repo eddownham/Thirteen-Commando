@@ -1092,60 +1092,125 @@ async function registerStanceTemplates() {
 /**
  * Add Effect Template magic wand to token HUD
  */
+/**
+ * Add Effect Template magic wand to token HUD
+ * COMPLETELY REWRITTEN for Foundry VTT v13 new palette-based HUD structure
+ */
 Hooks.on("renderTokenHUD", (hud, html, data) => {
     // Only show for GMs
     if (!game.user.isGM) return;
 
     console.log("Adding effect template button to token HUD for:", hud.object.document.name);
 
-    // Find and hide the status effects BUTTON (not just the menu)
-    const statusEffectsButton = html.find('[data-action="effects"]');
-    if (statusEffectsButton.length > 0) {
-        statusEffectsButton.hide();
+    // Convert HTMLElement to jQuery for easier manipulation
+    const $html = $(html);
+
+    // Find the right column where we want to add our button
+    const $rightCol = $html.find('.col.right');
+    if ($rightCol.length === 0) {
+        console.warn("Could not find right column in token HUD");
+        return;
+    }
+
+    // Find the status effects button/palette area
+    const $statusEffectsButton = $html.find('[data-action="togglePalette"][data-palette="effects"]');
+    const $statusEffectsPalette = $html.find('.palette.status-effects');
+
+    // Hide the existing status effects button and palette
+    if ($statusEffectsButton.length > 0) {
+        $statusEffectsButton.hide();
         console.log("Hidden status effects button");
-    } else {
-        console.warn("Could not find status effects button");
     }
 
-    // Also hide the status effects menu to be thorough
-    const statusEffectsMenu = html.find('.status-effects');
-    if (statusEffectsMenu.length > 0) {
-        statusEffectsMenu.hide();
-        console.log("Hidden status effects menu");
+    if ($statusEffectsPalette.length > 0) {
+        $statusEffectsPalette.hide();
+        console.log("Hidden status effects palette");
     }
 
-    // Add our effect template button in place of the hidden button
-    const templateButton = $(`
-        <div class="control-icon effect-templates" title="Apply Effect Template" data-action="effect-templates">
+    // Create our effect template button with the same styling as other HUD buttons
+    const $templateButton = $(`
+        <button type="button" class="control-icon effect-templates" 
+                data-action="effect-templates" 
+                data-tooltip="Apply Effect Template" 
+                aria-label="Apply Effect Template">
             <i class="fas fa-magic" style="color: #d4af37;"></i>
-        </div>
+        </button>
     `);
 
     // Add click handler for template menu
-    templateButton.click(async (event) => {
+    $templateButton.on('click', async (event) => {
         event.preventDefault();
         event.stopPropagation();
-        
+
         console.log("Effect template button clicked");
-        
+
         // Store reference to token document
         const tokenDoc = hud.object.document;
-        
+
         // Show the template menu
         await _showEffectTemplateMenu(tokenDoc);
     });
 
-    // Insert the button where the status effects button was
-    if (statusEffectsButton.length > 0) {
-        statusEffectsButton.after(templateButton);
+    // Insert the button in the right column
+    // Try to place it where the status effects button was, or at the end
+    if ($statusEffectsButton.length > 0) {
+        $statusEffectsButton.after($templateButton);
     } else {
-        // Fallback: add to right column
-        const rightCol = html.find('.col.right');
-        rightCol.append(templateButton);
+        // Fallback: add to the end of the right column
+        $rightCol.append($templateButton);
     }
-    
-    console.log("Template button added, status effects button hidden");
+
+    console.log("Template button added to token HUD");
 });
+
+/**
+ * Alternative approach - Replace the status effects palette entirely
+ * Uncomment this version if the above doesn't work properly
+ */
+/*
+Hooks.on("renderTokenHUD", (hud, html, data) => {
+    // Only show for GMs
+    if (!game.user.isGM) return;
+
+    console.log("Adding effect template button to token HUD for:", hud.object.document.name);
+
+    // Convert HTMLElement to jQuery
+    const $html = $(html);
+
+    // Find and replace the entire status effects section
+    const $statusSection = $html.find('.palette.status-effects').parent();
+    
+    if ($statusSection.length > 0) {
+        // Create our custom effect template section
+        const $templateSection = $(`
+            <div class="effect-templates-section">
+                <button type="button" class="control-icon effect-templates" 
+                        data-action="effect-templates" 
+                        data-tooltip="Apply Effect Template" 
+                        aria-label="Apply Effect Template">
+                    <i class="fas fa-magic" style="color: #d4af37; font-size: 16px;"></i>
+                </button>
+            </div>
+        `);
+
+        // Add click handler
+        $templateSection.find('.effect-templates').on('click', async (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            console.log("Effect template button clicked");
+            const tokenDoc = hud.object.document;
+            await _showEffectTemplateMenu(tokenDoc);
+        });
+
+        // Replace the status effects section
+        $statusSection.replaceWith($templateSection);
+        console.log("Replaced status effects section with template button");
+    } else {
+        console.warn("Could not find status effects section to replace");
+    }
+});
+*/
 
 /**
  * Show effect template selection dialog
