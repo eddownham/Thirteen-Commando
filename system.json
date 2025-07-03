@@ -51,7 +51,7 @@
   "secondaryTokenAttribute": "stress",
   "url": "https://github.com/eddownham/Thirteen-Commando",
   "manifest": "https://github.com/eddownham/Thirteen-Commando/system.json",
-  "download": "https://github.com/eddownham/Thirteen-Commando/archive/refs/tags/v1.0.1.zip",
+  "download": "https://github.com/eddownham/Thirteen-Commando/archive/refs/tags/v1.0.2.zip",
   "protected": false,
   "flags": {}
 }
