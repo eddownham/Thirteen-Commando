@@ -898,7 +898,7 @@ Hooks.on('updateToken', async (document, change, options, userId) => {
     user: userId,
     speaker: ChatMessage.getSpeaker({ actor: document.actor }),
     content: `
-      <div class="thirteen-commando chat-card">
+      <div class="chat-card">
         <header class="card-header flexrow">
           <h3 class="item-name">Movement</h3>
         </header>
