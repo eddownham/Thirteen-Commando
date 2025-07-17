@@ -201,18 +201,29 @@ Handlebars.registerHelper('multiply', function(factor1, factor2) {
   return Math.round(result * 100) / 100;
 });
 
-Handlebars.registerHelper('divide', function(dividend, divisor) {
-  // Convert to numbers and handle edge cases
-  const num1 = Number(dividend) || 0;
-  const num2 = Number(divisor) || 1; // Default to 1 to avoid division by zero
-  // Avoid division by zero
-  if (num2 === 0) {
-    console.warn('Division by zero attempted in divide helper');
-    return 0;
-  }
-  // Perform division and round to 2 decimal places
-  const result = num1 / num2;
-  return Math.round(result * 100) / 100;
+Handlebars.registerHelper('divide', function (dividend, divisor, rounding) {
+    const num1 = Number(dividend) || 0;
+    const num2 = Number(divisor) || 1;
+
+    // Avoid division by zero
+    if (num2 === 0) {
+        return 0;
+    }
+
+    // Perform division
+    const result = num1 / num2;
+
+    // Handle optional rounding parameter
+    if (rounding === 'U') {
+        // Round up (ceiling)
+        return Math.ceil(result);
+    } else if (rounding === 'D') {
+        // Round down (floor)
+        return Math.floor(result);
+    } else {
+        // Default behavior: round to 2 decimal places (backward compatible)
+        return Math.round(result * 100) / 100;
+    }
 });
 
 Handlebars.registerHelper('average', function(...values) {
