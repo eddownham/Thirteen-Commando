@@ -1,5 +1,5 @@
 /**
- * Complete Thirteen Commando Actor Sheet - With All Six Components
+ * Complete Thirteen Commando Actor Sheet - With All Six Components + Scaling
  */
 
 // Import components
@@ -139,6 +139,122 @@ export class ThirteenCommandoActorSheet extends ActorSheet {
     }
 
     /**
+     * Apply scaling to the character sheet
+     */
+    _applyScaling() {
+        const scale = game.settings.get('thirteen-commando', 'characterSheetScale') / 100;
+        console.log('Scale factor =>', scale);
+        console.log('Element exists:', !!this.element);
+        console.log('Element[0] exists:', !!(this.element && this.element[0]));
+
+        if (this.element && this.element[0]) {
+            const element = this.element[0];
+
+            console.log('Applying scale transform:', `scale(${scale})`);
+
+            // Clear any existing scaling
+            element.style.zoom = '';
+            element.style.transform = '';
+            element.style.width = '';
+            element.style.height = '';
+
+            // Apply zoom scaling to the content
+            // The zoom property scales both the content AND the window dimensions
+            element.style.zoom = scale;
+            
+            console.log('Applied zoom scaling - letting zoom handle window size automatically');
+
+            // DON'T call setPosition() - the zoom property handles the window scaling
+            // This was causing double scaling (zoom + setPosition)
+
+            // Add a class for any scale-specific styling
+            element.classList.toggle('scaled', scale !== 1);
+            element.style.setProperty('--sheet-scale', scale);
+
+            console.log('Scaling applied successfully');
+        } else {
+            console.log('Element not ready for scaling');
+        }
+    }
+
+    /**
+     * Add zoom controls to the sheet (optional)
+     */
+    _addZoomControls() {
+        if (!this.actor.isOwner) return; // Only for owners
+        
+        const currentScale = game.settings.get('thirteen-commando', 'characterSheetScale');
+        
+        const zoomControl = $(`
+            <div class="zoom-controls" style="
+                position: absolute; 
+                top: 5px; 
+                right: 250px; 
+                z-index: 1000;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                background: rgba(0,0,0,0.7);
+                padding: 5px;
+                border-radius: 4px;
+            ">
+                <button type="button" class="zoom-out" title="Zoom Out" style="
+                    background: none;
+                    border: 1px solid #ccc;
+                    color: #fff;
+                    padding: 2px 6px;
+                    cursor: pointer;
+                    border-radius: 3px;
+                ">
+                    <i class="fas fa-search-minus"></i>
+                </button>
+                <span class="zoom-level" style="
+                    color: #fff;
+                    font-size: 12px;
+                    min-width: 35px;
+                    text-align: center;
+                ">${currentScale}%</span>
+                <button type="button" class="zoom-in" title="Zoom In" style="
+                    background: none;
+                    border: 1px solid #ccc;
+                    color: #fff;
+                    padding: 2px 6px;
+                    cursor: pointer;
+                    border-radius: 3px;
+                ">
+                    <i class="fas fa-search-plus"></i>
+                </button>
+            </div>
+        `);
+        
+        this.element.append(zoomControl);
+        
+        // Add event listeners
+        zoomControl.find('.zoom-in').click((e) => {
+            e.preventDefault();
+            this._adjustZoom(5);
+        });
+        
+        zoomControl.find('.zoom-out').click((e) => {
+            e.preventDefault(); 
+            this._adjustZoom(-5);
+        });
+    }
+
+    /**
+     * Adjust zoom level
+     */
+    _adjustZoom(change) {
+        const currentZoom = game.settings.get('thirteen-commando', 'characterSheetScale');
+        const newZoom = Math.max(50, Math.min(200, currentZoom + change));
+        
+        game.settings.set('thirteen-commando', 'characterSheetScale', newZoom);
+        
+        // Update the zoom control display
+        this.element.find('.zoom-level').text(`${newZoom}%`);
+    }
+
+    /**
      * Get skill total by skill key - DELEGATED TO QUICK SKILLS COMPONENT
      */
     getSkillTotal(skillKey) {
@@ -255,8 +371,17 @@ export class ThirteenCommandoActorSheet extends ActorSheet {
         return this.diceRolling.rollQuickSkill(skillKey, skillName, skillTotal);
     }
 
+    /**
+     * Override activateListeners to apply scaling after sheet renders
+     */
     activateListeners(html) {
         super.activateListeners(html);
+
+        // Apply scaling after the sheet is fully rendered
+        this._applyScaling();
+        
+        // Add zoom controls (optional)
+        this._addZoomControls();
 
         //Damage button Handler
         html.find('.weapon-damage-btn').click(this._onWeaponDamage.bind(this));
@@ -558,8 +683,8 @@ export class ThirteenCommandoActorSheet extends ActorSheet {
     }
 
     /**
- * Handle weapon damage roll
- */
+     * Handle weapon damage roll
+     */
     async _onWeaponDamage(event) {
         event.preventDefault();
         event.stopPropagation();
