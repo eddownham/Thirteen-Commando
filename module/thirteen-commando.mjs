@@ -43,6 +43,29 @@ Hooks.once('init', async function() {
     }
   });
 
+    // In thirteen-commando.mjs - Add system setting
+    game.settings.register('thirteen-commando', 'characterSheetScale', {
+        name: 'Character Sheet Scale',
+        hint: 'Scale character sheets for different monitor sizes (50% - 200%)',
+        scope: 'client',
+        config: true,
+        type: Number,
+        range: {
+            min: 50,
+            max: 200,
+            step: 25
+        },
+        default: 100,
+        onChange: () => {
+            // Update all open character sheets
+            Object.values(ui.windows).forEach(window => {
+                if (window instanceof ThirteenCommandoActorSheet) {
+                    window.render();
+                }
+            });
+        }
+    });
+
   // Register live movement cost settings
   game.settings.register('thirteen-commando', 'showMovementCosts', {
     name: 'Show Live Movement Costs',
