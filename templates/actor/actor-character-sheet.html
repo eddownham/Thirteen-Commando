@@ -3,7 +3,8 @@
         /* Basic Layout CSS - Minimal Styling */
 
         /* CSS Variables for theming */
-        :root {
+
+        .thirteen-commando.sheet.actor {
             --color-primary: #d4af37;
             --color-accent: #95a5a6;
             --color-text: #ecf0f1;
@@ -13,7 +14,8 @@
             --tab-title-weight: normal;
         }
 
-        * {
+
+        .thirteen-commando * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -151,19 +153,19 @@
             background: rgba(46, 204, 113, 0.4);
         }
 
-            /* Disabled checkbox styling */
-            .health input[type="checkbox"]:disabled {
-                opacity: 0.4;
-                cursor: not-allowed;
-                background-color: #555;
-            }
+        /* Disabled checkbox styling */
+        .health input[type="checkbox"]:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background-color: #555;
+        }
 
-                /* Visual indicator for disabled state */
-                .health input[type="checkbox"]:disabled + label,
-                .health label:has(+ input[type="checkbox"]:disabled) {
-                    opacity: 0.4;
-                    color: #888;
-                }
+        /* Visual indicator for disabled state */
+        .health input[type="checkbox"]:disabled + label,
+        .health label:has(+ input[type="checkbox"]:disabled) {
+            opacity: 0.4;
+            color: #888;
+        }
 
         .profile-img {
             width: 200px !important;
@@ -191,10 +193,10 @@
             max-width: 300px; 
         }
 
-            .character-name:focus {
-                border-bottom-color: #d4af37;
-                outline: none;
-            }
+        .character-name:focus {
+            border-bottom-color: #d4af37;
+            outline: none;
+        }
 
         .quick-stats {
             display: flex;
@@ -269,23 +271,23 @@
             border: 1px solid #95a5a6;
         }
 
-            /* Rollable styling for attributes */
-            .attr-item.rollable {
-                cursor: pointer;
-                transition: all 0.2s ease;
-            }
+        /* Rollable styling for attributes */
+        .attr-item.rollable {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
 
-                .attr-item.rollable:hover {
-                    background-color: rgba(212, 175, 55, 0.2);
-                    box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
-                    transform: translateY(-1px);
-                    border-color: #d4af37;
-                }
+        .attr-item.rollable:hover {
+            background-color: rgba(212, 175, 55, 0.2);
+            box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+            transform: translateY(-1px);
+            border-color: #d4af37;
+        }
 
-                .attr-item.rollable:active {
-                    transform: translateY(0);
-                    box-shadow: 0 0 4px rgba(212, 175, 55, 0.5);
-                }
+        .attr-item.rollable:active {
+            transform: translateY(0);
+            box-shadow: 0 0 4px rgba(212, 175, 55, 0.5);
+        }
 
         .attr-name {
             font-size: 0.8em;
@@ -336,7 +338,7 @@
         .skill-item {
             display: flex;
             justify-content: space-between;
-            align-items: center; /* ADD THIS LINE */
+            align-items: center;  ADD THIS LINE 
             padding: 4px 8px;
             background: rgba(52, 73, 94, 0.6);
             border-radius: 4px;
@@ -378,35 +380,37 @@
             padding: 0 10px;
         }
 
-            .sheet-tabs .item {
-                background: rgba(52, 73, 94, 0.8);
-                border: 2px solid #95a5a6;
-                border-radius: 8px 8px 0 0;
-                padding: 8px 16px;
-                color: #bdc3c7;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                text-decoration: none;
-                font-weight: bold;
-                font-size: 0.9em;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-            }
+        .sheet-tabs .item {
+            background: rgba(52, 73, 94, 0.8);
+            border: 2px solid #95a5a6;
+            border-radius: 8px 8px 0 0;
+            padding: 8px 16px;
+            color: #bdc3c7;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-                .sheet-tabs .item:hover {
-                    background: rgba(52, 73, 94, 1);
-                    color: #ecf0f1;
-                    border-color: #bdc3c7;
-                }
+        .sheet-tabs .item:hover {
+            background: rgba(52, 73, 94, 1);
+            color: #ecf0f1;
+            border-color: #bdc3c7;
+        }
 
-                .sheet-tabs .item.active {
-                    background: rgba(212, 175, 55, 0.2);
-                    border-color: #d4af37;
-                    color: #d4af37;
-                    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-                }
+        .sheet-tabs .item.active {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: #d4af37;
+            color: #d4af37;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
 
         /* Tab Content Area - Scrollable */
+
+        
         .sheet-body {
             flex: 1;
             overflow: hidden;
@@ -420,10 +424,15 @@
             height: 100%;
         }
 
-            .tab.active {
-                display: block;
-            }
+        /*Start*/
+        .thirteen-commando.actor.sheet .sheet-body .tab.active {
+            display: block;
+        }
 
+        #chat.tab.active {
+            display: flex !important;
+        }
+        /*end*/
         .content-section {
             background: rgba(52, 73, 94, 0.4);
             border: 2px solid #95a5a6;
@@ -431,7 +440,7 @@
             padding: 20px;
             margin-bottom: 20px;
         }
-
+        
         .section-title {
             color: var(--color-primary);
             font-size: 1.3em;
@@ -877,7 +886,7 @@
                 </section>
             </main>
         </div>
-
+    
         <script>
             /**
              * Updates health checkboxes based on guts attribute value
@@ -1059,5 +1068,5 @@
                 activateExertionListeners($(document));
             });
         </script>
-
+  
 </form>
