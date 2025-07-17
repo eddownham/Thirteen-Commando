@@ -9,18 +9,20 @@
             </h1>
             <div class="weapon-type-row">
                 <select name="system.weaponType" class="weapon-type-select">
-                    <option value="rifle" {{#if (eq system.weaponType "rifle")}}selected{{/if}}>Rifle</option>
-                    <option value="pistol" {{#if (eq system.weaponType "pistol")}}selected{{/if}}>Pistol</option>
-                    <option value="submachinegun" {{#if (eq system.weaponType "submachinegun")}}selected{{/if}}>Submachine Gun</option>
-                    <option value="machinegun" {{#if (eq system.weaponType "machinegun")}}selected{{/if}}>Machine Gun</option>
-                    <option value="heavyweapon" {{#if (eq system.weaponType "heavyweapon")}}selected{{/if}}>Heavy Weapon</option>
+                    <option value="rifle" {{#if (eq system.weaponType "rifle")}} selected{{/if}}>Rifle</option>
+                    <option value="pistol" {{#if (eq system.weaponType "pistol")}} selected{{/if}}>Pistol</option>
+                    <option value="submachinegun" {{#if (eq system.weaponType "submachinegun")}} selected{{/if}}>Submachine Gun</option>
+                    <option value="machinegun" {{#if (eq system.weaponType "machinegun")}} selected{{/if}}>Machine Gun</option>
+                    <option value="heavyweapon" {{#if (eq system.weaponType "heavyweapon")}} selected{{/if}}>Heavy Weapon</option>
+                    <option value="meleeweapon" {{#if (eq system.weaponType "meleeweapon")}} selected{{/if}}>Melee Weapon</option>
                 </select>
                 <select name="system.proficiency" class="proficiency-select">
-                    <option value="rifles" {{#if (eq system.proficiency "rifles")}}selected{{/if}}>Rifles Skill</option>
-                    <option value="pistols" {{#if (eq system.proficiency "pistols")}}selected{{/if}}>Pistols Skill</option>
-                    <option value="submachineguns" {{#if (eq system.proficiency "submachineguns")}}selected{{/if}}>SMG Skill</option>
-                    <option value="machinegunner" {{#if (eq system.proficiency "machinegunner")}}selected{{/if}}>Machine Gun Skill</option>
-                    <option value="heavyweapons" {{#if (eq system.proficiency "heavyweapons")}}selected{{/if}}>Heavy Weapons Skill</option>
+                    <option value="rifles" {{#if (eq system.proficiency "rifles")}} selected{{/if}}>Rifles Skill</option>
+                    <option value="pistols" {{#if (eq system.proficiency "pistols")}} selected{{/if}}>Pistols Skill</option>
+                    <option value="submachineguns" {{#if (eq system.proficiency "submachineguns")}} selected{{/if}}>SMG Skill</option>
+                    <option value="machinegunner" {{#if (eq system.proficiency "machinegunner")}} selected{{/if}}>Machine Gun Skill</option>
+                    <option value="heavyweapons" {{#if (eq system.proficiency "heavyweapons")}} selected{{/if}}>Heavy Weapons Skill</option>
+                    <option value="meleecombat" {{#if (eq system.proficiency "meleecombat")}} selected{{/if}}>Melee Weapons Skill</option>
                 </select>
             </div>
         </div>
@@ -192,9 +194,10 @@
 <style>
     .thirteen-commando.item {
         --color-primary: #d4af37;
-        --color-accent: #34495e;
+        --color-accent: #95a5a6;
         --color-text: #ecf0f1;
         --color-bg: #2c3e50;
+        --color-background: #2c3e50;
     }
 
     .thirteen-commando.item .sheet-header {
@@ -236,10 +239,10 @@
 
     .thirteen-commando.item .weapon-type-select,
     .thirteen-commando.item .proficiency-select {
-        background: rgba(44, 62, 80, 0.8);
+        background-color: var(--color-background);
         border: 2px solid var(--color-accent);
         border-radius: 5px;
-        color: var(--color-text);
+        color: var(--color-accent);
         padding: 12px 16px;
         flex: 1;
         font-size: 1em;
