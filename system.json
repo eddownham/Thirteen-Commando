@@ -2,7 +2,7 @@
   "id": "thirteen-commando",
   "title": "Thirteen Commando",
   "description": "A tactical military RPG system featuring specialized commando operations",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "compatibility": {
     "minimum": "12",
     "verified": "13"
@@ -51,7 +51,7 @@
   "secondaryTokenAttribute": "stress",
   "url": "https://github.com/eddownham/Thirteen-Commando",
   "manifest": "https://raw.githubusercontent.com/eddownham/Thirteen-Commando/refs/heads/main/system.json",
-  "download": "https://github.com/eddownham/Thirteen-Commando/archive/refs/tags/v1.0.4.zip",
+  "download": "https://github.com/eddownham/Thirteen-Commando/archive/refs/heads/main.zip",
   "protected": false,
   "flags": {}
 }
