@@ -61,8 +61,8 @@ export class ThirteenCommandoActor extends Actor {
     // Update health boxes based on Guts
     this._updateHealthBoxes(systemData);
 
-    // Apply wound effects
-    this._applyWoundEffects();
+    // Apply wound effects - DISABLED: Now handled by HealthWounds component
+    // this._applyWoundEffects();
 
     // Apply morale effects to exertion
     this._applyMoraleEffects(systemData);
@@ -220,37 +220,14 @@ export class ThirteenCommandoActor extends Actor {
 
   /**
    * Apply wound effects based on current health status
+   * DISABLED: Wound effects are now handled by the HealthWounds component
+   * This method is kept for compatibility but no longer creates wound effects
    */
   _applyWoundEffects() {
-    const health = this.system.health;
-    if (!health) return;
-
-    // Determine worst wound level
-    let woundPenalty = 0;
-    let woundType = '';
-
-    if (health.dead) {
-      woundPenalty = -10;
-      woundType = 'dead';
-    } else if (health.critical1 || health.critical2) {
-      woundPenalty = -4;
-      woundType = 'critical';
-    } else if (health.injured1 || health.injured2) {
-      woundPenalty = -3;
-      woundType = 'injured';
-    } else if (health.hurt1 || health.hurt2) {
-      woundPenalty = -2;
-      woundType = 'hurt';
-    } else if (health.grazed1 || health.grazed2) {
-      woundPenalty = -1;
-      woundType = 'grazed';
-    }
-
-    if (woundPenalty < 0) {
-      this._createWoundEffect(woundType, woundPenalty);
-    } else {
-      this._removeWoundEffects();
-    }
+    // Wound effects are now handled by HealthWounds component using effect templates
+    // This legacy method has been disabled to prevent duplicate wound effects
+    console.log(`${this.name} - Wound effects handled by HealthWounds component (legacy method disabled)`);
+    return;
   }
 
   /**
@@ -270,203 +247,30 @@ export class ThirteenCommandoActor extends Actor {
   }
 
   /**
-   * Create wound effect
+   * Create wound effect - LEGACY METHOD (DISABLED)
+   * This method has been disabled as wound effects are now handled by HealthWounds component
    */
   async _createWoundEffect(woundType, penalty) {
-    // Check if wound effect already exists
-    const existingEffect = this.effects.find(e => 
-      e.getFlag('thirteen-commando', 'isWoundEffect') === true
-    );
-
-    if (existingEffect) {
-      // Update existing effect if penalty changed
-      const currentPenalty = existingEffect.changes[0]?.value || 0;
-      if (currentPenalty != penalty) {
-        await existingEffect.update({
-          name: `Wound Penalty (${woundType})`,
-          changes: this._getWoundEffectChanges(woundType, penalty)
-        });
-      }
-      return;
-    }
-
-    // Create new wound effect
-    const effectData = {
-      name: `Wound Penalty (${woundType})`,
-      icon: 'icons/svg/blood.svg',
-      origin: this.uuid,
-      duration: {},
-      changes: this._getWoundEffectChanges(woundType, penalty),
-      disabled: false,
-      transfer: false,
-      flags: {
-        'thirteen-commando': {
-          isWoundEffect: true,
-          woundType: woundType
-        }
-      }
-    };
-
-    await this.createEmbeddedDocuments('ActiveEffect', [effectData]);
+    console.log(`${this.name} - Legacy _createWoundEffect() called but disabled - HealthWounds component handles wound effects`);
+    return;
   }
 
   /**
-   * Get wound effect changes based on wound type and penalty
+   * Get wound effect changes based on wound type and penalty - LEGACY METHOD (DISABLED)
+   * This method has been disabled as wound effects are now handled by HealthWounds component
    */
   _getWoundEffectChanges(woundType, penalty) {
-    const changes = [];
-
-    switch (woundType) {
-      case 'dead':
-        // Dead characters can't act
-        changes.push({
-          key: 'system.attributes.physical.might.value',
-          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-          value: penalty,
-          priority: 20
-        });
-        break;
-
-      case 'critical':
-        // Critical wounds affect all attributes
-        changes.push(
-          {
-            key: 'system.attributes.physical.might.value',
-            mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-            value: penalty,
-            priority: 20
-          },
-          {
-            key: 'system.attributes.physical.coordination.value',
-            mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-            value: penalty,
-            priority: 20
-          },
-          {
-            key: 'system.attributes.physical.endurance.value',
-            mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-            value: penalty,
-            priority: 20
-          },
-          {
-            key: 'system.attributes.mental.intelligence.value',
-            mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-            value: penalty,
-            priority: 20
-          },
-          {
-            key: 'system.attributes.mental.guile.value',
-            mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-            value: penalty,
-            priority: 20
-          },
-          {
-            key: 'system.attributes.mental.guts.value',
-            mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-            value: penalty,
-            priority: 20
-          },
-          {
-            key: 'system.attributes.social.bearing.value',
-            mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-            value: penalty,
-            priority: 20
-          },
-          {
-            key: 'system.attributes.social.charm.value',
-            mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-            value: penalty,
-            priority: 20
-          },
-          {
-            key: 'system.attributes.social.composure.value',
-            mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-            value: penalty,
-            priority: 20
-          }
-        );
-        break;
-
-      case 'injured':
-        // Injured affects physical attributes and light mental penalty
-        changes.push(
-          {
-            key: 'system.attributes.physical.might.value',
-            mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-            value: penalty,
-            priority: 20
-          },
-          {
-            key: 'system.attributes.physical.coordination.value',
-            mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-            value: penalty,
-            priority: 20
-          },
-          {
-            key: 'system.attributes.physical.endurance.value',
-            mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-            value: penalty,
-            priority: 20
-          },
-          {
-            key: 'system.attributes.mental.guile.value',
-            mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-            value: Math.max(penalty + 1, -1), // Lighter mental penalty
-            priority: 20
-          }
-        );
-        break;
-
-      case 'hurt':
-        // Hurt affects physical attributes only
-        changes.push(
-          {
-            key: 'system.attributes.physical.might.value',
-            mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-            value: penalty,
-            priority: 20
-          },
-          {
-            key: 'system.attributes.physical.coordination.value',
-            mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-            value: penalty,
-            priority: 20
-          },
-          {
-            key: 'system.attributes.physical.endurance.value',
-            mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-            value: penalty,
-            priority: 20
-          }
-        );
-        break;
-
-      case 'grazed':
-        // Grazed affects coordination only
-        changes.push({
-          key: 'system.attributes.physical.coordination.value',
-          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-          value: penalty,
-          priority: 20
-        });
-        break;
-    }
-
-    return changes;
+    console.log(`${this.name} - Legacy _getWoundEffectChanges() called but disabled - HealthWounds component handles wound effects`);
+    return [];
   }
 
   /**
-   * Remove wound effects
+   * Remove wound effects - LEGACY METHOD (DISABLED)
+   * This method has been disabled as wound effects are now handled by HealthWounds component
    */
   async _removeWoundEffects() {
-    const woundEffects = this.effects.filter(e => 
-      e.getFlag('thirteen-commando', 'isWoundEffect') === true
-    );
-
-    if (woundEffects.length > 0) {
-      const effectIds = woundEffects.map(e => e.id);
-      await this.deleteEmbeddedDocuments('ActiveEffect', effectIds);
-    }
+    console.log(`${this.name} - Legacy _removeWoundEffects() called but disabled - HealthWounds component handles wound effects`);
+    return;
   }
 
   /**
