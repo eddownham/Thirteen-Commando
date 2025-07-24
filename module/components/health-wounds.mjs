@@ -1,6 +1,7 @@
 /**
  * Health and Wounds Component for Thirteen Commando
  * Handles wound effects, health box management, and wound template system
+ * NO FALLBACK VERSION - Requires proper effect templates
  */
 export class HealthWounds {
     
@@ -23,48 +24,6 @@ export class HealthWounds {
             { name: 'bruised2', penalty: -1, label: 'Bruised 2' },
             { name: 'bruised1', penalty: -1, label: 'Bruised 1' }   
         ];
-
-        // Wound effect templates
-        this.woundEffectTemplates = {
-            grazed: {
-                name: "Grazed Wound",
-                description: "Light wound causing minor coordination penalty",
-                changes: [
-                    { key: "system.attributes.physical.coordination.value", mode: 2, value: -1, priority: 20 }
-                ]
-            },
-            hurt: {
-                name: "Hurt Wound", 
-                description: "Moderate wound affecting physical attributes",
-                changes: [
-                    { key: "system.attributes.physical.might.value", mode: 2, value: -2, priority: 20 },
-                    { key: "system.attributes.physical.coordination.value", mode: 2, value: -2, priority: 20 },
-                    { key: "system.attributes.physical.endurance.value", mode: 2, value: -2, priority: 20 }
-                ]
-            },
-            injured: {
-                name: "Injured Wound",
-                description: "Serious wound affecting physical and mental attributes", 
-                changes: [
-                    { key: "system.attributes.physical.might.value", mode: 2, value: -3, priority: 20 },
-                    { key: "system.attributes.physical.coordination.value", mode: 2, value: -3, priority: 20 },
-                    { key: "system.attributes.physical.endurance.value", mode: 2, value: -3, priority: 20 },
-                    { key: "system.attributes.mental.guts.value", mode: 2, value: -1, priority: 20 }
-                ]
-            },
-            critical: {
-                name: "Critical Wound",
-                description: "Life-threatening wound severely affecting all attributes",
-                changes: [
-                    { key: "system.attributes.physical.might.value", mode: 2, value: -4, priority: 20 },
-                    { key: "system.attributes.physical.coordination.value", mode: 2, value: -4, priority: 20 },
-                    { key: "system.attributes.physical.endurance.value", mode: 2, value: -4, priority: 20 },
-                    { key: "system.attributes.mental.intelligence.value", mode: 2, value: -2, priority: 20 },
-                    { key: "system.attributes.mental.guile.value", mode: 2, value: -2, priority: 20 },
-                    { key: "system.attributes.mental.guts.value", mode: 2, value: -2, priority: 20 }
-                ]
-            }
-        };
     }
 
     /**
@@ -149,6 +108,8 @@ export class HealthWounds {
      * Update wound effects based on current health
      */
     async updateWoundEffects() {
+        console.log('🔄 updateWoundEffects called');
+        console.log('Stack trace:', new Error().stack);
         const currentWound = this.getCurrentWoundSeverity();
         
         // Remove all existing wound effects
@@ -176,10 +137,23 @@ export class HealthWounds {
     }
 
     /**
-     * Create wound effect based on wound type - USES TEMPLATE SYSTEM
+     * Create wound effect based on wound type - NO FALLBACK VERSION
      */
     async createWoundEffect(woundLevel) {
+        console.log(`🩸 createWoundEffect called for: ${woundLevel.name}`);
+        console.log('Stack trace:', new Error().stack);
         try {
+            // CHECK IF WOUND EFFECT ALREADY EXISTS
+            const existingWoundEffect = this.actor.effects.find(effect => 
+                effect.getFlag('thirteen-commando', 'isWoundEffect') && 
+                effect.getFlag('thirteen-commando', 'woundLevel') === woundLevel.name
+            );
+
+            if (existingWoundEffect) {
+                console.log(`Wound effect for ${woundLevel.name} already exists: ${existingWoundEffect.name}`);
+                return; // Don't create a duplicate
+            }
+
             const templates = this.actor.getEffectTemplates();
             
             const woundTemplateMap = {
@@ -199,7 +173,9 @@ export class HealthWounds {
             const templateName = woundTemplateMap[woundLevel.name];
             
             if (!templateName) {
-                await this._createHardcodedWoundEffect(woundLevel);
+                // Show error dialog instead of fallback
+                ui.notifications.error(`No wound template mapping found for ${woundLevel.name}`);
+                this._showMissingTemplateDialog(woundLevel.name, 'Unknown');
                 return;
             }
             
@@ -208,6 +184,8 @@ export class HealthWounds {
             );
             
             if (woundTemplate) {
+                console.log(`Using template: ${templateName} for wound: ${woundLevel.name}`);
+                
                 const effectData = {
                     name: `${woundTemplate.name} (${woundLevel.name})`,
                     icon: woundTemplate.icon,
@@ -223,138 +201,79 @@ export class HealthWounds {
                                 isWoundEffect: true,
                                 woundLevel: woundLevel.name,
                                 templateId: woundTemplate.id,
-                                templateName: templateName
+                                templateName: templateName,
+                                createdAt: Date.now()
                             }
                         }
                     )
                 };
                 
-                try {
-                    await ActiveEffect.create(effectData, {parent: this.actor});
-                } catch (error) {
-                    await this.actor.createEmbeddedDocuments('ActiveEffect', [effectData]);
-                }
-                
+                await this.actor.createEmbeddedDocuments('ActiveEffect', [effectData]);
                 console.log(`Created wound effect: ${effectData.name}`);
-                return;
+                
             } else {
-                await this._createHardcodedWoundEffect(woundLevel);
+                // Show error dialog instead of fallback
+                console.error(`Template ${templateName} not found in medical templates`);
+                this._showMissingTemplateDialog(woundLevel.name, templateName);
             }
             
         } catch (error) {
             console.error('Error applying wound template:', error);
-            await this._createHardcodedWoundEffect(woundLevel);
+            ui.notifications.error(`Failed to apply wound effect for ${woundLevel.name}: ${error.message}`);
         }
     }
 
     /**
-     * Create hardcoded wound effect as fallback
+     * Show dialog when required wound template is missing
      */
-    async _createHardcodedWoundEffect(wound) {
-        const effectData = {
-            name: `Wound: ${wound.label}`,
-            icon: 'icons/svg/blood.svg',
-            origin: this.actor.uuid,
-            disabled: false,
-            duration: {
-                permanent: true
+    _showMissingTemplateDialog(woundLevel, templateName) {
+        new Dialog({
+            title: "Missing Wound Effect Template",
+            content: `
+                <div style="margin-bottom: 15px;">
+                    <h3 style="color: #d4af37; margin-bottom: 10px;">Required Effect Template Missing</h3>
+                    <p><strong>Wound Level:</strong> ${woundLevel}</p>
+                    <p><strong>Required Template:</strong> ${templateName}</p>
+                    <p style="margin-top: 15px; color: #e74c3c;">
+                        <i class="fas fa-exclamation-triangle"></i> 
+                        You need to create this effect template before wound effects can be applied.
+                    </p>
+                </div>
+                <div style="background: rgba(52, 73, 94, 0.3); padding: 10px; border-radius: 5px;">
+                    <p><strong>To fix this:</strong></p>
+                    <ol style="margin: 10px 0; padding-left: 20px;">
+                        <li>Open <strong>Game Settings</strong></li>
+                        <li>Click <strong>Manage Effect Templates</strong></li>
+                        <li>Go to the <strong>Medical</strong> tab</li>
+                        <li>Create a template named <strong>"${templateName}"</strong></li>
+                        <li>Configure the appropriate attribute penalties</li>
+                    </ol>
+                </div>
+            `,
+            buttons: {
+                openManager: {
+                    icon: '<i class="fas fa-magic"></i>',
+                    label: "Open Effect Manager",
+                    callback: () => {
+                        // Try to open the effect template manager
+                        try {
+                            game.thirteenCommando.EffectTemplateManager.show();
+                        } catch (error) {
+                            console.error('Could not open effect manager:', error);
+                            ui.notifications.warn('Please access Effect Templates through Game Settings');
+                        }
+                    }
+                },
+                close: {
+                    icon: '<i class="fas fa-times"></i>',
+                    label: "Close"
+                }
             },
-            description: wound.description,
-            changes: [
-                {
-                    key: 'system.woundPenalty',
-                    mode: 2,
-                    value: wound.penalty,
-                    priority: 20
-                }
-            ],
-            flags: {
-                'thirteen-commando': {
-                    isWoundEffect: true,
-                    woundLevel: wound.name,
-                    woundPenalty: wound.penalty
-                }
-            }
-        };
-
-        if (wound.penalty <= -4) {
-            effectData.changes.push(
-                {
-                    key: 'system.attributes.physical.might.value',
-                    mode: 2,
-                    value: wound.penalty,
-                    priority: 20
-                },
-                {
-                    key: 'system.attributes.physical.coordination.value', 
-                    mode: 2,
-                    value: wound.penalty,
-                    priority: 20
-                },
-                {
-                    key: 'system.attributes.mental.intelligence.value',
-                    mode: 2,
-                    value: Math.floor(wound.penalty / 2),
-                    priority: 20
-                }
-            );
-        } else if (wound.penalty <= -3) {
-            effectData.changes.push(
-                {
-                    key: 'system.attributes.physical.might.value',
-                    mode: 2,
-                    value: wound.penalty,
-                    priority: 20
-                },
-                {
-                    key: 'system.attributes.physical.coordination.value',
-                    mode: 2,
-                    value: wound.penalty,
-                    priority: 20
-                },
-                {
-                    key: 'system.attributes.mental.intelligence.value',
-                    mode: 2,
-                    value: -1,
-                    priority: 20
-                }
-            );
-        } else if (wound.penalty <= -2) {
-            effectData.changes.push(
-                {
-                    key: 'system.attributes.physical.might.value',
-                    mode: 2,
-                    value: wound.penalty,
-                    priority: 20
-                },
-                {
-                    key: 'system.attributes.physical.coordination.value',
-                    mode: 2,
-                    value: wound.penalty,
-                    priority: 20
-                }
-            );
-        } else if (wound.penalty <= -1) {
-            effectData.changes.push(
-                {
-                    key: 'system.attributes.physical.coordination.value',
-                    mode: 2,
-                    value: wound.penalty,
-                    priority: 20
-                }
-            );
-        }
-
-        try {
-            await ActiveEffect.create(effectData, {parent: this.actor});
-        } catch (error) {
-            try {
-                await this.actor.createEmbeddedDocuments('ActiveEffect', [effectData]);
-            } catch (error2) {
-                console.error('Alternative method also failed:', error2);
-                ui.notifications.error('Failed to create wound effect. Check console for details.');
-            }
-        }
+            default: "openManager"
+        }, {
+            width: 500,
+            classes: ["thirteen-commando", "missing-template-dialog"]
+        }).render(true);
     }
 
     /**
@@ -488,7 +407,11 @@ export class HealthWounds {
         console.log('Total Wounds:', stats.totalWounds);
         console.log('Wounds by Type:', stats.woundsByType);
         console.log('Available Health Boxes:', Object.keys(healthBoxes).filter(k => healthBoxes[k].available));
-        console.log('Active Wound Effects:', woundEffects.map(e => e.name));
+        console.log('Active Wound Effects:', woundEffects.map(e => ({
+            name: e.name,
+            id: e.id,
+            createdAt: e.getFlag('thirteen-commando', 'createdAt')
+        })));
         console.log('Guts Value:', this.actor.system.attributes?.mental?.guts?.value);
         console.groupEnd();
         
@@ -513,7 +436,8 @@ export class HealthWounds {
                 'thirteen-commando': {
                     isWoundEffect: true,
                     customWound: true,
-                    severity: penalty
+                    severity: penalty,
+                    createdAt: Date.now()
                 }
             },
             disabled: false,
@@ -526,27 +450,5 @@ export class HealthWounds {
 
         await this.actor.createEmbeddedDocuments('ActiveEffect', [effectData]);
         console.log(`Created custom wound effect: ${name}`);
-    }
-
-    /**
-     * Get wound effect templates for external use
-     */
-    getWoundEffectTemplates() {
-        return foundry.utils.deepClone(this.woundEffectTemplates);
-    }
-
-    /**
-     * Modify wound effect template
-     */
-    setWoundEffectTemplate(woundType, template) {
-        if (this.woundEffectTemplates[woundType]) {
-            this.woundEffectTemplates[woundType] = foundry.utils.mergeObject(
-                this.woundEffectTemplates[woundType], 
-                template
-            );
-            console.log(`Updated wound effect template: ${woundType}`);
-        } else {
-            console.warn(`Unknown wound type: ${woundType}`);
-        }
     }
 }
